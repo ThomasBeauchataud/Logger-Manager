@@ -6,7 +6,7 @@
 
     <groupId>com.github.ffcfalcos</groupId>
     <artifactId>logger-manager</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
     <name>Logger Manager</name>
     <description>Logger Manager is a small component to easily log messages on rabbitMQ, console and files</description>
