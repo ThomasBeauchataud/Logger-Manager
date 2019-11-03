@@ -118,9 +118,19 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.ffcfalcos</groupId>
             <artifactId>rabbitmq-manager</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ffcfalcos</groupId>
+            <artifactId>log-formatter</artifactId>
+            <version>1.0.1</version>
         </dependency>
     </dependencies>
 
