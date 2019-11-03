@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 1.1.0
+ * @version 2.0.0
  * This class permit to log with different way a message
  * With @PostConstructed method we try to find some env-entry parameters
  * If they are set, all parameters are automatically load

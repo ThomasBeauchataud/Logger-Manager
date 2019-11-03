@@ -1,11 +1,11 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.rabbitmq.RabbitMQManager;
-import com.github.ffcfalcos.rabbitmq.RabbitMQManagerInterface;
+import com.github.ffcfalcos.logger.rabbitmq.RabbitMQManagerInterface;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
+import javax.inject.Inject;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import java.io.BufferedWriter;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 1.1.0
+ * @version 2.0.0
  * This class permit to log with different way a message
  * With @PostConstructed method we try to find some env-entry parameters
  * If they are set, all parameters are automatically load
@@ -33,9 +33,11 @@ import java.util.List;
  */
 @Default
 @ApplicationScoped
-public class Logger implements LoggerInterface {
+class Logger implements LoggerInterface {
 
-    private final RabbitMQManagerInterface rabbitMQManager = new RabbitMQManager();
+    @Inject
+    private RabbitMQManagerInterface rabbitMQManager;
+
     private String filePath;
     private List<String> rabbitMQParameters;
     private int defaultLogger = 0;
