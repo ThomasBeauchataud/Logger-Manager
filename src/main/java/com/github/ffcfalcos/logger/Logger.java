@@ -3,6 +3,9 @@ package com.github.ffcfalcos.logger;
 import com.github.ffcfalcos.rabbitmq.RabbitMQManager;
 import com.github.ffcfalcos.rabbitmq.RabbitMQManagerInterface;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import java.io.BufferedWriter;
@@ -13,17 +16,23 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * At the construction of the logger, we try to find env-entry parameters
+ * @author Thomas Beauchataud
+ * @since 03.11.2019
+ * @version 1.1.0
+ * This class permit to log with different way a message
+ * With @PostConstructed method we try to find some env-entry parameters
  * If they are set, all parameters are automatically load
  * Parameters for Rabbit:
- *                  rabbitMQ-host
- *                  rabbitMQ-user
- *                  rabbitMQ-password
- *                  rabbitMQ-exchange-logger
- *                  rabbitMQ-routingKey-logger
+ *      rabbitMQ-host
+ *      rabbitMQ-user
+ *      rabbitMQ-password
+ *      rabbitMQ-exchange-logger
+ *      rabbitMQ-routingKey-logger
  * Parameters for File:
- *                  log-path
+ *      log-path
  */
+@Default
+@ApplicationScoped
 public class Logger implements LoggerInterface {
 
     private final RabbitMQManagerInterface rabbitMQManager = new RabbitMQManager();
@@ -31,7 +40,19 @@ public class Logger implements LoggerInterface {
     private List<String> rabbitMQParameters;
     private int defaultLogger = 0;
 
-    public Logger() {
+    /**
+     * Here we try load some env-entry parameters to initialize parameters
+     * Parameters for Rabbit:
+     *      rabbitMQ-host
+     *      rabbitMQ-user
+     *      rabbitMQ-password
+     *      rabbitMQ-exchange-logger
+     *      rabbitMQ-routingKey-logger
+     * Parameters for File:
+            log-path
+     */
+    @PostConstruct
+    public void init() {
         try {
             Context env = (Context) new InitialContext().lookup("java:comp/env");
             rabbitMQParameters = Arrays.asList(
@@ -47,6 +68,11 @@ public class Logger implements LoggerInterface {
         }
     }
 
+    /**
+     * Log a message with the default method
+     * By default, its the console
+     * @param content String
+     */
     @Override
     public void log(String content) {
         if(defaultLogger == 0) {
@@ -60,6 +86,13 @@ public class Logger implements LoggerInterface {
         }
     }
 
+    /**
+     * Log a message with different ways
+     * @param message String
+     * @param rabbit boolean, true to log with rabbitMQ (if rabbitMQ parameters are declared)
+     * @param file boolean, true to log with file (if filePath is declared)
+     * @param console boolean, true to log with the console
+     */
     @Override
     public void log(String message, boolean rabbit, boolean file, boolean console) {
         if(rabbit && rabbitMQParameters != null) {
@@ -73,16 +106,38 @@ public class Logger implements LoggerInterface {
         }
     }
 
+    /**
+     * Set the filePath of logs
+     * @param filePath String, absolute filePath
+     */
     @Override
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Set RabbitMQ parameters as follow
+     * @param parameters
+     * String[] RabbitMQ parameters
+     *      0 - RabbitMQ host
+     *      1 - RabbitMQ user
+     *      2 - RabbitMQ password
+     *      3 - RabbitMQ exchange
+     *      4 - RabbitMQ exchange routing key
+     */
     @Override
     public void setRabbitParameters(List<String> parameters) {
         this.rabbitMQParameters = parameters;
     }
 
+    /**
+     * Set the default log type
+     * @param defaultCode int
+     *      0 - console
+     *      1 - rabbitMQ
+     *      2 - file
+     *      else: no change
+     */
     @Override
     public void setDefault(int defaultCode) {
         if(defaultCode == 0 || defaultCode == 1 || defaultCode == 2) {
@@ -90,6 +145,10 @@ public class Logger implements LoggerInterface {
         }
     }
 
+    /**
+     * Log a message on file defined with parameters
+     * @param content String
+     */
     private void logFile(String content) {
         try {
             FileWriter fw = new FileWriter(this.filePath, true);
