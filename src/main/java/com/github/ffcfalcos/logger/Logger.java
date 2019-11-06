@@ -1,165 +1,78 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.rabbitmq.RabbitMQManagerInterface;
+import com.github.ffcfalcos.logger.persistingHandler.FilePersistingHandler;
+import com.github.ffcfalcos.logger.persistingHandler.PersistingHandlerInterface;
+import com.github.ffcfalcos.logger.persistingHandler.RabbitMQManager;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
-import javax.inject.Inject;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 2.0.0
- * This class permit to log with different way a message
- * With @PostConstructed method we try to find some env-entry parameters
- * If they are set, all parameters are automatically load
- * Parameters for Rabbit:
- *      rabbitMQ-host
- *      rabbitMQ-user
- *      rabbitMQ-password
- *      rabbitMQ-exchange-logger
- *      rabbitMQ-routingKey-logger
- * Parameters for File:
- *      log-path
+ * @version 2.1.0
+ * This class permit to log a message by different way and you add you custom persisting handler
  */
 @Default
 @ApplicationScoped
 class Logger implements LoggerInterface {
 
-    @Inject
-    private RabbitMQManagerInterface rabbitMQManager;
+    private PersistingHandlerInterface defaultPersistingHandler;
+    private List<PersistingHandlerInterface> persistingHandlerList = new ArrayList<>();
 
-    private String filePath;
-    private List<String> rabbitMQParameters;
-    private int defaultLogger = 0;
-
-    /**
-     * Here we try load some env-entry parameters to initialize parameters
-     * Parameters for Rabbit:
-     *      rabbitMQ-host
-     *      rabbitMQ-user
-     *      rabbitMQ-password
-     *      rabbitMQ-exchange-logger
-     *      rabbitMQ-routingKey-logger
-     * Parameters for File:
-            log-path
-     */
     @PostConstruct
     public void init() {
-        try {
-            Context env = (Context) new InitialContext().lookup("java:comp/env");
-            rabbitMQParameters = Arrays.asList(
-                    (String) env.lookup("rabbitMQ-host"),
-                    (String) env.lookup("rabbitMQ-user"),
-                    (String) env.lookup("rabbitMQ-password"),
-                    (String) env.lookup("rabbitMQ-exchange-logger"),
-                    (String) env.lookup("rabbitMQ-routingKey-logger"));
-            this.filePath = (String) env.lookup("log-path");
-            this.defaultLogger = 1;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        defaultPersistingHandler = new RabbitMQManager();
+        persistingHandlerList.add(new FilePersistingHandler());
+        persistingHandlerList.add(defaultPersistingHandler);
+    }
+
+    /**
+     * Add a new PersistingHandler to the logger
+     * @param persistingHandler {@link PersistingHandlerInterface}
+     */
+    @Override
+    public void addPersistingHandler(PersistingHandlerInterface persistingHandler) {
+        persistingHandlerList.add(persistingHandler);
     }
 
     /**
      * Log a message with the default method
-     * By default, its the console
+     * By default, its the {@link com.github.ffcfalcos.logger.persistingHandler.RabbitMQManager}
      * @param content String
      */
     @Override
     public void log(String content) {
-        if(defaultLogger == 0) {
-            System.out.println(content);
-        }
-        if(defaultLogger == 1 && rabbitMQParameters != null) {
-            rabbitMQManager.sendToRabbit(content, rabbitMQParameters);
-        }
-        if(defaultLogger == 2 && filePath != null) {
-            this.logFile(content);
-        }
+        defaultPersistingHandler.persist(content);
     }
 
     /**
-     * Log a message with different ways
+     * Log a message with a specific {@link PersistingHandlerInterface}
      * @param message String
-     * @param rabbit boolean, true to log with rabbitMQ (if rabbitMQ parameters are declared)
-     * @param file boolean, true to log with file (if filePath is declared)
-     * @param console boolean, true to log with the console
+     * @param persistingHandlerName String the name of the persisting handler class, if it doesn't exists, the default
+     *      persisting handler will be used
      */
     @Override
-    public void log(String message, boolean rabbit, boolean file, boolean console) {
-        if(rabbit && rabbitMQParameters != null) {
-            rabbitMQManager.sendToRabbit(message, rabbitMQParameters);
-        }
-        if(file && filePath != null) {
-            this.logFile(message);
-        }
-        if(console) {
-            System.out.println(message);
-        }
+    public void log(String message, String persistingHandlerName) {
+        PersistingHandlerInterface persistingHandler = getPersistingHandlerByName(persistingHandlerName);
+        persistingHandler.persist(message);
     }
 
     /**
-     * Set the filePath of logs
-     * @param filePath String, absolute filePath
+     * Return a {@link PersistingHandlerInterface} identified by his name
+     * @param persistingHandlerName String
+     * @return {@link PersistingHandlerInterface}
      */
-    @Override
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    /**
-     * Set RabbitMQ parameters as follow
-     * @param parameters
-     * String[] RabbitMQ parameters
-     *      0 - RabbitMQ host
-     *      1 - RabbitMQ user
-     *      2 - RabbitMQ password
-     *      3 - RabbitMQ exchange
-     *      4 - RabbitMQ exchange routing key
-     */
-    @Override
-    public void setRabbitParameters(List<String> parameters) {
-        this.rabbitMQParameters = parameters;
-    }
-
-    /**
-     * Set the default log type
-     * @param defaultCode int
-     *      0 - console
-     *      1 - rabbitMQ
-     *      2 - file
-     *      else: no change
-     */
-    @Override
-    public void setDefault(int defaultCode) {
-        if(defaultCode == 0 || defaultCode == 1 || defaultCode == 2) {
-            this.defaultLogger = defaultCode;
+    private PersistingHandlerInterface getPersistingHandlerByName(String persistingHandlerName) {
+        for(PersistingHandlerInterface persistingHandler : persistingHandlerList) {
+            if(persistingHandler.getClass().getName().equals(persistingHandlerName)) {
+                return persistingHandler;
+            }
         }
-    }
-
-    /**
-     * Log a message on file defined with parameters
-     * @param content String
-     */
-    private void logFile(String content) {
-        try {
-            FileWriter fw = new FileWriter(this.filePath, true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter out = new PrintWriter(bw);
-            out.println(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return defaultPersistingHandler;
     }
 
 }

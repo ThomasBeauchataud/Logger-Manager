@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 2.0.0
+ * @version 2.1.0
  * This class permit to format a rich log message for execution of SQL request
  */
 public interface LogDaoFormatterInterface extends LogFormatterInterface {

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 2.0.0
+ * @version 2.1.0
  * This class permit to format a rich log message for execution of SQL request
  */
 @Default
@@ -26,7 +26,7 @@ class LogDaoFormatter extends LogFormatter implements LogDaoFormatterInterface {
     }
 
     /**
-     * Add the SQL Request to the lzog content
+     * Add the SQL Request to the log content
      * @param logContent JSONObject[]
      * @param request String the SQL Request
      */

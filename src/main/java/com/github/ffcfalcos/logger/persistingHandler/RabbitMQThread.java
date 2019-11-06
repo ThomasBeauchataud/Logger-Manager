@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.rabbitmq;
+package com.github.ffcfalcos.logger.persistingHandler;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -7,7 +7,7 @@ import com.rabbitmq.client.ConnectionFactory;
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 2.0.0
+ * @version 2.1.0
  * This class send a message to a RabbitMQ by a Thread to not slow the main program
  */
 class RabbitMQThread implements Runnable {
