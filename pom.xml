@@ -29,20 +29,30 @@
         </developer>
     </developers>
 
-    <scm>
-        <connection>scm:git:git://github.com/ffcfalcos/logger.git</connection>
-        <developerConnection>scm:git:ssh://github.com:ffcfalcos/logger.git</developerConnection>
-        <url>https://github.com/ffcfalcos/logger</url>
-    </scm>
+    <profiles>
+        <profile>
+            <id>github</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>true</enabled></snapshots>
+                </repository>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub ffcfalcos Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/ffcfalcos</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>github</id>
+            <name>GitHub ffcfalcos Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/ffcfalcos/Logger</url>
         </repository>
     </distributionManagement>
 
@@ -98,17 +108,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.8</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
@@ -128,14 +127,13 @@
             <version>1.1</version>
         </dependency>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
-            <scope>provided</scope>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
-            <artifactId>aspectjtools</artifactId>
+            <artifactId>aspectjrt</artifactId>
             <version>1.9.4</version>
         </dependency>
         <dependency>
