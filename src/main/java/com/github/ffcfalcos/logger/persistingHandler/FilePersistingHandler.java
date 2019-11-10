@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 2.1.0
+ * @version 3.0.0
  * This class permit to persist a message in a file
  * If they are set, all parameters are automatically load :
  *      log-path

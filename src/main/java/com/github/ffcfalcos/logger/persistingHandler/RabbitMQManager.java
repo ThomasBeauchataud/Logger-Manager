@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 2.1.0
+ * @version 3.0.0
  * This class permit to send message to a RabbitMQ
  * It also create a Thread for each message and validate the JSON message to prevent errors
  * If they are set, all parameters are automatically load :

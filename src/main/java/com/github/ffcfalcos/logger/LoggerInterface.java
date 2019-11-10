@@ -5,7 +5,7 @@ import com.github.ffcfalcos.logger.persistingHandler.PersistingHandlerInterface;
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 2.1.0
+ * @version 3.0.0
  * This class permit to log a message by different way and you add you custom persisting handler
  */
 @SuppressWarnings("unused")

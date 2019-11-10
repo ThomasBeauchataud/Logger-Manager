@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Thomas Beauchataud
  * @since 03.11.2019
- * @version 2.1.0
+ * @version 3.0.0
  * This class permit to format a rich log message for webservice handlers
  */
 @Default
