@@ -21,21 +21,21 @@ public class LoggerInterceptor {
     @Inject
     private LogInterceptorFormatterInterface logInterceptorFormatter;
 
-    @Before("@within(com.github.ffcfalcos.logger.LogBefore)")
+    @Before("@within(com.github.ffcfalcos.logger.interceptor.LogBefore)")
     public void logBefore(JoinPoint joinPoint) {
         List<JSONObject> logContent = logInterceptorFormatter.init();
         logInterceptorFormatter.addParameters(logContent, joinPoint.getArgs());
         logger.log(logInterceptorFormatter.close(logContent));
     }
 
-    @After("@within(com.github.ffcfalcos.logger.LogAfter)")
+    @After("@within(com.github.ffcfalcos.logger.interceptor.LogAfter)")
     public void logAfter(JoinPoint joinPoint) {
         List<JSONObject> logContent = logInterceptorFormatter.init();
         logInterceptorFormatter.addParameters(logContent, joinPoint.getArgs());
         logger.log(logInterceptorFormatter.close(logContent));
     }
 
-    @Around("@within(com.github.ffcfalcos.logger.LogBefore)")
+    @Around("@within(com.github.ffcfalcos.logger.interceptor.LogBefore)")
     public Object logBefore(ProceedingJoinPoint proceedingJoinPoint) {
         List<JSONObject> logContent = logInterceptorFormatter.init();
         try {
