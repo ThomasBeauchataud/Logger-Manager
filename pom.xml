@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Logger Manager</name>
     <description>Logger Manager is a small component to easily log messages on rabbitMQ, console and files</description>
-    <url>https://github.com/ffcfalcos/logger</url>
+    <url>https://github.com/ffcfalcos/Logger-Manager</url>
 
     <licenses>
         <license>
@@ -25,7 +25,7 @@
             <name>Thomas Beauchataud</name>
             <email>thomas.lcdv@yahoo.fr</email>
             <organization>com.github.ffcfalcos</organization>
-            <organizationUrl>https://github.com/ffcfalcos/logger</organizationUrl>
+            <organizationUrl>https://github.com/ffcfalcos/Logger-Manager</organizationUrl>
         </developer>
     </developers>
 
@@ -52,7 +52,7 @@
         <repository>
             <id>github</id>
             <name>GitHub ffcfalcos Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/ffcfalcos/Logger</url>
+            <url>https://maven.pkg.github.com/ffcfalcos/Logger-Manager</url>
         </repository>
     </distributionManagement>
 
