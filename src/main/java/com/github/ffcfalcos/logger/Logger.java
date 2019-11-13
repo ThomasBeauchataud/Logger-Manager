@@ -1,78 +1,121 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.persistingHandler.FilePersistingHandler;
-import com.github.ffcfalcos.logger.persistingHandler.PersistingHandlerInterface;
-import com.github.ffcfalcos.logger.persistingHandler.RabbitMQManager;
+import com.github.ffcfalcos.logger.handler.formatter.StringFormatterHandler;
+import com.github.ffcfalcos.logger.handler.formatter.FormatterHandlerInterface;
+import com.github.ffcfalcos.logger.handler.formatter.JsonFormatterHandler;
+import com.github.ffcfalcos.logger.handler.persisting.FilePersistingHandler;
+import com.github.ffcfalcos.logger.handler.persisting.PersistingHandlerInterface;
+import com.github.ffcfalcos.logger.handler.persisting.RabbitMQPersistingHandler;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-/**
- * @author Thomas Beauchataud
- * @since 03.11.2019
- * @version 3.0.0
- * This class permit to log a message by different way and you add you custom persisting handler
- */
 @Default
 @ApplicationScoped
-class Logger implements LoggerInterface {
+public class Logger implements LoggerInterface {
 
-    private PersistingHandlerInterface defaultPersistingHandler;
-    private List<PersistingHandlerInterface> persistingHandlerList = new ArrayList<>();
+    private PersistingHandlerInterface defaultPersistingHandler = loadDefaultPersistingHandler();
+    private FormatterHandlerInterface defaultFormatterHandler = loadDefaultFormatterHandler();
+    private List<PersistingHandlerInterface> persistingHandlerList = loadPersistingHandlers(defaultPersistingHandler);
+    private List<FormatterHandlerInterface> formatterHandlerList = loadFormatterHandlers(defaultFormatterHandler);
 
-    @PostConstruct
-    public void init() {
-        defaultPersistingHandler = new RabbitMQManager();
-        persistingHandlerList.add(new FilePersistingHandler());
-        persistingHandlerList.add(defaultPersistingHandler);
-    }
-
-    /**
-     * Add a new PersistingHandler to the logger
-     * @param persistingHandler {@link PersistingHandlerInterface}
-     */
     @Override
     public void addPersistingHandler(PersistingHandlerInterface persistingHandler) {
         persistingHandlerList.add(persistingHandler);
     }
 
-    /**
-     * Log a message with the default method
-     * By default, its the {@link com.github.ffcfalcos.logger.persistingHandler.RabbitMQManager}
-     * @param content String
-     */
     @Override
-    public void log(String content) {
-        defaultPersistingHandler.persist(content);
+    public void addPersistingHandlers(List<PersistingHandlerInterface> persistingHandlers) {
+        for(PersistingHandlerInterface persistingHandler : persistingHandlers) {
+            addPersistingHandler(persistingHandler);
+        }
     }
 
-    /**
-     * Log a message with a specific {@link PersistingHandlerInterface}
-     * @param message String
-     * @param persistingHandlerName String the name of the persisting handler class, if it doesn't exists, the default
-     *      persisting handler will be used
-     */
     @Override
-    public void log(String message, String persistingHandlerName) {
-        PersistingHandlerInterface persistingHandler = getPersistingHandlerByName(persistingHandlerName);
-        persistingHandler.persist(message);
+    public void addFormatterHandler(FormatterHandlerInterface formatterHandler) {
+        formatterHandlerList.add(formatterHandler);
     }
 
-    /**
-     * Return a {@link PersistingHandlerInterface} identified by his name
-     * @param persistingHandlerName String
-     * @return {@link PersistingHandlerInterface}
-     */
-    private PersistingHandlerInterface getPersistingHandlerByName(String persistingHandlerName) {
+    @Override
+    public void addFormatterHandlers(List<FormatterHandlerInterface> formatterHandlers) {
+        for(FormatterHandlerInterface formatterHandler : formatterHandlers) {
+            addFormatterHandler(formatterHandler);
+        }
+    }
+
+    @Override
+    public FormatterHandlerInterface getFormatterHandler(String formatterHandlerName) {
+        for(FormatterHandlerInterface formatterHandler : this.formatterHandlerList) {
+            if(formatterHandler.getClass().getSimpleName().equals(formatterHandlerName)) {
+                return formatterHandler;
+            }
+        }
+        return defaultFormatterHandler;
+    }
+
+    @Override
+    public PersistingHandlerInterface getPersistingHandler(String persistingHandlerName) {
         for(PersistingHandlerInterface persistingHandler : persistingHandlerList) {
-            if(persistingHandler.getClass().getName().equals(persistingHandlerName)) {
+            if(persistingHandler.getClass().getSimpleName().equals(persistingHandlerName)) {
                 return persistingHandler;
             }
         }
         return defaultPersistingHandler;
+    }
+
+    @Override
+    public void log(Map<String, Object> message) {
+        log(message, defaultPersistingHandler.getClass().getSimpleName(), defaultFormatterHandler.getClass().getSimpleName());
+    }
+
+    @Override
+    public void log(Map<String, Object> message, String persistingHandlerName) {
+        log(message, persistingHandlerName, defaultFormatterHandler.getClass().getSimpleName());
+    }
+
+    @Override
+    public void log(Map<String, Object> message, String persistingHandlerName, String formatterHandlerName) {
+        String finalContent = getFormatterHandler(formatterHandlerName).format(message);
+        getPersistingHandler(persistingHandlerName).persist(finalContent);
+    }
+
+    @Override
+    public void log(String content) {
+        log(content, defaultPersistingHandler.getClass().getSimpleName(), defaultFormatterHandler.getClass().getSimpleName());
+    }
+
+    @Override
+    public void log(String message, String persistingHandlerName) {
+        log(message, persistingHandlerName, defaultPersistingHandler.getClass().getSimpleName());
+    }
+
+    @Override
+    public void log(String message, String persistingHandlerName, String formatterHandlerName) {
+        String finalContent = getFormatterHandler(formatterHandlerName).format(message);
+        getPersistingHandler(persistingHandlerName).persist(finalContent);
+    }
+
+    private PersistingHandlerInterface loadDefaultPersistingHandler() {
+        return new RabbitMQPersistingHandler();
+    }
+
+    private FormatterHandlerInterface loadDefaultFormatterHandler() { return new JsonFormatterHandler(); }
+
+    private List<PersistingHandlerInterface> loadPersistingHandlers(PersistingHandlerInterface defaultPersistingHandler) {
+        List<PersistingHandlerInterface> list = new ArrayList<>();
+        list.add(defaultPersistingHandler);
+        list.add(new FilePersistingHandler());
+        return list;
+    }
+
+    private List<FormatterHandlerInterface> loadFormatterHandlers(FormatterHandlerInterface defaultFormatterHandler) {
+        List<FormatterHandlerInterface> list = new ArrayList<>();
+        list.add(defaultFormatterHandler);
+        list.add(new StringFormatterHandler());
+        return list;
     }
 
 }

@@ -1,15 +1,9 @@
-package com.github.ffcfalcos.logger.persistingHandler;
+package com.github.ffcfalcos.logger.handler.persisting;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-/**
- * @author Thomas Beauchataud
- * @since 03.11.2019
- * @version 3.0.0
- * This class send a message to a RabbitMQ by a Thread to not slow the main program
- */
 class RabbitMQThread implements Runnable {
 
     private String host;
@@ -19,15 +13,6 @@ class RabbitMQThread implements Runnable {
     private String routingKey;
     private String content;
 
-    /**
-     * RabbitMQThread Constructor
-     * @param host String RabbitMQ host
-     * @param user String RabbitMQ user
-     * @param password String RabbitMQ password
-     * @param exchange String RabbitMQ exchange name
-     * @param routingKey String RabbitMQ exchange routing key
-     * @param content String the message
-     */
     RabbitMQThread(String host, String user, String password, String exchange, String routingKey, String content) {
         this.host = host;
         this.user = user;

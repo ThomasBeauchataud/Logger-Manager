@@ -1,0 +1,5 @@
+FirstLine
+{application=System, start=1573611697780, end=1573611697780, time=0, type=Trace, error=false, parameters=[firstParameter, secondParameter]}
+{application=System, start=1573611697841, end=1573611697841, time=0, type=Trace, error=false, parameters=[firstParameter, secondParameter]}
+{application=System, response=firstParametersecondParameter, start=1573611697844, end=1573611697844, time=0, type=Trace, error=false, parameters=[firstParameter, secondParameter]}
+{application=System, response=firstParametersecondParameter, start=1573611697844, end=1573611697844, time=0, type=Trace, error=false, parameters=[firstParameter, secondParameter]}
