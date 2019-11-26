@@ -15,11 +15,15 @@ public interface LoggerInterface {
 
     PersistingHandlerInterface getPersistingHandler(String persistingHandlerName);
 
+    void setDefaultPersistingHandler(String persistingHandlerName);
+
     void addFormatterHandler(FormatterHandlerInterface formatterHandler);
 
     void addFormatterHandlers(List<FormatterHandlerInterface> formatterHandlers);
 
     FormatterHandlerInterface getFormatterHandler(String formatterHandlerName);
+
+    void setDefaultFormatterHandler(String formatterHandlerName);
 
     void log(Map<String, Object> message);
 

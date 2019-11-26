@@ -3,6 +3,7 @@ package com.github.ffcfalcos.logger;
 import com.github.ffcfalcos.logger.handler.formatter.StringFormatterHandler;
 import com.github.ffcfalcos.logger.handler.formatter.FormatterHandlerInterface;
 import com.github.ffcfalcos.logger.handler.formatter.JsonFormatterHandler;
+import com.github.ffcfalcos.logger.handler.persisting.ConsolePersistingHandler;
 import com.github.ffcfalcos.logger.handler.persisting.FilePersistingHandler;
 import com.github.ffcfalcos.logger.handler.persisting.PersistingHandlerInterface;
 import com.github.ffcfalcos.logger.handler.persisting.RabbitMQPersistingHandler;
@@ -57,6 +58,11 @@ public class Logger implements LoggerInterface {
     }
 
     @Override
+    public void setDefaultFormatterHandler(String formatterHandlerName) {
+        defaultFormatterHandler = getFormatterHandler(formatterHandlerName);
+    }
+
+    @Override
     public PersistingHandlerInterface getPersistingHandler(String persistingHandlerName) {
         for(PersistingHandlerInterface persistingHandler : persistingHandlerList) {
             if(persistingHandler.getClass().getSimpleName().equals(persistingHandlerName)) {
@@ -64,6 +70,11 @@ public class Logger implements LoggerInterface {
             }
         }
         return defaultPersistingHandler;
+    }
+
+    @Override
+    public void setDefaultPersistingHandler(String persistingHandlerName) {
+        defaultPersistingHandler = this.getPersistingHandler(persistingHandlerName);
     }
 
     @Override
@@ -108,6 +119,7 @@ public class Logger implements LoggerInterface {
         List<PersistingHandlerInterface> list = new ArrayList<>();
         list.add(defaultPersistingHandler);
         list.add(new FilePersistingHandler());
+        list.add(new ConsolePersistingHandler());
         return list;
     }
 

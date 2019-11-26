@@ -1,7 +1,7 @@
 package com.github.ffcfalcos.logger.handler.persisting;
 
 @SuppressWarnings("unused")
-interface RabbitMQPersistingHandlerInterface extends PersistingHandlerInterface {
+public interface RabbitMQPersistingHandlerInterface extends PersistingHandlerInterface {
 
     void setRabbitMQHost(String rabbitMQHost);
 
