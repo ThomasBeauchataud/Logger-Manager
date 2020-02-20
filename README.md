@@ -1,7 +1,7 @@
 # Logger-Manager
 Maven repository to easily generate logs message
 
-- [How to get the Logger service](#how-to-get-the-Logger-service)
+- [How to get the Logger service]()
 - How to use the *Logger* service
     - How to persist a message
     - How to format a message
@@ -13,7 +13,7 @@ Maven repository to easily generate logs message
 - Custom your *Logger* service
     - Add new *PersistingHandlers*
     - Add new *FormatterHandlers*
-
+&&&
 
 ## How to get the Logger service
 - By using a static method to get the singleton
