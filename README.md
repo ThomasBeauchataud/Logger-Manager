@@ -124,7 +124,7 @@ You can specify for each method which *FormatterHandler* and/or *PersistingHandl
 > The *TraceAnnotationHandler* (see [Plug the aspect class](#plug-the-aspect-class)) use the *LogDataCollector* service (see [How to create a Map log message with the LogDataCollector](#how-to-create-a-map-log-message-with-the-logdatacollector))
 
 Here are the available annotation :
-- TraceBefore, this annotation trace the parameters given to the method
+- TraceBefore, this annotation trace a method before his invocation with his parameters
 ```
 # MyService.java
 
@@ -133,7 +133,7 @@ public Object myMethodToTrace(Object param1, String param2, int param2) {
     ...
 }
 ```
-- TraceAround, this annotation trace parameters given to the method and the result
+- TraceAround, this annotation trace a method around his invocation with his parameters and his result
 ```
 # MyService.java
 
@@ -142,7 +142,7 @@ public Object myMethodToTrace(Object param1, String param2, int param2) {
     ...
 }
 ```
-- TraceAfter, this annotation trace result of the method
+- TraceAfter, this annotation trace a method before his invocation with his parameters
 ```
 # MyService.java
 

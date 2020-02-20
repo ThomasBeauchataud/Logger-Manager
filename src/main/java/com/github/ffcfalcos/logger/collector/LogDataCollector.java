@@ -5,8 +5,6 @@ import org.json.simple.JSONArray;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import java.util.*;
 
 @ApplicationScoped
@@ -25,12 +23,6 @@ public class LogDataCollector {
         Map<String, Object> logContent = new HashMap<>();
         logContent.put("type", logType);
         logContent.put("start", new Date().getTime());
-        try {
-            Context env = (Context) new InitialContext().lookup("java:comp/env");
-            logContent.put("application", env.lookup("application-name"));
-        } catch (Exception e) {
-            logContent.put("application", "System");
-        }
         logContent.put("error", false);
         return logContent;
     }
