@@ -1,19 +1,18 @@
 # Logger-Manager
 Maven repository to easily generate logs message
 
-- [How to get the Logger service]()
-- How to use the *Logger* service
-    - How to persist a message
-    - How to format a message
-    - How to log with *FormatterHandlers* and *PersistingHandlers*
-        - Log a simple *String*
-        - Log a *Map* object
-    - How to trace a method invocation
-    - How to create a *Map* log message with the *LogDataCollector*
-- Custom your *Logger* service
-    - Add new *PersistingHandlers*
-    - Add new *FormatterHandlers*
-&&&
+- [How to get the Logger service](#how-to-get-the-logger-service)
+- [How to use the Logger service](#how-to-use-the-logger-service)  
+    - [How to persist a message](#how-to-persist-a-message)
+    - [How to format a message](#how-to-format-a-message)
+    - [How to log with FormatterHandlers and PersistingHandlers](#how-to-log-with-formatterhandlers-and-persistinghandlers)
+        - [Log a simple String object](#log-a-simple-string-object)
+        - [Log a Map object](#log-a-map-object)
+    - [How to trace a method invocation](#how-to-trace-a-method-invocation)
+    - [How to create a Map log message with the LogDataCollector](#how-to-create-a-map-log-message-with-the-logdatacollector)
+- [Custom your Logger service](#custom-your-logger-service)
+    - [Add a new PersistingHandler](#add-a-new-persistingHandler)
+    - [Add a new FormatterHandler](#add-a-new-formatterHandler)
 
 ## How to get the Logger service
 - By using a static method to get the singleton
@@ -30,7 +29,7 @@ LoggerInterface logger = Logger.getInstance();
 LoggerInterface logger;
 ```
 > Dont use both system cause they would not be the same instance
-## How to use the logger service
+## How to use the Logger service
 ### How to persist a message
 *PersistingHandlers* are persisting systems which persist a message.
 They implements the *PersistingHandler* interface
@@ -84,7 +83,7 @@ rabbitMQPersistingHandler.setRabbitParameters("localhost","guest", "guest", "def
 *FormatterHandlers* are persisting systems which format a message.
 They implements the *FormatterHandler* interface
 ### How to log with *FormatterHandlers* and *PersistingHandlers*
-#### Log a simple *String*
+#### Log a simple String object
 To log a simple *String* message by using defaults *FormatterHandler* and *PersistingHandler*, you can use the following method provided by the *Logger*
 ```
 # LoggerInterface.java
@@ -108,4 +107,10 @@ void log(String message, Severity severity, Class persistingHandlerClass, Class 
 logger.log("my log message", Severity.INFO, FilePersistingHandler.class, null)
 ```
 > Let a *Handler* to *null* to get the default *Handler* of the *Logger*
-### To log a *Map* object
+### Log a Map object
+
+## How to trace a method invocation
+### How to create a Map log message with the LogDataCollector
+## Custom your Logger service
+### Add a new PersistingHandler
+### Add a new FormatterHandler
