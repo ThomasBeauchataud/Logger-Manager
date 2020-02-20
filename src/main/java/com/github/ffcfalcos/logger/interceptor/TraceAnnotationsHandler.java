@@ -3,6 +3,8 @@ package com.github.ffcfalcos.logger.interceptor;
 import com.github.ffcfalcos.logger.Logger;
 import com.github.ffcfalcos.logger.LoggerInterface;
 import com.github.ffcfalcos.logger.collector.LogDataCollector;
+import com.github.ffcfalcos.logger.handler.formatter.JsonFormatterHandler;
+import com.github.ffcfalcos.logger.handler.persisting.FilePersistingHandler;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -20,6 +22,7 @@ public abstract class TraceAnnotationsHandler {
         logger = Logger.getInstance();
     }
 
+    @TraceBefore(persistingHandlerClass = FilePersistingHandler.class)
     protected void handleTraceBefore(JoinPoint joinPoint, TraceBefore traceBefore) {
         Map<String, Object> logContent = logDataCollector.init("Trace");
         logDataCollector.add(logContent, "parameters", Arrays.toString(joinPoint.getArgs()));

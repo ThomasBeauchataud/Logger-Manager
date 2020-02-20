@@ -115,12 +115,44 @@ logger.log("my log message", Severity.INFO, FilePersistingHandler.class, null)
 ### Log a Map object
 
 ## How to trace a method invocation
-### Methods annotations
+### Methods trace annotations
+Trace annotations are annotation to trace before, after or around method invocation.
+You can specify for each method which *FormatterHandler* and/or *PersistingHandler* you want to use or use the default
+> The *TraceAnnotationHandler* (see [Plug the aspect class](#plug-the-aspect-class)) use the *LogDataCollector* service (see [How to create a Map log message with the LogDataCollector](#how-to-create-a-map-log-message-with-the-logdatacollector))
+
+Here are the available annotation :
+- TraceBefore, this annotation trace the parameters given to the method
+```
+# MyService.java
+
+@TraceBefore(persistingHandlerClass = FilePersistingHandler.class)
+public Object myMethodToTrace(Object param1, String param2, int param2) {
+    ...
+}
+```
+- TraceAround, this annotation trace parameters given to the method and the result
+```
+# MyService.java
+
+@TraceAround(formatterHandlerClass = JsonFormatterHandler.class)
+public Object myMethodToTrace(Object param1, String param2, int param2) {
+    ...
+}
+```
+- TraceAfter, this annotation trace result of the method
+```
+# MyService.java
+
+@TraceAfter()
+public Object myMethodToTrace(Object param1, String param2, int param2) {
+    ...
+}
+```
 ### Plug the aspect class
-To intercept annotated method invocation, you have to create the aspect class. 
+To intercept annotated methods invocations, you have to create the aspect class. 
 Methods to handle the trace of methods are already implemented in the *TraceAnnotationHandler* class.
 
-This is what should looks like your aspect class to intercept annotated method invocation
+This is what should looks like your aspect class to intercept annotated methods invocations
 ```
 @Aspect
 public class MyTraceAspectClass extends TraceAnnotationsHandler {
@@ -153,5 +185,36 @@ public class MyTraceAspectClass extends TraceAnnotationsHandler {
 ```
 ### How to create a Map log message with the LogDataCollector
 ## Custom your Logger service
+You can customise your *Logger* by creating your own *PersistingHandler* and *FormatterHandler*
 ### Add a new PersistingHandler
+To create a new *PersistingHandler*, you just have to create a class implementing the interface *PersistingHandler*
+> You can test your *PersistingHandler* by running the test *PersistingHandlerTest.run(PersistingHandler)* on your new *PersistingHandler*
+
+Then to add your new *PersistingHandler* in the *Logger*, you can use the following method
+````
+# LoggerInterface.java
+
+void addPersistingHandler(PersistingHandler persistingHandler);
+````
+> Example
+````
+# MyService.java
+
+logger.addPersistingHandler(new MyPersistingHandler());
+````
 ### Add a new FormatterHandler
+To create a new *FormatterHandler*, you just have to create a class implementing the interface *FormatterHandler*
+> You can test your *FormatterHandler* by running the test *FormatterHandlerTest.run(FormatterHandler)* on your new *FormatterHandler*
+
+Then to add your new *FormatterHandler* in the *Logger*, you can use the following method
+````
+# LoggerInterface.java
+
+void addFormatterHandler(FormatterHandler persistingHandler);
+````
+> Example
+````
+# MyService.java
+
+logger.addFormatterHandler(new FormatterHandler());
+````

@@ -10,8 +10,8 @@ import java.lang.annotation.Target;
 @SuppressWarnings("rawtypes")
 public @interface TraceBefore {
 
-    Class persistingHandlerClass();
+    Class persistingHandlerClass() default void.class;
 
-    Class formatterHandlerClass();
+    Class formatterHandlerClass() default void.class;
 
 }
