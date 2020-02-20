@@ -2,16 +2,14 @@ package com.github.ffcfalcos.logger.handler.persisting;
 
 import org.json.simple.parser.JSONParser;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
+@SuppressWarnings("unused")
+public class RabbitMQPersistingHandler implements PersistingHandler {
 
-public class RabbitMQPersistingHandler implements RabbitMQPersistingHandlerInterface {
-
-    private String rabbitMQHost = loadHost();
-    private String rabbitMQUser = loadUser();
-    private String rabbitMQPassword = loadPassword();
-    private String rabbitMQExchange = loadExchange();
-    private String rabbitMQRoutingKey = loadRoutingKey();
+    private String rabbitMQHost;
+    private String rabbitMQUser;
+    private String rabbitMQPassword;
+    private String rabbitMQExchange;
+    private String rabbitMQRoutingKey;
 
     @Override
     public void persist(String content) {
@@ -24,74 +22,12 @@ public class RabbitMQPersistingHandler implements RabbitMQPersistingHandlerInter
         }
     }
 
-    @Override
-    public void setRabbitMQHost(String rabbitMQHost) {
+    public void setRabbitParameters(String rabbitMQHost, String rabbitMQUser, String rabbitMQPassword, String rabbitMQExchange, String rabbitMQRoutingKey) {
         this.rabbitMQHost = rabbitMQHost;
-    }
-
-    @Override
-    public void setRabbitMQUser(String rabbitMQUser) {
         this.rabbitMQUser = rabbitMQUser;
-    }
-
-    @Override
-    public void setRabbitMQPassword(String rabbitMQPassword) {
         this.rabbitMQPassword = rabbitMQPassword;
-    }
-
-    @Override
-    public void setRabbitMQExchange(String rabbitMQExchange) {
         this.rabbitMQExchange = rabbitMQExchange;
-    }
-
-    @Override
-    public void setRabbitMQRoutingKey(String rabbitMQRoutingKey) {
         this.rabbitMQRoutingKey = rabbitMQRoutingKey;
-    }
-
-    private String loadHost() {
-        try {
-            Context env = (Context) new InitialContext().lookup("java:comp/env");
-            return (String) env.lookup("rabbitMQ-host");
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private String loadUser() {
-        try {
-            Context env = (Context) new InitialContext().lookup("java:comp/env");
-            return (String) env.lookup("rabbitMQ-user");
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private String loadPassword() {
-        try {
-            Context env = (Context) new InitialContext().lookup("java:comp/env");
-            return (String) env.lookup("rabbitMQ-password");
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private String loadExchange() {
-        try {
-            Context env = (Context) new InitialContext().lookup("java:comp/env");
-            return (String) env.lookup("rabbitMQ-exchange-logger");
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private String loadRoutingKey() {
-        try {
-            Context env = (Context) new InitialContext().lookup("java:comp/env");
-            return (String) env.lookup("rabbitMQ-routingKey-logger");
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     private boolean isJSONValid(String test) {

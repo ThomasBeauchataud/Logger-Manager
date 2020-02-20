@@ -1,4 +1,5 @@
-import com.github.ffcfalcos.logger.handler.formatter.FormatterHandlerInterface;
+import com.github.ffcfalcos.logger.collector.Severity;
+import com.github.ffcfalcos.logger.handler.formatter.FormatterHandler;
 import com.github.ffcfalcos.logger.handler.formatter.StringFormatterHandler;
 
 import java.util.ArrayList;
@@ -7,14 +8,14 @@ import java.util.Map;
 
 public class StringFormatterHandlerTest implements TestInterface {
 
-    private final FormatterHandlerInterface stringFormatter = new StringFormatterHandler();
+    private final FormatterHandler stringFormatter = new StringFormatterHandler();
 
     @Override
     public void run() {
         try {
             try {
                 String nullString = null;
-                stringFormatter.format(nullString);
+                stringFormatter.format(nullString, Severity.INFO);
             } catch (Exception e) {
                 System.out.println("StringFormatterHandler failed null string test");
                 throw e;
@@ -28,7 +29,7 @@ public class StringFormatterHandlerTest implements TestInterface {
             }
             try {
                 String string = "String message";
-                String formattedString = stringFormatter.format(string);
+                String formattedString = stringFormatter.format(string, Severity.INFO);
                 if (formattedString == null) {
                     throw new Exception("");
                 }

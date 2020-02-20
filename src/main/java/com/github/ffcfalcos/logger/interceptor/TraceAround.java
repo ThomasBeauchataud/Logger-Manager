@@ -7,10 +7,11 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
+@SuppressWarnings("rawtypes")
 public @interface TraceAround {
 
-    String persistingHandlerName() default "default";
+    Class persistingHandlerClass();
 
-    String formatterHandlerName() default "default";
+    Class formatterHandlerClass();
 
 }

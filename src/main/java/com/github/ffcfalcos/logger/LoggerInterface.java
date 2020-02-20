@@ -1,40 +1,44 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.handler.formatter.FormatterHandlerInterface;
-import com.github.ffcfalcos.logger.handler.persisting.PersistingHandlerInterface;
+import com.github.ffcfalcos.logger.collector.Severity;
+import com.github.ffcfalcos.logger.handler.formatter.FormatterHandler;
+import com.github.ffcfalcos.logger.handler.persisting.PersistingHandler;
+import com.github.ffcfalcos.logger.rule.storage.RuleStorageHandler;
 
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused","rawtypes"})
 public interface LoggerInterface {
 
-    void addPersistingHandler(PersistingHandlerInterface persistingHandler);
+    void addPersistingHandler(PersistingHandler persistingHandler);
 
-    void addPersistingHandlers(List<PersistingHandlerInterface> persistingHandlers);
+    void addPersistingHandlers(List<PersistingHandler> persistingHandlers);
 
-    PersistingHandlerInterface getPersistingHandler(String persistingHandlerName);
+    PersistingHandler getPersistingHandler(Class PersistingHandlerClass);
 
-    void setDefaultPersistingHandler(String persistingHandlerName);
+    List<PersistingHandler> getPersistingHandlers();
 
-    void addFormatterHandler(FormatterHandlerInterface formatterHandler);
+    void setDefaultPersistingHandler(Class persistingHandlerClass);
 
-    void addFormatterHandlers(List<FormatterHandlerInterface> formatterHandlers);
+    void addFormatterHandler(FormatterHandler formatterHandler);
 
-    FormatterHandlerInterface getFormatterHandler(String formatterHandlerName);
+    void addFormatterHandlers(List<FormatterHandler> formatterHandlers);
 
-    void setDefaultFormatterHandler(String formatterHandlerName);
+    FormatterHandler getFormatterHandler(Class formatterHandlerClass);
+
+    void setDefaultFormatterHandler(Class formatterHandlerClass);
 
     void log(Map<String, Object> message);
 
-    void log(Map<String, Object> message, String persistingHandlerName);
+    void log(Map<String, Object> message, Class persistingHandlerClass, Class formatterHandlerClass);
 
-    void log(Map<String, Object> message, String persistingHandlerName, String formatterHandlerName);
+    void log(String message, Severity severity);
 
-    void log(String message);
+    void log(String message, Severity severity, Class persistingHandlerClass, Class formatterHandlerClass);
 
-    void log(String message, String persistingHandlerName);
+    RuleStorageHandler getRuleStorageHandler();
 
-    void log(String message, String persistingHandlerName, String formatterHandlerName);
+    void setRuleStorageHandler(RuleStorageHandler ruleStorageHandler);
 
 }

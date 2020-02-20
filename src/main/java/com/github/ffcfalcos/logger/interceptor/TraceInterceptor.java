@@ -2,7 +2,6 @@ package com.github.ffcfalcos.logger.interceptor;
 
 import com.github.ffcfalcos.logger.LoggerInterface;
 import com.github.ffcfalcos.logger.collector.LogDataCollector;
-import com.github.ffcfalcos.logger.collector.LogDataCollectorInterface;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -11,10 +10,10 @@ import java.util.Arrays;
 import java.util.Map;
 
 @Aspect
-@SuppressWarnings("Duplicates")
+@SuppressWarnings({"Duplicates"})
 public class TraceInterceptor {
 
-    private LogDataCollectorInterface logDataCollector = new LogDataCollector();
+    private LogDataCollector logDataCollector = new LogDataCollector();
 
     @Pointcut("@annotation(traceBefore)")
     public void traceBeforePointcut(TraceBefore traceBefore) { }
@@ -26,9 +25,9 @@ public class TraceInterceptor {
     public void logBefore(JoinPoint joinPoint, TraceBefore traceBefore) {
         Map<String, Object> logContent = logDataCollector.init("Trace");
         logDataCollector.add(logContent, "parameters", Arrays.toString(joinPoint.getArgs()));
-        TraceableInterface traceable = (TraceableInterface) joinPoint.getTarget();
+        Traceable traceable = (Traceable) joinPoint.getTarget();
         LoggerInterface logger = traceable.getLogger();
-        logger.log(logDataCollector.close(logContent), traceBefore.persistingHandlerName(), traceBefore.formatterHandlerName());
+        logger.log(logDataCollector.close(logContent), traceBefore.persistingHandlerClass(), traceBefore.formatterHandlerClass());
     }
 
     @Around(value = "traceAroundPointcut(traceAround)", argNames = "proceedingJoinPoint, traceAround")
@@ -42,9 +41,9 @@ public class TraceInterceptor {
         } catch (Exception e) {
             logDataCollector.addException(logContent, e);
         } finally {
-            TraceableInterface traceable = (TraceableInterface) proceedingJoinPoint.getTarget();
+            Traceable traceable = (Traceable) proceedingJoinPoint.getTarget();
             LoggerInterface logger = traceable.getLogger();
-            logger.log(logDataCollector.close(logContent), traceAround.persistingHandlerName(), traceAround.formatterHandlerName());
+            logger.log(logDataCollector.close(logContent), traceAround.persistingHandlerClass(), traceAround.formatterHandlerClass());
         }
         return null;
     }

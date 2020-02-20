@@ -1,11 +1,10 @@
 import com.github.ffcfalcos.logger.handler.persisting.FilePersistingHandler;
-import com.github.ffcfalcos.logger.handler.persisting.FilePersistingHandlerInterface;
 
 import java.io.*;
 
 public class FilePersistingHandlerTest implements TestInterface {
 
-    private final FilePersistingHandlerInterface filePersistingHandler = new FilePersistingHandler();
+    private final FilePersistingHandler filePersistingHandler = new FilePersistingHandler();
     private final String filePath = System.getProperty("user.dir") + "/src/test/resources/logs.log";
 
     @Override

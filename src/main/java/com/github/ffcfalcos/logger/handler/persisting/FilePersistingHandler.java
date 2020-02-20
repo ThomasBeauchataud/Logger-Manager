@@ -1,24 +1,24 @@
 package com.github.ffcfalcos.logger.handler.persisting;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FilePersistingHandler implements FilePersistingHandlerInterface {
+@SuppressWarnings("unused")
+public class FilePersistingHandler implements PersistingHandler {
 
-    private String filePath = loadFilePath();
+    private String filePath;
 
-    @Override
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public FilePersistingHandler() {
+        filePath = System.getProperty("user.dir") + "/default-log.log";
     }
 
     @Override
     public void persist(String content) {
         try {
             if(filePath != null) {
+                new File(filePath).createNewFile();
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filePath, true));
                 bufferedWriter.append("\n");
                 bufferedWriter.append(content);
@@ -29,12 +29,8 @@ public class FilePersistingHandler implements FilePersistingHandlerInterface {
         }
     }
 
-    private String loadFilePath() {
-        try {
-            Context env = (Context) new InitialContext().lookup("java:comp/env");
-            return  (String) env.lookup("log-path");
-        } catch (Exception e) {
-            return null;
-        }
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
+
 }

@@ -1,4 +1,5 @@
-import com.github.ffcfalcos.logger.handler.formatter.FormatterHandlerInterface;
+import com.github.ffcfalcos.logger.collector.Severity;
+import com.github.ffcfalcos.logger.handler.formatter.FormatterHandler;
 import com.github.ffcfalcos.logger.handler.formatter.JsonFormatterHandler;
 import org.json.simple.parser.JSONParser;
 
@@ -8,14 +9,14 @@ import java.util.Map;
 
 public class JsonFormatterHandlerTest implements TestInterface {
 
-    private final FormatterHandlerInterface jsonFormatter = new JsonFormatterHandler();
+    private final FormatterHandler jsonFormatter = new JsonFormatterHandler();
 
     @Override
     public void run() {
         try {
             try {
                 String nullString = null;
-                jsonFormatter.format(nullString);
+                jsonFormatter.format(nullString, Severity.INFO);
             } catch (Exception e) {
                 System.out.println("JsonFormatterHandler failed null string test");
                 throw e;
@@ -29,7 +30,7 @@ public class JsonFormatterHandlerTest implements TestInterface {
             }
             try {
                 String string = "String message";
-                String formattedString = jsonFormatter.format(string);
+                String formattedString = jsonFormatter.format(string, Severity.INFO);
                 if (isNoneValidJson(formattedString)) {
                     throw new Exception("");
                 }

@@ -1,9 +1,11 @@
 package com.github.ffcfalcos.logger.handler.formatter;
 
+import com.github.ffcfalcos.logger.collector.Severity;
+
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class StringFormatterHandler implements FormatterHandlerInterface {
+public class StringFormatterHandler implements FormatterHandler {
 
     @Override
     public String format(Map<String, Object> logContent) {
@@ -14,8 +16,8 @@ public class StringFormatterHandler implements FormatterHandlerInterface {
     }
 
     @Override
-    public String format(String logContent) {
-        return logContent;
+    public String format(String logContent, Severity severity) {
+        return severity.name() + " - " + logContent;
     }
 
 }

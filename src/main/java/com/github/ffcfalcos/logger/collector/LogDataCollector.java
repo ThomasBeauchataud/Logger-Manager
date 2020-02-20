@@ -10,10 +10,11 @@ import java.util.*;
 
 @ApplicationScoped
 @Default
-@SuppressWarnings({"unchecked"})
-public class LogDataCollector implements LogDataCollectorInterface {
+@SuppressWarnings({"unchecked","unused"})
+public class LogDataCollector {
 
-    @Override
+    private static LogDataCollector logDataCollector;
+
     public Map<String, Object> init(String logType) {
         Map<String, Object> logContent = new HashMap<>();
         logContent.put("type", logType);
@@ -28,7 +29,6 @@ public class LogDataCollector implements LogDataCollectorInterface {
         return logContent;
     }
 
-    @Override
     public void addException(Map<String, Object> logContent, Exception e) {
         if(logContent != null) {
             logContent.put("error", true);
@@ -37,7 +37,6 @@ public class LogDataCollector implements LogDataCollectorInterface {
         }
     }
 
-    @Override
     public Map<String, Object> close(Map<String, Object> logContent) {
         if(logContent != null) {
             logContent.put("end", new Date().getTime());
@@ -46,12 +45,11 @@ public class LogDataCollector implements LogDataCollectorInterface {
         return logContent;
     }
 
-    @Override
     public void add(Map<String, Object> logContent, String key, Object content) {
         if(content != null) {
             if (content instanceof List) {
                 JSONArray jsonArray = new JSONArray();
-                for (Object object : (List) content) {
+                for (Object object : (List<Object>) content) {
                     jsonArray.add(object.toString());
                 }
                 logContent.put(key, jsonArray);
@@ -59,6 +57,13 @@ public class LogDataCollector implements LogDataCollectorInterface {
                 logContent.put(key, content);
             }
         }
+    }
+
+    public static LogDataCollector getLogDataCollector() {
+        if(logDataCollector == null) {
+            logDataCollector = new LogDataCollector();
+        }
+        return logDataCollector;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.github.ffcfalcos.logger.handler.persisting;
 
-public class ConsolePersistingHandler implements PersistingHandlerInterface {
+public class ConsolePersistingHandler implements PersistingHandler {
 
     @Override
     public void persist(String content) {
