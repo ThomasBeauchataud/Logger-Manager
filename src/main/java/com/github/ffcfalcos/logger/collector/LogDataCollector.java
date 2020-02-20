@@ -2,6 +2,7 @@ package com.github.ffcfalcos.logger.collector;
 
 import org.json.simple.JSONArray;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.naming.Context;
@@ -13,7 +14,12 @@ import java.util.*;
 @SuppressWarnings({"unchecked","unused"})
 public class LogDataCollector {
 
-    private static LogDataCollector logDataCollector;
+    private static LogDataCollector instance;
+
+    @PostConstruct
+    public void initialize() {
+        instance = this;
+    }
 
     public Map<String, Object> init(String logType) {
         Map<String, Object> logContent = new HashMap<>();
@@ -59,11 +65,11 @@ public class LogDataCollector {
         }
     }
 
-    public static LogDataCollector getLogDataCollector() {
-        if(logDataCollector == null) {
-            logDataCollector = new LogDataCollector();
+    public static LogDataCollector getInstance() {
+        if(instance == null) {
+            instance = new LogDataCollector();
         }
-        return logDataCollector;
+        return instance;
     }
 
 }

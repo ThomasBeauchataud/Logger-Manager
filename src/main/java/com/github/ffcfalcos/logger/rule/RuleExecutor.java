@@ -21,8 +21,8 @@ public abstract class RuleExecutor {
 
     public RuleExecutor() {
         this.rules = new ArrayList<>();
-        this.logger = Logger.getLogger();
-        this.logDataCollector = LogDataCollector.getLogDataCollector();
+        this.logger = Logger.getInstance();
+        this.logDataCollector = LogDataCollector.getInstance();
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleAtFixedRate(new RuleLoader(rules, logger), 0, 60, TimeUnit.MINUTES);
     }

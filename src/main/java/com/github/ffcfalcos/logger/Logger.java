@@ -45,7 +45,7 @@ public class Logger implements LoggerInterface {
     }
 
     @PostConstruct
-    public void init() {
+    public void initialize() {
         instance = this;
     }
 
@@ -144,7 +144,7 @@ public class Logger implements LoggerInterface {
         this.ruleStorageHandler = ruleStorageHandler;
     }
 
-    public static LoggerInterface getLogger() {
+    public static LoggerInterface getInstance() {
         if(instance == null) {
             instance = new Logger();
         }

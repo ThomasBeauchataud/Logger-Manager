@@ -28,7 +28,7 @@ LoggerInterface logger = Logger.getInstance();
 @Inject
 LoggerInterface logger;
 ```
-> Dont use both system cause they would not be the same instance
+> If you use dependency injection, the static method of the singleton will return the same instance
 ## How to use the Logger service
 ### How to persist a message
 *PersistingHandlers* are persisting systems which persist a message.
@@ -46,6 +46,7 @@ You can get any *PersistingHandler* by using the following method from the *Logg
 
 PersistingHandler getPersistingHandler(Class PersistingHandlerClass);
 ```
+> Example
 ```
 # MyService.java
 
@@ -60,6 +61,7 @@ The file path can be changed by the following method
 
 public void setFilePath(String filePath);
 ```
+> Example
 ```
 # MyService.java
 
@@ -73,6 +75,7 @@ RabbitMQ client parameters can be modified by the following method
 
 public void setRabbitParameters(String rabbitMQHost, String rabbitMQUser, String rabbitMQPassword, String rabbitMQExchange, String rabbitMQRoutingKey)
 ```
+> Example
 ```
 # MyService.java
 
@@ -90,6 +93,7 @@ To log a simple *String* message by using defaults *FormatterHandler* and *Persi
 
 void log(String message, Severity severity);
 ```
+> Example
 ```
 # MyService.java
 
@@ -101,6 +105,7 @@ If you want to specify which *FormatterHandler* and/or *PersistingHandler* you w
 
 void log(String message, Severity severity, Class persistingHandlerClass, Class formatterHandlerClass);
 ```
+> Example
 ```
 # MyService.java
 
@@ -110,6 +115,42 @@ logger.log("my log message", Severity.INFO, FilePersistingHandler.class, null)
 ### Log a Map object
 
 ## How to trace a method invocation
+### Methods annotations
+### Plug the aspect class
+To intercept annotated method invocation, you have to create the aspect class. 
+Methods to handle the trace of methods are already implemented in the *TraceAnnotationHandler* class.
+
+This is what should looks like your aspect class to intercept annotated method invocation
+```
+@Aspect
+public class MyTraceAspectClass extends TraceAnnotationsHandler {
+
+    @Pointcut("@annotation(traceBefore)")
+    public void traceBeforePointcut(TraceBefore traceBefore) { }
+    
+    @Pointcut("@annotation(traceAround)")
+    public void traceAroundPointcut(TraceAround traceAround) { }
+    
+    @Pointcut("@annotation(traceAfter)")
+    public void traceAroundPointcut(TraceAround traceAfter) { }
+    
+    @Before(value = "traceBeforePointcut(traceBefore)", argNames = "joinPoint, traceBefore")
+    public void traceBefore(JoinPoint joinPoint, TraceBefore traceBefore) {
+        return super.handleTraceBefore(jointPoint, traceBefore)
+    }
+    
+    @Around(value = "traceAroundPointcut(traceAround)", argNames = "proceedingJoinPoint, traceAround")
+    public Object traceAround(ProceedingJoinPoint proceedingJoinPoint, TraceAround traceAround) {
+        return super.handleTraceAround(proceedingJoinPoint, traceAround)
+    }
+    
+    @After(value = "traceAfterPointcut(traceAfter)", argNames = "result, traceAfter")
+    public void traceAfter(Object result, TraceAfter traceAfter) {
+        return super.handleTraceAfter(result, traceAfter)
+    }
+
+}
+```
 ### How to create a Map log message with the LogDataCollector
 ## Custom your Logger service
 ### Add a new PersistingHandler
