@@ -7,7 +7,6 @@ public class Main {
         List<TestInterface> tests = new ArrayList<>();
         tests.add(new JsonFormatterHandlerTest());
         tests.add(new FilePersistingHandlerTest());
-        tests.add(new TraceInterceptorTest());
         tests.add(new StringFormatterHandlerTest());
         return tests;
     }

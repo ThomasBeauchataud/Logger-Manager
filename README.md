@@ -1,7 +1,7 @@
 # Logger-Manager
 Maven repository to easily generate logs message
 
-## How to get the logger service
+## How to get the *Logger* service
 - By using a static method to get the singleton
 ```
 # MyService.java
@@ -18,7 +18,7 @@ LoggerInterface logger;
 > Dont use both system cause they would not be the same instance
 ## How to use the logger service
 ### How to persist a message
-Persisting handlers are persisting systems which persist a message.
+*PersistingHandlers* are persisting systems which persist a message.
 They implements the *PersistingHandler* interface
 ```
 # PersistingHandler.java
@@ -27,7 +27,7 @@ public interface PersistingHandler {
     void persist(String content);
 }
 ```
-You can get any persisting handler by using the following method from the logger
+You can get any *PersistingHandler* by using the following method from the *Logger*
 ```
 # LoggerInterface.java
 
@@ -38,7 +38,7 @@ PersistingHandler getPersistingHandler(Class PersistingHandlerClass);
 
 PersistingHandler consolePersistingHandler = logger.getPersistingHandler(ConsolePersistingHandler.class);
 ```
-Here are the default persisting handlers provided with this library :
+Here are the default *PersistingHandlers* provided with this library :
 - *ConsolePersistingHandler* which persist a message on the system console
 - *FilePersistingHandler* which persist a message on a file.
 The file path can be changed by the following method
@@ -67,11 +67,11 @@ RabbitMQPersistingHandler rabbitMQPersistingHandler = logger.getPersistingHandle
 rabbitMQPersistingHandler.setRabbitParameters("localhost","guest", "guest", "default", "*")
 ```
 ### How to format a message
-Persisting handlers are persisting systems which persist a message.
-They implements the *PersistingHandler* interface
-### How to log with formatter handlers and persisting handlers
+*FormatterHandlers* are persisting systems which format a message.
+They implements the *FormatterHandler* interface
+### How to log with *FormatterHandlers* and *PersistingHandlers*
 #### Log a simple *String*
-To log a simple *String* message by using defaults persisting and formatter handlers, you can use the following method provided by the logger
+To log a simple *String* message by using defaults *FormatterHandler* and *PersistingHandler*, you can use the following method provided by the *Logger*
 ```
 # LoggerInterface.java
 
@@ -93,5 +93,5 @@ void log(String message, Severity severity, Class persistingHandlerClass, Class 
 
 logger.log("my log message", Severity.INFO, FilePersistingHandler.class, null)
 ```
-> Let a *Handler* to *null* to get the default *Handler*
+> Let a *Handler* to *null* to get the default *Handler* of the *Logger*
 ### To log a *Map* object
