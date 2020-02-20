@@ -4,6 +4,7 @@ import com.github.ffcfalcos.logger.rule.Rule;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public interface RuleStorageHandler {
 
     List<Rule> getRules();

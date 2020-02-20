@@ -10,6 +10,7 @@ import com.github.ffcfalcos.logger.handler.persisting.PersistingHandler;
 import com.github.ffcfalcos.logger.handler.persisting.RabbitMQPersistingHandler;
 import com.github.ffcfalcos.logger.rule.storage.CsvRuleStorageHandler;
 import com.github.ffcfalcos.logger.rule.storage.RuleStorageHandler;
+import com.github.ffcfalcos.logger.statistic.LoggerStatisticsManagement;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -30,6 +31,7 @@ public class Logger implements LoggerInterface {
     private List<PersistingHandler> persistingHandlerList;
     private List<FormatterHandler> formatterHandlerList;
     private RuleStorageHandler ruleStorageHandler;
+    private LoggerStatisticsManagement loggerStatisticsManagement;
 
     public Logger() {
         defaultPersistingHandler = new RabbitMQPersistingHandler();
@@ -42,6 +44,7 @@ public class Logger implements LoggerInterface {
         formatterHandlerList.add(defaultFormatterHandler);
         formatterHandlerList.add(new StringFormatterHandler());
         ruleStorageHandler = new CsvRuleStorageHandler();
+        loggerStatisticsManagement = new LoggerStatisticsManagement();
     }
 
     @PostConstruct
@@ -125,6 +128,7 @@ public class Logger implements LoggerInterface {
         PersistingHandler persistingHandler = getPersistingHandler(persistingHandlerClass);
         FormatterHandler formatterHandler = getFormatterHandler(formatterHandlerClass);
         persistingHandler.persist(formatterHandler.format(message));
+        loggerStatisticsManagement.update(persistingHandlerClass, formatterHandlerClass);
     }
 
     @Override
@@ -132,6 +136,7 @@ public class Logger implements LoggerInterface {
         PersistingHandler persistingHandler = getPersistingHandler(persistingHandlerClass);
         FormatterHandler formatterHandler = getFormatterHandler(formatterHandlerClass);
         persistingHandler.persist(formatterHandler.format(message, severity));
+        loggerStatisticsManagement.update(persistingHandlerClass, formatterHandlerClass);
     }
 
     @Override

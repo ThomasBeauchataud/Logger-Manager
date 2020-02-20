@@ -1,6 +1,7 @@
 # Logger-Manager
 Maven repository to easily generate logs message
 
+- [What this library brings more than others logging libraries](#what-this-library-brings-more-than-others-logging-libraries)
 - [How to get the Logger service](#how-to-get-the-logger-service)
 - [How to use the Logger service](#how-to-use-the-logger-service)  
     - [How to persist a message](#how-to-persist-a-message)
@@ -11,8 +12,10 @@ Maven repository to easily generate logs message
     - [How to trace a method invocation](#how-to-trace-a-method-invocation)
     - [How to create a Map log message with the LogDataCollector](#how-to-create-a-map-log-message-with-the-logdatacollector)
 - [Custom your Logger service](#custom-your-logger-service)
-    - [Add a new PersistingHandler](#add-a-new-persistingHandler)
-    - [Add a new FormatterHandler](#add-a-new-formatterHandler)
+    - [Add a new PersistingHandler](#add-a-new-persistinghandler)
+    - [Add a new FormatterHandler](#add-a-new-formatterhandler)
+- [Logger statistics](#logger-statistics)
+- [Versions historic and projects](#versions-historic-and-projects)
 
 ## How to get the Logger service
 - By using a static method to get the singleton
@@ -216,5 +219,15 @@ void addFormatterHandler(FormatterHandler persistingHandler);
 ````
 # MyService.java
 
-logger.addFormatterHandler(new FormatterHandler());
+logger.addFormatterHandler(new MyFormatterHandler());
 ````
+## Logger statistics
+## Versions historic and projects
+- 4.1 (Project) Adding a graphic interface to manage the *Logger* service
+- 4.0 (Project) The possibility to create, remove and modify logging rules during the runtime
+- 3.1 Adding the *LoggerStatisticsManagement* to follow the utilisation of the *Logger* service
+- 3.0 Adding traces annotations and the *TraceAnnotationsHandler*
+- 2.0 Adding the *LogDataCollector* service and the possibility to log *Map* object
+- 1.2 Adding tests to check if the created *PersistingHandler* & *FormatterHandler* are conformed
+- 1.1 Adding the possibility to create and add *PersistingHandler* & *FormatterHandler*
+- 1.0 Creation of the library

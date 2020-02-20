@@ -1,5 +1,6 @@
 package com.github.ffcfalcos.logger.rule.storage;
 
+import com.github.ffcfalcos.logger.rule.Entry;
 import com.github.ffcfalcos.logger.rule.Rule;
 
 import java.io.*;
@@ -9,7 +10,11 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class CsvRuleStorageHandler implements RuleStorageHandler {
 
-    private String filePath = System.getProperty("user.dir") + "/csv-rules.csv";
+    private String filePath;
+
+    public CsvRuleStorageHandler() {
+        this.filePath = System.getProperty("user.dir") + "/csv-rules.csv";
+    }
 
     @Override
     public List<Rule> getRules() {
@@ -70,8 +75,12 @@ public class CsvRuleStorageHandler implements RuleStorageHandler {
     }
 
     private Rule createRule(String[] data) {
-        //TODO implements this
-        return null;
+        try {
+            return new Rule(data[0], data[1], Entry.valueOf(data[2]), Class.forName(data[3]), Class.forName(data[4]));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
