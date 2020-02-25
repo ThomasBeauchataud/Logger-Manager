@@ -100,7 +100,17 @@ public abstract class AbstractTraceAnnotationHandler {
      * @param traceAfterThrowing TraceAfterThrowing
      */
     protected void handleTraceAfterThrowing(JoinPoint joinPoint, Exception exception, TraceAfterThrowing traceAfterThrowing) {
-        //TODO implements
+        LogContent logContent = new LogContent("Trace after throwing");
+        logContent.put("parameters", Arrays.toString(joinPoint.getArgs()));
+        if(joinPoint.getTarget() == null) {
+            logContent.put("class", joinPoint.getStaticPart().getSourceLocation().getWithinType().getName());
+            logContent.put("function", joinPoint.getSignature().getName());
+        } else {
+            logContent.put("class", joinPoint.getTarget().getClass().getName());
+            logContent.put("method", joinPoint.getSignature().getName());
+        }
+        logContent.addException(exception);
+        logger.log(logContent.close(), traceAfterThrowing.persistingHandlerClass(), traceAfterThrowing.formatterHandlerClass());
     }
 
     /**
@@ -110,7 +120,17 @@ public abstract class AbstractTraceAnnotationHandler {
      * @param traceAfterReturning TraceAfterReturning
      */
     protected void handleTraceAfterReturning(JoinPoint joinPoint, Object output, TraceAfterReturning traceAfterReturning) {
-        //TODO implements
+        LogContent logContent = new LogContent("Trace after returning");
+        logContent.put("parameters", Arrays.toString(joinPoint.getArgs()));
+        if(joinPoint.getTarget() == null) {
+            logContent.put("class", joinPoint.getStaticPart().getSourceLocation().getWithinType().getName());
+            logContent.put("function", joinPoint.getSignature().getName());
+        } else {
+            logContent.put("class", joinPoint.getTarget().getClass().getName());
+            logContent.put("method", joinPoint.getSignature().getName());
+        }
+        logContent.put("output", output);
+        logger.log(logContent.close(), traceAfterReturning.persistingHandlerClass(), traceAfterReturning.formatterHandlerClass());
     }
 
 }
