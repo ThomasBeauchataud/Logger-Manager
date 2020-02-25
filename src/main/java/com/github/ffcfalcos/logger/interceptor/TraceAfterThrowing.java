@@ -8,12 +8,12 @@ import java.lang.annotation.Target;
 /**
  * @author Thomas Beauchataud
  * @since 24.02.2020
- * Annotation to place on a method to trace it after his execution
+ * Annotation to place on a method to trace it after throwing an exception
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @SuppressWarnings("rawtypes")
-public @interface TraceAfter {
+public @interface TraceAfterThrowing {
 
     /**
      * The PersistingHandlerClass to use to trace the method execution

@@ -1,23 +1,23 @@
 package com.github.ffcfalcos.logger.rule;
 
-import com.github.ffcfalcos.logger.LoggerInterface;
+import com.github.ffcfalcos.logger.rule.storage.RuleStorageHandler;
 
 import java.util.List;
 
-public class RuleLoader implements Runnable {
+class RuleLoader implements Runnable {
 
     private List<Rule> rules;
-    private LoggerInterface logger;
+    private RuleStorageHandler ruleStorageHandler;
 
-    public RuleLoader(List<Rule> rules, LoggerInterface logger) {
+    public RuleLoader(List<Rule> rules, RuleStorageHandler ruleStorageHandler) {
         this.rules = rules;
-        this.logger = logger;
+        this.ruleStorageHandler = ruleStorageHandler;
     }
 
     @Override
     public void run() {
         rules.clear();
-        rules.addAll(logger.getRuleStorageHandler().getRules());
+        rules.addAll(ruleStorageHandler.getRules());
     }
 
 }

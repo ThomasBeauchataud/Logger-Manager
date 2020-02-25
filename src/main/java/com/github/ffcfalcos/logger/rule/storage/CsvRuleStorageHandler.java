@@ -57,7 +57,12 @@ public class CsvRuleStorageHandler implements RuleStorageHandler {
     }
 
     public void setFilePath(String filePath) {
-        this.filePath = filePath;
+        try {
+            new File(filePath).mkdir();
+            this.filePath = filePath;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void writeRules(List<Rule> rules) {

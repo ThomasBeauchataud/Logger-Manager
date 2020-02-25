@@ -1,9 +1,8 @@
 package com.github.ffcfalcos.logger;
 
+import com.github.ffcfalcos.logger.collector.LogContent;
 import com.github.ffcfalcos.logger.collector.Severity;
 import com.github.ffcfalcos.logger.handler.formatter.FormatterHandler;
-
-import java.util.HashMap;
 
 public class FormatterHandlerTest {
 
@@ -29,7 +28,7 @@ public class FormatterHandlerTest {
             System.err.println(formatterHandler.getClass().getSimpleName() + " failed the format empty string test");
         }
         try {
-            formatterHandler.format(new HashMap<>());
+            formatterHandler.format(new LogContent("test"));
         } catch (Exception e) {
             System.err.println(formatterHandler.getClass().getSimpleName() + " failed the format empty map test");
         }

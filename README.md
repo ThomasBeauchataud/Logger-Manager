@@ -160,28 +160,28 @@ This is what should looks like your aspect class to intercept annotated methods 
 @Aspect
 public class MyTraceAspectClass extends TraceAnnotationsHandler {
 
-    @Pointcut("@annotation(traceBefore)")
+    @Pointcut("@annotation(traceBefore) && execution(* *(..)")
     public void traceBeforePointcut(TraceBefore traceBefore) { }
-    
-    @Pointcut("@annotation(traceAround)")
+
+    @Pointcut("@annotation(traceAround) && execution(* *(..))")
     public void traceAroundPointcut(TraceAround traceAround) { }
-    
-    @Pointcut("@annotation(traceAfter)")
-    public void traceAroundPointcut(TraceAround traceAfter) { }
-    
+
+    @Pointcut("@annotation(traceAfter) && execution(* *(..)")
+    public void traceAfterPointcut(TraceAfter traceAfter) { }
+
     @Before(value = "traceBeforePointcut(traceBefore)", argNames = "joinPoint, traceBefore")
     public void traceBefore(JoinPoint joinPoint, TraceBefore traceBefore) {
-        return super.handleTraceBefore(jointPoint, traceBefore)
+        super.handleTraceBefore(joinPoint, traceBefore);
     }
-    
+
     @Around(value = "traceAroundPointcut(traceAround)", argNames = "proceedingJoinPoint, traceAround")
-    public Object traceAround(ProceedingJoinPoint proceedingJoinPoint, TraceAround traceAround) {
-        return super.handleTraceAround(proceedingJoinPoint, traceAround)
+    public Object traceAround(ProceedingJoinPoint proceedingJoinPoint, TraceAround traceAround) throws Throwable {
+        return super.handleTraceAround(proceedingJoinPoint, traceAround);
     }
-    
-    @After(value = "traceAfterPointcut(traceAfter)", argNames = "result, traceAfter")
-    public void traceAfter(Object result, TraceAfter traceAfter) {
-        return super.handleTraceAfter(result, traceAfter)
+
+    @After(value = "traceAfterPointcut(traceAfter)", argNames = "joinPoint, traceAfter")
+    public void traceAfter(JoinPoint joinPoint, TraceAfter traceAfter) {
+        super.handleTraceAfter(joinPoint, traceAfter);
     }
 
 }
@@ -225,6 +225,7 @@ logger.addFormatterHandler(new MyFormatterHandler());
 ## Versions historic and projects
 - 4.1 (Project) Adding a graphic interface to manage the *Logger* service
 - 4.0 (Project) The possibility to create, remove and modify logging rules during the runtime
+- 3.2 (Project) Adding the *LoggingListener* to log event handler execution
 - 3.1 Adding the *LoggerStatisticsManagement* to follow the utilisation of the *Logger* service
 - 3.0 Adding traces annotations and the *TraceAnnotationsHandler*
 - 2.0 Adding the *LogDataCollector* service and the possibility to log *Map* object
