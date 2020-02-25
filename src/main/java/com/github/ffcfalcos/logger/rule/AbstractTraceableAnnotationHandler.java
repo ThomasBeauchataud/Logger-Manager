@@ -6,20 +6,19 @@ import com.github.ffcfalcos.logger.collector.LogContent;
 import com.github.ffcfalcos.logger.rule.storage.RuleStorageHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("unused")
-public abstract class AbstractRuleExecutor {
+public abstract class AbstractTraceableAnnotationHandler {
 
     private List<Rule> rules;
     private LoggerInterface logger;
 
-    protected AbstractRuleExecutor(RuleStorageHandler ruleStorageHandler) {
-        this.rules = new ArrayList<>();
+    protected AbstractTraceableAnnotationHandler(RuleStorageHandler ruleStorageHandler) {
+        this.rules = ruleStorageHandler.getRules();
         this.logger = Logger.getInstance();
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleAtFixedRate(new RuleLoader(rules, ruleStorageHandler), 0, 60, TimeUnit.MINUTES);

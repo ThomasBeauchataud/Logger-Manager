@@ -83,8 +83,7 @@ public class CsvRuleStorageHandler implements RuleStorageHandler {
         try {
             return new Rule(data[0], data[1], Entry.valueOf(data[2]), Class.forName(data[3]), Class.forName(data[4]));
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return new Rule(data[0], data[1], Entry.valueOf(data[2]), null, null);
         }
     }
 
