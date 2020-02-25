@@ -1,23 +1,50 @@
 package com.github.ffcfalcos.logger.handler.formatter;
 
+import com.github.ffcfalcos.logger.collector.LogContent;
 import com.github.ffcfalcos.logger.collector.Severity;
 
-import java.util.Map;
+import java.util.Date;
 import java.util.stream.Collectors;
 
+/**
+ * @author Thomas Beauchataud
+ * @since 24.02.2020
+ * Format a log message with the date before persist it
+ */
 public class StringFormatterHandler implements FormatterHandler {
 
+    /**
+     * Format a map message
+     * @param logContent LogContent
+     * @return String
+     */
     @Override
-    public String format(Map<String, Object> logContent) {
+    public String format(LogContent logContent) {
         if(logContent == null) {
             return null;
         }
-        return logContent.keySet().stream().map(key -> key + "=" + logContent.get(key)).collect(Collectors.joining(", ", "{", "}"));
+        return getFormatDate() + logContent.keySet().stream().map(key -> key + "=" +
+                logContent.get(key)).collect(Collectors.joining(", ", "{", "}"));
     }
 
+    /**
+     * Format a string message with his severity
+     * @param logContent String
+     * @param severity Severity
+     * @return String
+     */
     @Override
     public String format(String logContent, Severity severity) {
-        return severity.name() + " - " + logContent;
+        String content =  getFormatDate() + " - ";
+        if(severity != null) {
+            content += severity.name() + " - ";
+        }
+        content += logContent;
+        return content;
+    }
+
+    private String getFormatDate() {
+        return "[" + new Date().toString() + "] ";
     }
 
 }

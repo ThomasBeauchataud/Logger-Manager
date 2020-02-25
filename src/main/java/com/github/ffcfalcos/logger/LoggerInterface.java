@@ -1,44 +1,65 @@
 package com.github.ffcfalcos.logger;
 
+import com.github.ffcfalcos.logger.collector.LogContent;
 import com.github.ffcfalcos.logger.collector.Severity;
-import com.github.ffcfalcos.logger.handler.formatter.FormatterHandler;
-import com.github.ffcfalcos.logger.handler.persisting.PersistingHandler;
-import com.github.ffcfalcos.logger.rule.storage.RuleStorageHandler;
+import com.github.ffcfalcos.logger.handler.formatter.FormatterHandlerProvider;
+import com.github.ffcfalcos.logger.handler.persisting.PersistingHandlerProvider;
+import com.github.ffcfalcos.logger.statistic.LoggerStatisticsManagement;
 
-import java.util.List;
-import java.util.Map;
-
+/**
+ * @author Thomas Beauchataud
+ * @since 24.02.2020
+ * Logger component accessible by singleton or dependency injection
+ */
 @SuppressWarnings({"unused","rawtypes"})
 public interface LoggerInterface {
 
-    void addPersistingHandler(PersistingHandler persistingHandler);
+    /**
+     * Return the PersistingHandlerProvider to manage PersistingHandlers
+     * @return PersistingHandlerProvider
+     */
+    PersistingHandlerProvider getPersistingHandlerProvider();
 
-    void addPersistingHandlers(List<PersistingHandler> persistingHandlers);
+    /**
+     * Return the FormatterHandlerProvider to manage FormatterHandlers
+     * @return FormatterHandlerProvider
+     */
+    FormatterHandlerProvider getFormatterHandlerProvider();
 
-    PersistingHandler getPersistingHandler(Class PersistingHandlerClass);
+    /**
+     * Return the LoggerStatisticsManagement to manage it
+     * @return LoggerStatisticsManagement
+     */
+    LoggerStatisticsManagement getLoggerStatisticsManagement();
 
-    List<PersistingHandler> getPersistingHandlers();
+    /**
+     * Log a LogContent object with the defaults FormatterHandler and PersistingHandler
+     * @param content LogContent
+     */
+    void log(LogContent content);
 
-    void setDefaultPersistingHandler(Class persistingHandlerClass);
+    /**
+     * Log a LogContent object with specifics FormatterHandler and PersistingHandler
+     * @param persistingHandlerClass Class | null to use the default PersistingHandler
+     * @param formatterHandlerClass Class | null to use the default FormatterHandler
+     * @param content LogContent
+     */
+    void log(LogContent content, Class persistingHandlerClass, Class formatterHandlerClass);
 
-    void addFormatterHandler(FormatterHandler formatterHandler);
+    /**
+     * Log a string object with the default FormatterHandler and the default PersistingHandler
+     * @param content String
+     * @param severity Severity
+     */
+    void log(String content, Severity severity);
 
-    void addFormatterHandlers(List<FormatterHandler> formatterHandlers);
-
-    FormatterHandler getFormatterHandler(Class formatterHandlerClass);
-
-    void setDefaultFormatterHandler(Class formatterHandlerClass);
-
-    void log(Map<String, Object> message);
-
-    void log(Map<String, Object> message, Class persistingHandlerClass, Class formatterHandlerClass);
-
-    void log(String message, Severity severity);
-
-    void log(String message, Severity severity, Class persistingHandlerClass, Class formatterHandlerClass);
-
-    RuleStorageHandler getRuleStorageHandler();
-
-    void setRuleStorageHandler(RuleStorageHandler ruleStorageHandler);
+    /**
+     * Log a string object with specifics FormatterHandler and PersistingHandler
+     * @param persistingHandlerClass Class | null to use the default PersistingHandler
+     * @param formatterHandlerClass Class | null to use the default FormatterHandler
+     * @param content String
+     * @param severity Severity
+     */
+    void log(String content, Severity severity, Class persistingHandlerClass, Class formatterHandlerClass);
 
 }
