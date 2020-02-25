@@ -53,10 +53,10 @@ PersistingHandler getPersistingHandler(Class PersistingHandlerClass);
 ```
 # MyService.java
 
-PersistingHandler consolePersistingHandler = logger.getPersistingHandler(ConsolePersistingHandler.class);
+PersistingHandler SystemOutPersistingHandler = logger.getPersistingHandler(SystemOutPersistingHandler.class);
 ```
 Here are the default *PersistingHandlers* provided with this library :
-- *ConsolePersistingHandler* which persist a message on the system console
+- *SystemOutPersistingHandler* which persist a message on the system console
 - *FilePersistingHandler* which persist a message on a file.
 The file path can be changed by the following method
 ```
