@@ -223,9 +223,8 @@ logger.addFormatterHandler(new MyFormatterHandler());
 ````
 ## Logger statistics
 ## Versions historic and projects
-- 4.1 (Project) Adding a graphic interface to manage the *Logger* service
+- 5.0 (Project) Adding a graphic interface to manage the *Logger* service
 - 4.0 (Project) The possibility to create, remove and modify logging rules during the runtime
-- 3.2 (Project) Adding the *LoggingListener* to log event handler execution
 - 3.1 Adding the *LoggerStatisticsManagement* to follow the utilisation of the *Logger* service
 - 3.0 Adding traces annotations and the *TraceAnnotationsHandler*
 - 2.0 Adding the *LogDataCollector* service and the possibility to log *Map* object
