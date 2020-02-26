@@ -1,6 +1,5 @@
 # Logger-Manager
 Maven repository to easily generate logs message
-
 ## 1. Get the Logger service
 - By using a static method to get the singleton
 ```
@@ -17,17 +16,7 @@ LoggerInterface logger;
 ```
 > If you use dependency injection, the static method of the singleton will return the same instance
 ## 2. Log with the Logger service
-- 3 [Log with TraceX annotations](#log-with-tracex-annotations)
-- [Custom your Logger service](#custom-your-logger-service)
-    - [Add a new PersistingHandler](#add-a-new-persistinghandler)
-    - [Add a new FormatterHandler](#add-a-new-formatterhandler)
-- [Logger statistics](#logger-statistics)
-- [Versions historic and projects](#versions-historic-and-projects)
-
-## How to get the Logger service
-
-## How to use the Logger service
-### How to persist a message
+### 2.1. Persist a log message
 *PersistingHandlers* are persisting systems which persist a message.
 They implements the *PersistingHandler* interface
 ```
@@ -37,48 +26,17 @@ public interface PersistingHandler {
     void persist(String content);
 }
 ```
-You can get any *PersistingHandler* by using the following method from the *Logger*
-```
-# LoggerInterface.java
-
-PersistingHandler getPersistingHandler(Class<?> PersistingHandlerClass);
-```
+You can get any *PersistingHandler* by getting the *PersistingHandlerProvider* from the *Logger*
 > Example
 ```
 # MyService.java
 
-PersistingHandler SystemOutPersistingHandler = logger.getPersistingHandler(SystemOutPersistingHandler.class);
+PersistingHandler filePersistingHandler = logger.getPersistingHandlerProvider().get(FilePersistingHandler.class);
 ```
 Here are the default *PersistingHandlers* provided with this library :
 - *SystemOutPersistingHandler* which persist a message on the system console
 - *FilePersistingHandler* which persist a message on a file.
-The file path can be changed by the following method
-```
-# FilePersistingHandler.java
-
-public void setFilePath(String filePath);
-```
-> Example
-```
-# MyService.java
-
-FilePersistingHandler fileMQPersistingHandler = logger.getPersistingHandler(filePersistingHandler.class);
-fileMQPersistingHandler.setFilePath("new-path.log")
-```
 - *RabbitMQPersistingHandler* which persist a message on a RabbitMQ server.
-RabbitMQ client parameters can be modified by the following method
-```
-# RabbitMQPersistingHandler.java
-
-public void setRabbitParameters(String rabbitMQHost, String rabbitMQUser, String rabbitMQPassword, String rabbitMQExchange, String rabbitMQRoutingKey)
-```
-> Example
-```
-# MyService.java
-
-RabbitMQPersistingHandler rabbitMQPersistingHandler = logger.getPersistingHandler(rabbitMQPersistingHandler.class);
-rabbitMQPersistingHandler.setRabbitParameters("localhost","guest", "guest", "default", "*")
-```
 ### How to format a message
 *FormatterHandlers* are persisting systems which format a message.
 They implements the *FormatterHandler* interface
