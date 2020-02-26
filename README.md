@@ -19,15 +19,8 @@ LoggerInterface logger;
 ### 2.1. Persist a log message
 *PersistingHandlers* are persisting systems which persist a message.
 They implements the *PersistingHandler* interface
-```
-# PersistingHandler.java
 
-public interface PersistingHandler {
-    void persist(String content);
-}
-```
 You can get any *PersistingHandler* by getting the *PersistingHandlerProvider* from the *Logger* to execute his methods
-> Example
 ```
 # MyService.java
 
@@ -40,16 +33,8 @@ Here are the default *PersistingHandlers* provided with this library :
 ### 2.2. Format a log message
 *FormatterHandlers* are persisting systems which format a message.
 They implements the *FormatterHandler* interface
-```
-# FormattergHandler.java
 
-public interface FormatterHandler {
-    String format(String content);
-    String format(LogContent content);
-}
-```
 You can get any *FormatterHandler* by getting the *FormatterHandlerProvider* from the *Logger* to execute his methods
-> Example
 ```
 # MyService.java
 
@@ -58,27 +43,15 @@ FormatterHandler jsonFormatterHandler = logger.getFormatterHandlerProvider().get
 ### 2.3. Log a message using *FormatterHandlers* and *PersistingHandlers*
 To log a simple *String* message by using defaults *FormatterHandler* and *PersistingHandler*, you can use the following method provided by the *Logger*
 ```
-# LoggerInterface.java
-
-void log(String message, Severity severity);
-```
-> Example
-```
 # MyService.java
 
 logger.log("my log message", Severity.INFO)
 ```
 If you want to specify which *FormatterHandler* and/or *PersistingHandler* you want to use, you can use the following method
 ```
-# LoggerInterface.java
-
-void log(String message, Severity severity, Class persistingHandlerClass, Class formatterHandlerClass);
-```
-> Example
-```
 # MyService.java
 
-logger.log("my log message", Severity.INFO, FilePersistingHandler.class, null)
+logger.log("my log message", Severity.INFO, FilePersistingHandler.class, JsonFormatterHandler.class)
 ```
 > Let a *Handler* to *null* to get the default *Handler* of the *Logger*
 ## 3. The LogContent object
