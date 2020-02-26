@@ -26,7 +26,7 @@ public interface PersistingHandler {
     void persist(String content);
 }
 ```
-You can get any *PersistingHandler* by getting the *PersistingHandlerProvider* from the *Logger*
+You can get any *PersistingHandler* by getting the *PersistingHandlerProvider* from the *Logger* to execute his methods
 > Example
 ```
 # MyService.java
@@ -37,11 +37,25 @@ Here are the default *PersistingHandlers* provided with this library :
 - *SystemOutPersistingHandler* which persist a message on the system console
 - *FilePersistingHandler* which persist a message on a file
 - *RabbitMQPersistingHandler* which persist a message on a RabbitMQ server
-### 2.2 Format a log message
+### 2.2. Format a log message
 *FormatterHandlers* are persisting systems which format a message.
 They implements the *FormatterHandler* interface
-### How to log with *FormatterHandlers* and *PersistingHandlers*
-#### Log a simple String object
+```
+# FormattergHandler.java
+
+public interface FormatterHandler {
+    String format(String content);
+    String format(LogContent content);
+}
+```
+You can get any *FormatterHandler* by getting the *FormatterHandlerProvider* from the *Logger* to execute his methods
+> Example
+```
+# MyService.java
+
+FormatterHandler jsonFormatterHandler = logger.getFormatterHandlerProvider().get(JsonFormatterHandler.class);
+```
+### 2.3. Log a message using *FormatterHandlers* and *PersistingHandlers*
 To log a simple *String* message by using defaults *FormatterHandler* and *PersistingHandler*, you can use the following method provided by the *Logger*
 ```
 # LoggerInterface.java
@@ -67,7 +81,7 @@ void log(String message, Severity severity, Class persistingHandlerClass, Class 
 logger.log("my log message", Severity.INFO, FilePersistingHandler.class, null)
 ```
 > Let a *Handler* to *null* to get the default *Handler* of the *Logger*
-### Log a LogContent object
+## The LogContent object
 
 ## How to trace a method invocation
 ### Methods trace annotations
