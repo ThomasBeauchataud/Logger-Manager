@@ -81,9 +81,9 @@ void log(String message, Severity severity, Class persistingHandlerClass, Class 
 logger.log("my log message", Severity.INFO, FilePersistingHandler.class, null)
 ```
 > Let a *Handler* to *null* to get the default *Handler* of the *Logger*
-## The LogContent object
+## 3. The LogContent object
 
-## How to trace a method invocation
+## 4. How to trace a method invocation
 ### Methods trace annotations
 Trace annotations are annotation to trace before, after or around method invocation.
 You can specify for each method which *FormatterHandler* and/or *PersistingHandler* you want to use or use the default
