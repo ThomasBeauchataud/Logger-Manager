@@ -3,14 +3,10 @@ Maven repository to easily generate logs message
 ## 1. Get the Logger service
 - By using a static method to get the singleton
 ```
-# MyService.java
-
 LoggerInterface logger = Logger.getInstance();
 ```
 - By using dependency injection
 ```
-# MyService.java
-
 @Inject
 LoggerInterface logger;
 ```
@@ -22,8 +18,6 @@ They implements the *PersistingHandler* interface
 
 You can get any *PersistingHandler* by getting the *PersistingHandlerProvider* from the *Logger* to execute his methods
 ```
-# MyService.java
-
 PersistingHandler filePersistingHandler = logger.getPersistingHandlerProvider().get(FilePersistingHandler.class);
 ```
 Here are the default *PersistingHandlers* provided with this library :
@@ -36,21 +30,18 @@ They implements the *FormatterHandler* interface
 
 You can get any *FormatterHandler* by getting the *FormatterHandlerProvider* from the *Logger* to execute his methods
 ```
-# MyService.java
-
 FormatterHandler jsonFormatterHandler = logger.getFormatterHandlerProvider().get(JsonFormatterHandler.class);
 ```
+Here are the default *FormatterHandlers* provided with this library :
+- *JsonFormatterHandler* which format any object into a json string
+- *StringPersistingHandler* which format any object into a string by using *toString()* method of the object
 ### 2.3. Log a message using *FormatterHandlers* and *PersistingHandlers*
 To log a simple *String* message by using defaults *FormatterHandler* and *PersistingHandler*, you can use the following method provided by the *Logger*
 ```
-# MyService.java
-
 logger.log("my log message", Severity.INFO)
 ```
 If you want to specify which *FormatterHandler* and/or *PersistingHandler* you want to use, you can use the following method
 ```
-# MyService.java
-
 logger.log("my log message", Severity.INFO, FilePersistingHandler.class, JsonFormatterHandler.class)
 ```
 > Let a *Handler* to *null* to get the default *Handler* of the *Logger*
