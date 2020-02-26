@@ -35,9 +35,9 @@ PersistingHandler filePersistingHandler = logger.getPersistingHandlerProvider().
 ```
 Here are the default *PersistingHandlers* provided with this library :
 - *SystemOutPersistingHandler* which persist a message on the system console
-- *FilePersistingHandler* which persist a message on a file.
-- *RabbitMQPersistingHandler* which persist a message on a RabbitMQ server.
-### How to format a message
+- *FilePersistingHandler* which persist a message on a file
+- *RabbitMQPersistingHandler* which persist a message on a RabbitMQ server
+### 2.2 Format a log message
 *FormatterHandlers* are persisting systems which format a message.
 They implements the *FormatterHandler* interface
 ### How to log with *FormatterHandlers* and *PersistingHandlers*
