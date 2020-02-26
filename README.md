@@ -1,16 +1,12 @@
 # Logger-Manager
 Maven repository to easily generate logs message
 
-- [What this library brings more than others logging libraries](#what-this-library-brings-more-than-others-logging-libraries)
-- [How to get the Logger service](#how-to-get-the-logger-service)
-- [How to use the Logger service](#how-to-use-the-logger-service)  
-    - [How to persist a message](#how-to-persist-a-message)
-    - [How to format a message](#how-to-format-a-message)
-    - [How to log with FormatterHandlers and PersistingHandlers](#how-to-log-with-formatterhandlers-and-persistinghandlers)
-        - [Log a simple String object](#log-a-simple-string-object)
-        - [Log a LogContent object](#log-a-logcontent-object)
-    - [How to trace a method invocation](#how-to-trace-a-method-invocation)
-    - [How to create a Map log message with the LogDataCollector](#how-to-create-a-map-log-message-with-the-logdatacollector)
+- 1 [Get the Logger service](#get-the-logger-service)
+- 2 [Log with the Logger service](#log-with-the-logger-service)
+
+This section contain infortions about PersistingHandler and FormatterHandler
+   
+- 3 [Log with TraceX annotations](#log-with-tracex-annotations)
 - [Custom your Logger service](#custom-your-logger-service)
     - [Add a new PersistingHandler](#add-a-new-persistinghandler)
     - [Add a new FormatterHandler](#add-a-new-formatterhandler)
