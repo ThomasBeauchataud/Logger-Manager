@@ -1,19 +1,7 @@
 # Logger-Manager
 Maven repository to easily generate logs message
 
-- 1 [Get the Logger service](#get-the-logger-service)
-- 2 [Log with the Logger service](#log-with-the-logger-service)
-
-This section contain infortions about PersistingHandler and FormatterHandler
-   
-- 3 [Log with TraceX annotations](#log-with-tracex-annotations)
-- [Custom your Logger service](#custom-your-logger-service)
-    - [Add a new PersistingHandler](#add-a-new-persistinghandler)
-    - [Add a new FormatterHandler](#add-a-new-formatterhandler)
-- [Logger statistics](#logger-statistics)
-- [Versions historic and projects](#versions-historic-and-projects)
-
-## How to get the Logger service
+## 1. Get the Logger service
 - By using a static method to get the singleton
 ```
 # MyService.java
@@ -28,6 +16,16 @@ LoggerInterface logger = Logger.getInstance();
 LoggerInterface logger;
 ```
 > If you use dependency injection, the static method of the singleton will return the same instance
+## 2. Log with the Logger service
+- 3 [Log with TraceX annotations](#log-with-tracex-annotations)
+- [Custom your Logger service](#custom-your-logger-service)
+    - [Add a new PersistingHandler](#add-a-new-persistinghandler)
+    - [Add a new FormatterHandler](#add-a-new-formatterhandler)
+- [Logger statistics](#logger-statistics)
+- [Versions historic and projects](#versions-historic-and-projects)
+
+## How to get the Logger service
+
 ## How to use the Logger service
 ### How to persist a message
 *PersistingHandlers* are persisting systems which persist a message.
