@@ -8,7 +8,7 @@ Maven repository to easily generate logs message
     - [How to format a message](#how-to-format-a-message)
     - [How to log with FormatterHandlers and PersistingHandlers](#how-to-log-with-formatterhandlers-and-persistinghandlers)
         - [Log a simple String object](#log-a-simple-string-object)
-        - [Log a Map object](#log-a-map-object)
+        - [Log a LogContent object](#log-a-logcontent-object)
     - [How to trace a method invocation](#how-to-trace-a-method-invocation)
     - [How to create a Map log message with the LogDataCollector](#how-to-create-a-map-log-message-with-the-logdatacollector)
 - [Custom your Logger service](#custom-your-logger-service)
@@ -47,7 +47,7 @@ You can get any *PersistingHandler* by using the following method from the *Logg
 ```
 # LoggerInterface.java
 
-PersistingHandler getPersistingHandler(Class PersistingHandlerClass);
+PersistingHandler getPersistingHandler(Class<?> PersistingHandlerClass);
 ```
 > Example
 ```
@@ -115,7 +115,7 @@ void log(String message, Severity severity, Class persistingHandlerClass, Class 
 logger.log("my log message", Severity.INFO, FilePersistingHandler.class, null)
 ```
 > Let a *Handler* to *null* to get the default *Handler* of the *Logger*
-### Log a Map object
+### Log a LogContent object
 
 ## How to trace a method invocation
 ### Methods trace annotations

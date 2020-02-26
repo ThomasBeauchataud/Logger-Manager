@@ -1,5 +1,6 @@
 import com.github.ffcfalcos.logger.rule.AbstractTraceableAnnotationHandler;
-import com.github.ffcfalcos.logger.rule.storage.CsvRuleStorageHandler;
+import com.github.ffcfalcos.logger.rule.loader.FileWatcherRulesLoader;
+import com.github.ffcfalcos.logger.rule.storage.CsvRulesStorageHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 
@@ -7,7 +8,7 @@ import org.aspectj.lang.annotation.*;
 public class TraceableAnnotationHandler extends AbstractTraceableAnnotationHandler {
 
     protected TraceableAnnotationHandler() {
-        super(new CsvRuleStorageHandler());
+        super(new FileWatcherRulesLoader(new CsvRulesStorageHandler()));
     }
 
     @Pointcut("@annotation(com.github.ffcfalcos.logger.rule.Traceable) && execution(* *(..))")

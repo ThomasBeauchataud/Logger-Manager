@@ -8,7 +8,7 @@ import java.util.Date;
  * @since 24.02.2020
  * Statistics Management component which save a small historic of handlers utilisation
  */
-@SuppressWarnings({"rawtypes","unused"})
+@SuppressWarnings("unused")
 public class LoggerStatisticsManagement {
 
     private String filePath;
@@ -35,7 +35,7 @@ public class LoggerStatisticsManagement {
      * @param persistingHandlerClass Class
      * @param formatterHandlerClass Class
      */
-    public void update(Class persistingHandlerClass, Class formatterHandlerClass) {
+    public void update(Class<?> persistingHandlerClass, Class<?> formatterHandlerClass) {
         if(active) {
             try {
                 FileWriter csvWriter = new FileWriter(filePath);

@@ -8,7 +8,7 @@ import java.util.List;
  * @since 24.02.2020
  * Provide Formatter Handlers
  */
-@SuppressWarnings({"rawtypes","unused"})
+@SuppressWarnings("unused")
 public class FormatterHandlerProvider {
 
     private FormatterHandler defaultFormatterHandler;
@@ -30,7 +30,7 @@ public class FormatterHandlerProvider {
      * @param formatterHandlerClass Class | null to get the default FormatterHandler
      * @return FormatterHandler
      */
-    public FormatterHandler get(Class formatterHandlerClass) {
+    public FormatterHandler get(Class<?> formatterHandlerClass) {
         if(formatterHandlerClass == null) { return defaultFormatterHandler; }
         for(FormatterHandler formatterHandler : this.formatterHandlers) {
             if(formatterHandler.getClass().equals(formatterHandlerClass)) {
@@ -44,7 +44,7 @@ public class FormatterHandlerProvider {
      * Change the default FormatterHandler
      * @param formatterHandlerClass Class
      */
-    public void setDefault(Class formatterHandlerClass) {
+    public void setDefault(Class<?> formatterHandlerClass) {
         if(formatterHandlerClass != null) {
             for(FormatterHandler formatterHandler : this.formatterHandlers) {
                 if(formatterHandler.getClass().equals(formatterHandlerClass)) {

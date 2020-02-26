@@ -8,7 +8,7 @@ import java.util.List;
  * @since 24.02.2020
  * Provide Persisting Handlers
  */
-@SuppressWarnings({"rawtypes","unused"})
+@SuppressWarnings("unused")
 public class PersistingHandlerProvider {
 
     private PersistingHandler defaultPersistingHandler;
@@ -31,7 +31,7 @@ public class PersistingHandlerProvider {
      * @param persistingHandlerClass Class | null to get the default PersistingHandler
      * @return PersistingHandler
      */
-    public PersistingHandler get(Class persistingHandlerClass) {
+    public PersistingHandler get(Class<?> persistingHandlerClass) {
         if(persistingHandlerClass == null) { return defaultPersistingHandler; }
         for(PersistingHandler persistingHandler : this.persistingHandlers) {
             if(persistingHandler.getClass().equals(persistingHandlerClass)) {
@@ -45,7 +45,7 @@ public class PersistingHandlerProvider {
      * Change the default PersistingHandler
      * @param persistingHandlerClass Class
      */
-    public void setDefault(Class persistingHandlerClass) {
+    public void setDefault(Class<?> persistingHandlerClass) {
         if(persistingHandlerClass != null) {
             for(PersistingHandler persistingHandler : this.persistingHandlers) {
                 if(persistingHandler.getClass().equals(persistingHandlerClass)) {

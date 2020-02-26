@@ -1,10 +1,10 @@
 package com.github.ffcfalcos.logger.handler.persisting;
 
+import com.github.ffcfalcos.logger.util.FilePathService;
+
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Stack;
 
 /**
  * @author Thomas Beauchataud
@@ -33,7 +33,7 @@ public class FilePersistingHandler implements PersistingHandler {
     public void persist(String content) {
         try {
             if(filePath != null) {
-                checkFilePath(filePath);
+                FilePathService.checkFilePath(filePath);
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filePath, true));
                 bufferedWriter.append("\n");
                 bufferedWriter.append(content);
@@ -58,35 +58,6 @@ public class FilePersistingHandler implements PersistingHandler {
      */
     public String getFilePath() {
         return filePath;
-    }
-
-    /**
-     * Create folders for the file path if necessary
-     * @param filePath String
-     */
-    private void checkFilePath(String filePath) {
-        try {
-            new File(this.filePath).createNewFile();
-        } catch (Exception e) {
-            Stack<String> stack = new Stack<>();
-            stack.push(filePath.substring(0, filePath.lastIndexOf('/')));
-            createFolderPath(stack);
-        }
-    }
-
-    /**
-     * Create folders recursively
-     * @param stack Stack
-     */
-    private void createFolderPath(Stack<String> stack) {
-        while(!stack.empty()) {
-            if(new File(stack.peek()).mkdir()) {
-                stack.pop();
-            } else {
-                stack.push(filePath.substring(0, stack.peek().lastIndexOf('/')));
-                createFolderPath(stack);
-            }
-        }
     }
 
 }

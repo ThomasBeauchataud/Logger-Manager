@@ -18,7 +18,7 @@ import javax.enterprise.inject.Default;
  */
 @Default
 @ApplicationScoped
-@SuppressWarnings({"Duplicates","rawtypes"})
+@SuppressWarnings("Duplicates")
 public class Logger implements LoggerInterface {
 
     private static LoggerInterface instance;
@@ -97,7 +97,7 @@ public class Logger implements LoggerInterface {
      * @param content LogContent
      */
     @Override
-    public void log(LogContent content, Class persistingHandlerClass, Class formatterHandlerClass) {
+    public void log(LogContent content, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass) {
         PersistingHandler persistingHandler = persistingHandlerProvider.get(persistingHandlerClass);
         FormatterHandler formatterHandler = formatterHandlerProvider.get(formatterHandlerClass);
         persistingHandler.persist(formatterHandler.format(content));
@@ -112,7 +112,7 @@ public class Logger implements LoggerInterface {
      * @param severity Severity
      */
     @Override
-    public void log(String content, Severity severity, Class persistingHandlerClass, Class formatterHandlerClass) {
+    public void log(String content, Severity severity, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass) {
         PersistingHandler persistingHandler = persistingHandlerProvider.get(persistingHandlerClass);
         FormatterHandler formatterHandler = formatterHandlerProvider.get(formatterHandlerClass);
         persistingHandler.persist(formatterHandler.format(content, severity));

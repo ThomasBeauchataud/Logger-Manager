@@ -12,19 +12,18 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@SuppressWarnings("rawtypes")
 public @interface TraceAfterThrowing {
 
     /**
      * The PersistingHandlerClass to use to trace the method execution
      * @return Class
      */
-    Class persistingHandlerClass() default void.class;
+    Class<?> persistingHandlerClass() default void.class;
 
     /**
      * The FormatterHandlerClass to use to trace the method execution
      * @return Class
      */
-    Class formatterHandlerClass() default void.class;
+    Class<?> formatterHandlerClass() default void.class;
 
 }

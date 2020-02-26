@@ -11,7 +11,7 @@ import com.github.ffcfalcos.logger.statistic.LoggerStatisticsManagement;
  * @since 24.02.2020
  * Logger component accessible by singleton or dependency injection
  */
-@SuppressWarnings({"unused","rawtypes"})
+@SuppressWarnings("unused")
 public interface LoggerInterface {
 
     /**
@@ -44,7 +44,7 @@ public interface LoggerInterface {
      * @param formatterHandlerClass Class | null to use the default FormatterHandler
      * @param content LogContent
      */
-    void log(LogContent content, Class persistingHandlerClass, Class formatterHandlerClass);
+    void log(LogContent content, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass);
 
     /**
      * Log a string object with the default FormatterHandler and the default PersistingHandler
@@ -60,6 +60,6 @@ public interface LoggerInterface {
      * @param content String
      * @param severity Severity
      */
-    void log(String content, Severity severity, Class persistingHandlerClass, Class formatterHandlerClass);
+    void log(String content, Severity severity, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass);
 
 }
