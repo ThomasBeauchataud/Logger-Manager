@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.handler.formatter;
+package com.github.ffcfalcos.logger;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,6 @@ package com.github.ffcfalcos.logger;
 
 import com.github.ffcfalcos.logger.collector.LogContent;
 import com.github.ffcfalcos.logger.collector.Severity;
-import com.github.ffcfalcos.logger.handler.formatter.FormatterHandlerProvider;
-import com.github.ffcfalcos.logger.handler.persisting.PersistingHandlerProvider;
 import com.github.ffcfalcos.logger.statistic.LoggerStatisticsManagement;
 
 /**
