@@ -14,7 +14,7 @@ import java.util.Arrays;
  * This abstract class is use to be an aspect class, any class extending it must be an aspect class having pointcut
  *      executing methods above
  */
-@SuppressWarnings({"Duplicates","unused"})
+@SuppressWarnings("unused")
 public abstract class AbstractTraceAnnotationHandler {
     
     private LoggerInterface logger;
@@ -34,14 +34,7 @@ public abstract class AbstractTraceAnnotationHandler {
      */
     protected void handleTraceBefore(JoinPoint joinPoint, TraceBefore traceBefore) {
         LogContent logContent = new LogContent(LogType.TRACE_BEFORE);
-        logContent.put("parameters", Arrays.toString(joinPoint.getArgs()));
-        if(joinPoint.getTarget() == null) {
-            logContent.put("class", joinPoint.getStaticPart().getSourceLocation().getWithinType().getName());
-            logContent.put("function", joinPoint.getSignature().getName());
-        } else {
-            logContent.put("class", joinPoint.getTarget().getClass().getName());
-            logContent.put("method", joinPoint.getSignature().getName());
-        }
+        addLogContentDefaultData(logContent, joinPoint);
         if(traceBefore.context()) {
             addContext(logContent, joinPoint.getTarget());
         }
@@ -57,14 +50,7 @@ public abstract class AbstractTraceAnnotationHandler {
      */
     protected Object handleTraceAround(ProceedingJoinPoint proceedingJoinPoint, TraceAround traceAround) throws Throwable {
         LogContent logContent = new LogContent(LogType.TRACE_AROUND);
-        if(proceedingJoinPoint.getTarget() == null) {
-            logContent.put("class", proceedingJoinPoint.getStaticPart().getSourceLocation().getWithinType().getName());
-            logContent.put("function", proceedingJoinPoint.getSignature().getName());
-        } else {
-            logContent.put("class", proceedingJoinPoint.getTarget().getClass().getName());
-            logContent.put("method", proceedingJoinPoint.getSignature().getName());
-        }
-        logContent.put("parameters", Arrays.toString(proceedingJoinPoint.getArgs()));
+        addLogContentDefaultData(logContent, proceedingJoinPoint);
         if(traceAround.context()) {
             addContext(logContent, proceedingJoinPoint.getTarget());
         }
@@ -87,14 +73,7 @@ public abstract class AbstractTraceAnnotationHandler {
      */
     protected void handleTraceAfter(JoinPoint joinPoint, TraceAfter traceAfter) {
         LogContent logContent = new LogContent(LogType.TRACE_AFTER);
-        logContent.put("parameters", Arrays.toString(joinPoint.getArgs()));
-        if(joinPoint.getTarget() == null) {
-            logContent.put("class", joinPoint.getStaticPart().getSourceLocation().getWithinType().getName());
-            logContent.put("function", joinPoint.getSignature().getName());
-        } else {
-            logContent.put("class", joinPoint.getTarget().getClass().getName());
-            logContent.put("method", joinPoint.getSignature().getName());
-        }
+        addLogContentDefaultData(logContent, joinPoint);
         if(traceAfter.context()) {
             addContext(logContent, joinPoint.getTarget());
         }
@@ -109,14 +88,7 @@ public abstract class AbstractTraceAnnotationHandler {
      */
     protected void handleTraceAfterThrowing(JoinPoint joinPoint, Exception exception, TraceAfterThrowing traceAfterThrowing) {
         LogContent logContent = new LogContent(LogType.TRACE_AFTER_THROWING);
-        logContent.put("parameters", Arrays.toString(joinPoint.getArgs()));
-        if(joinPoint.getTarget() == null) {
-            logContent.put("class", joinPoint.getStaticPart().getSourceLocation().getWithinType().getName());
-            logContent.put("function", joinPoint.getSignature().getName());
-        } else {
-            logContent.put("class", joinPoint.getTarget().getClass().getName());
-            logContent.put("method", joinPoint.getSignature().getName());
-        }
+        addLogContentDefaultData(logContent, joinPoint);
         logContent.addException(exception);
         if(traceAfterThrowing.context()) {
             addContext(logContent, joinPoint.getTarget());
@@ -132,14 +104,7 @@ public abstract class AbstractTraceAnnotationHandler {
      */
     protected void handleTraceAfterReturning(JoinPoint joinPoint, Object output, TraceAfterReturning traceAfterReturning) {
         LogContent logContent = new LogContent(LogType.TRACE_AFTER_RETURNING);
-        logContent.put("parameters", Arrays.toString(joinPoint.getArgs()));
-        if(joinPoint.getTarget() == null) {
-            logContent.put("class", joinPoint.getStaticPart().getSourceLocation().getWithinType().getName());
-            logContent.put("function", joinPoint.getSignature().getName());
-        } else {
-            logContent.put("class", joinPoint.getTarget().getClass().getName());
-            logContent.put("method", joinPoint.getSignature().getName());
-        }
+        addLogContentDefaultData(logContent, joinPoint);
         logContent.put("response", output);
         if(traceAfterReturning.context()) {
             addContext(logContent, joinPoint.getTarget());
@@ -154,6 +119,22 @@ public abstract class AbstractTraceAnnotationHandler {
      */
     private void addContext(LogContent logContent, Object target) {
         logContent.put("target-context", SerializerService.serializeJson(target));
+    }
+
+    /**
+     * Add JoinData data (function name, class name, parameters, ...) to the LogContent
+     * @param logContent LogContent
+     * @param joinPoint JointPoint
+     */
+    private void addLogContentDefaultData(LogContent logContent, JoinPoint joinPoint) {
+        if(joinPoint.getTarget() == null) {
+            logContent.put("class", joinPoint.getStaticPart().getSourceLocation().getWithinType().getName());
+            logContent.put("function", joinPoint.getSignature().getName());
+        } else {
+            logContent.put("class", joinPoint.getTarget().getClass().getName());
+            logContent.put("method", joinPoint.getSignature().getName());
+        }
+        logContent.put("parameters", Arrays.toString(joinPoint.getArgs()));
     }
 
 }
