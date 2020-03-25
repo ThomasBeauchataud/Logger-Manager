@@ -11,6 +11,14 @@ import java.util.Stack;
 public class FilePathService {
 
     /**
+     * Try to delete a file
+     * @param filePath String file path
+     */
+    public static void deleteFile(String filePath) {
+        new File(filePath).delete();
+    }
+
+    /**
      * Create folders for the file path if necessary
      * @param filePath String
      */

@@ -27,13 +27,16 @@ public class FormatterHandlerProvider {
     /**
      * Return a FormatterHandler associated to the class in parameter
      * Return the default FormatterHandler if the one in parameter doesn't exists
+     *
      * @param formatterHandlerClass Class | null to get the default FormatterHandler
      * @return FormatterHandler
      */
     public FormatterHandler get(Class<?> formatterHandlerClass) {
-        if(formatterHandlerClass == null) { return defaultFormatterHandler; }
-        for(FormatterHandler formatterHandler : this.formatterHandlers) {
-            if(formatterHandler.getClass().equals(formatterHandlerClass)) {
+        if (formatterHandlerClass == null) {
+            return defaultFormatterHandler;
+        }
+        for (FormatterHandler formatterHandler : this.formatterHandlers) {
+            if (formatterHandler.getClass().equals(formatterHandlerClass)) {
                 return formatterHandler;
             }
         }
@@ -42,12 +45,13 @@ public class FormatterHandlerProvider {
 
     /**
      * Change the default FormatterHandler
+     *
      * @param formatterHandlerClass Class
      */
     public void setDefault(Class<?> formatterHandlerClass) {
-        if(formatterHandlerClass != null) {
-            for(FormatterHandler formatterHandler : this.formatterHandlers) {
-                if(formatterHandler.getClass().equals(formatterHandlerClass)) {
+        if (formatterHandlerClass != null) {
+            for (FormatterHandler formatterHandler : this.formatterHandlers) {
+                if (formatterHandler.getClass().equals(formatterHandlerClass)) {
                     defaultFormatterHandler = formatterHandler;
                 }
             }
@@ -56,10 +60,11 @@ public class FormatterHandlerProvider {
 
     /**
      * Add a new FormatterHandler to the provider
+     *
      * @param formatterHandler FormatterHandler
      */
     public void add(FormatterHandler formatterHandler) {
-        if(formatterHandler != null) {
+        if (formatterHandler != null) {
             this.formatterHandlers.add(formatterHandler);
         }
     }

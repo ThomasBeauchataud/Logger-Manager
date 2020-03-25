@@ -82,11 +82,11 @@ public class Logger implements LoggerInterface {
 
     /**
      * Log a string object with the default FormatterHandler and the default PersistingHandler
-     * @param content String
+     * @param content Object
      * @param severity Severity
      */
     @Override
-    public void log(String content, Severity severity) {
+    public void log(Object content, Severity severity) {
         log(content, severity, null, null);
     }
 
@@ -108,11 +108,11 @@ public class Logger implements LoggerInterface {
      * Log a string object with specifics FormatterHandler and PersistingHandler
      * @param persistingHandlerClass Class | null to use the default PersistingHandler
      * @param formatterHandlerClass Class | null to use the default FormatterHandler
-     * @param content String
+     * @param content Object
      * @param severity Severity
      */
     @Override
-    public void log(String content, Severity severity, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass) {
+    public void log(Object content, Severity severity, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass) {
         PersistingHandler persistingHandler = persistingHandlerProvider.get(persistingHandlerClass);
         FormatterHandler formatterHandler = formatterHandlerProvider.get(formatterHandlerClass);
         persistingHandler.persist(formatterHandler.format(content, severity));

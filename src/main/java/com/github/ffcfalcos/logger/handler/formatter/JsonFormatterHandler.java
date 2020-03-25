@@ -25,15 +25,18 @@ public class JsonFormatterHandler implements FormatterHandler {
     }
 
     /**
-     * Format a string message with his severity
-     * @param logContent String
+     * Format an object with his severity
+     * @param logContent Object
      * @param severity Severity
      * @return String
      */
     @Override
-    public String format(String logContent, Severity severity) {
+    public String format(Object logContent, Severity severity) {
+        if(logContent == null) {
+            return null;
+        }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("content", logContent);
+        jsonObject.put("content", logContent.toString());
         if(severity != null) {
             jsonObject.put("severity", severity.name());
         }

@@ -28,18 +28,21 @@ public class StringFormatterHandler implements FormatterHandler {
     }
 
     /**
-     * Format a string message with his severity
-     * @param logContent String
+     * Format an object with his severity
+     * @param logContent Object
      * @param severity Severity
      * @return String
      */
     @Override
-    public String format(String logContent, Severity severity) {
+    public String format(Object logContent, Severity severity) {
+        if(logContent == null) {
+            return null;
+        }
         String content =  getFormatDate() + " - ";
         if(severity != null) {
             content += severity.name() + " - ";
         }
-        content += logContent;
+        content += logContent.toString();
         return content;
     }
 

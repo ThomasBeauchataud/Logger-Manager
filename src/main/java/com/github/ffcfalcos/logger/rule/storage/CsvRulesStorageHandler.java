@@ -57,15 +57,23 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
      */
     @Override
     public void removeRules(List<Rule> rules) {
-        List<Rule> actualRules = getRules();
-        for(Rule rule : actualRules) {
-            for(Rule ruleTest : rules) {
-                if(rule.equals(ruleTest)) {
-                    actualRules.remove(ruleTest);
+        if(rules != null) {
+            List<Rule> actualRules = getRules();
+            List<Rule> finalRules = new ArrayList<>();
+            for (Rule rule : actualRules) {
+                boolean isToSave = true;
+                for (Rule ruleTest : rules) {
+                    if (rule.equalsTo(ruleTest)) {
+                        isToSave = false;
+                        break;
+                    }
+                }
+                if(isToSave) {
+                    finalRules.add(rule);
                 }
             }
+            writeRules(finalRules);
         }
-        writeRules(actualRules);
     }
 
     /**
@@ -74,9 +82,11 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
      */
     @Override
     public void addRules(List<Rule> rules) {
-        List<Rule> actualRules = getRules();
-        actualRules.addAll(rules);
-        writeRules(actualRules);
+        if(rules != null) {
+            List<Rule> actualRules = getRules();
+            actualRules.addAll(rules);
+            writeRules(actualRules);
+        }
     }
 
     /**
@@ -133,11 +143,19 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
      * @return Rule
      */
     private Rule createRule(String[] data) {
+        Class<?> persistingHandlerClass;
+        Class<?> formatterHandlerClass;
         try {
-            return new Rule(data[0], data[1], Entry.valueOf(data[2]), Class.forName(data[3]), Class.forName(data[4]));
+            persistingHandlerClass = Class.forName(data[3]);
         } catch (Exception e) {
-            return new Rule(data[0], data[1], Entry.valueOf(data[2]), null, null);
+            persistingHandlerClass = null;
         }
+        try {
+            formatterHandlerClass = Class.forName(data[4]);
+        } catch (Exception e) {
+            formatterHandlerClass = null;
+        }
+        return new Rule(data[0], data[1], Entry.valueOf(data[2]), persistingHandlerClass, formatterHandlerClass);
     }
 
 }

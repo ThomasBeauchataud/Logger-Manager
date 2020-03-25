@@ -15,8 +15,11 @@ public class LogContent extends HashMap<String, Object> {
      * Initialize the creation of the map object with default data
      * @param logType String
      */
-    public LogContent(String logType) {
-        put("type", logType);
+    public LogContent(LogType logType) {
+        if(logType == null) {
+            logType = LogType.UNKNOWN;
+        }
+        put("type", logType.name());
         put("start", new Date().getTime());
         put("error", false);
     }
@@ -26,9 +29,18 @@ public class LogContent extends HashMap<String, Object> {
      * @param e Exception
      */
     public void addException(Exception e) {
+        if(e != null) {
+            put("message", e.getMessage());
+            put("cause", e.getCause());
+        } else {
+            if(get("message") != null) {
+                remove("message");
+            }
+            if(get("cause") != null) {
+                remove("cause");
+            }
+        }
         put("error", true);
-        put("message", e.getMessage());
-        put("cause", e.getCause());
     }
 
     /**

@@ -19,6 +19,7 @@ public class Rule implements Serializable {
     private Entry entry;
     private Class<?> persistingHandlerClass;
     private Class<?> formatterHandlerClass;
+    private boolean context;
 
     /**
      * Rule Constructor
@@ -61,6 +62,14 @@ public class Rule implements Serializable {
     }
 
     /**
+     * Return true if the rule has to log the context
+     * @return boolean
+     */
+    public boolean getContext() {
+        return context;
+    }
+
+    /**
      * Validate the Rule for a JointPoint
      * @param joinPoint JointPoint
      * @return boolean
@@ -77,7 +86,33 @@ public class Rule implements Serializable {
      * @return String[]
      */
     public List<String> toStringList() {
-        return Arrays.asList(className, methodName, entry.name(), persistingHandlerClass.getName(), formatterHandlerClass.getName());
+        String persistingHandlerClassName;
+        if(persistingHandlerClass == null) {
+            persistingHandlerClassName = null;
+        } else {
+            persistingHandlerClassName = persistingHandlerClass.getName();
+        }
+        String formatterHandlerClassName;
+        if(formatterHandlerClass == null) {
+            formatterHandlerClassName = null;
+        } else {
+            formatterHandlerClassName = formatterHandlerClass.getName();
+        }
+        return Arrays.asList(className, methodName, entry.name(), persistingHandlerClassName, formatterHandlerClassName);
+    }
+
+    /**
+     * Return true if Rule are equals
+     * @param rule Rule
+     * @return boolean
+     */
+    public boolean equalsTo(Rule rule) {
+        return rule.entry == this.entry
+                && rule.formatterHandlerClass == this.formatterHandlerClass
+                && rule.persistingHandlerClass == this.persistingHandlerClass
+                && rule.className.equals(this.className)
+                && rule.methodName.equals(this.methodName);
+
     }
 
 }

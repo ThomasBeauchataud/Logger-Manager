@@ -26,4 +26,11 @@ public @interface TraceAfter {
      */
     Class<?> formatterHandlerClass() default void.class;
 
+    /**
+     * Define if the context of the invoked method has to be logged or not
+     * Make sur that your class has the JsonSerializable annotation if you set it to true
+     * @return boolean
+     */
+    boolean context() default false;
+
 }

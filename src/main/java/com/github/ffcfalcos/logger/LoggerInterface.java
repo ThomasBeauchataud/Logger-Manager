@@ -48,18 +48,18 @@ public interface LoggerInterface {
 
     /**
      * Log a string object with the default FormatterHandler and the default PersistingHandler
-     * @param content String
+     * @param content Object
      * @param severity Severity
      */
-    void log(String content, Severity severity);
+    void log(Object content, Severity severity);
 
     /**
      * Log a string object with specifics FormatterHandler and PersistingHandler
      * @param persistingHandlerClass Class | null to use the default PersistingHandler
      * @param formatterHandlerClass Class | null to use the default FormatterHandler
-     * @param content String
+     * @param content Object
      * @param severity Severity
      */
-    void log(String content, Severity severity, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass);
+    void log(Object content, Severity severity, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass);
 
 }

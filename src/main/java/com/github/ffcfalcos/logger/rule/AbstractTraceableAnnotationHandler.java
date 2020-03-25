@@ -1,8 +1,8 @@
 package com.github.ffcfalcos.logger.rule;
 
-import com.github.ffcfalcos.logger.Logger;
-import com.github.ffcfalcos.logger.LoggerInterface;
 import com.github.ffcfalcos.logger.collector.LogContent;
+import com.github.ffcfalcos.logger.collector.LogType;
+import com.github.ffcfalcos.logger.interceptor.AbstractTraceAnnotationHandler;
 import com.github.ffcfalcos.logger.rule.loader.AbstractRulesLoader;
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -16,10 +16,9 @@ import java.util.List;
  * If the methods is in the rule list, it will be logged as the rule wants it
  */
 @SuppressWarnings("unused")
-public abstract class AbstractTraceableAnnotationHandler {
+public abstract class AbstractTraceableAnnotationHandler extends AbstractTraceAnnotationHandler {
 
     private List<Rule> rules;
-    private LoggerInterface logger;
 
     /**
      * AbstractTraceableAnnotationHandler Constructor
@@ -27,7 +26,6 @@ public abstract class AbstractTraceableAnnotationHandler {
      */
     protected AbstractTraceableAnnotationHandler(AbstractRulesLoader rulesLoader) {
         this.rules = rulesLoader.getRulesStorageHandler().getRules();
-        this.logger = Logger.getInstance();
         rulesLoader.setRules(rules);
         new Thread(rulesLoader).start();
     }
@@ -42,42 +40,23 @@ public abstract class AbstractTraceableAnnotationHandler {
         Rule rule = getRule(proceedingJoinPoint);
         if(rule != null) {
             if(rule.getEntry().equals(Entry.BEFORE)) {
-                LogContent logContent = new LogContent("trace");
-                logContent.put("parameters", proceedingJoinPoint.getArgs());
-                logContent.put("method", proceedingJoinPoint.getSignature().getName());
-                logContent.put("class", proceedingJoinPoint.getTarget().getClass().getName());
-                logger.log(logContent.close(), rule.getPersistingHandlerClass(), rule.getFormatterHandlerClass());
+                super.handleTraceBefore(proceedingJoinPoint, TraceAnnotationFactory.createTraceBefore(rule));
                 return proceedingJoinPoint.proceed();
             }
             if(rule.getEntry().equals(Entry.AFTER)) {
                 Object response = proceedingJoinPoint.proceed();
-                LogContent logContent = new LogContent("trace");
-                logContent.put("response", response);
-                logContent.put("method", proceedingJoinPoint.getSignature().getName());
-                logContent.put("class", proceedingJoinPoint.getTarget().getClass().getName());
-                logger.log(logContent.close(), rule.getPersistingHandlerClass(), rule.getFormatterHandlerClass());
+                super.handleTraceAfter(proceedingJoinPoint, TraceAnnotationFactory.createTraceAfter(rule));
                 return response;
             }
             if(rule.getEntry().equals(Entry.AROUND)) {
-                LogContent logContent = new LogContent("trace");
-                logContent.put("parameters", proceedingJoinPoint.getArgs());
-                logContent.put("method", proceedingJoinPoint.getSignature().getName());
-                logContent.put("class", proceedingJoinPoint.getTarget().getClass().getName());
-                Object response = proceedingJoinPoint.proceed();
-                logContent.put("response", response);
-                logger.log(logContent.close(), rule.getPersistingHandlerClass(), rule.getFormatterHandlerClass());
-                return response;
+                return super.handleTraceAround(proceedingJoinPoint, TraceAnnotationFactory.createTraceAround(rule));
             }
             if(rule.getEntry().equals(Entry.AFTER_THROWING)) {
-                LogContent logContent = new LogContent("trace");
+                LogContent logContent = new LogContent(LogType.TRACE_AFTER_THROWING);
                 try {
                     return proceedingJoinPoint.proceed();
                 } catch (Exception e) {
-                    logContent.put("parameters", proceedingJoinPoint.getArgs());
-                    logContent.put("method", proceedingJoinPoint.getSignature().getName());
-                    logContent.put("class", proceedingJoinPoint.getTarget().getClass().getName());
-                    logContent.addException(e);
-                    logger.log(logContent.close(), rule.getPersistingHandlerClass(), rule.getFormatterHandlerClass());
+                    super.handleTraceAfterThrowing(proceedingJoinPoint, e, TraceAnnotationFactory.createTraceAfterThrowing(rule));
                     throw e;
                 }
             }

@@ -18,11 +18,11 @@ public interface FormatterHandler {
     String format(LogContent logContent);
 
     /**
-     * Format a string message with his severity
-     * @param logContent String
+     * Format an object with his severity
+     * @param logContent Object
      * @param severity Severity
      * @return String
      */
-    String format(String logContent, Severity severity);
+    String format(Object logContent, Severity severity);
 
 }

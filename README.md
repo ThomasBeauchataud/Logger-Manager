@@ -36,7 +36,7 @@ Here are the default *FormatterHandlers* provided with this library :
 - *JsonFormatterHandler* which format any object into a json string
 - *StringPersistingHandler* which format any object into a string by using *toString()* method of the object
 ### 2.3. Log a message using *FormatterHandlers* and *PersistingHandlers*
-To log a simple *String* message by using defaults *FormatterHandler* and *PersistingHandler*, you can use the following method provided by the *Logger*
+To log a simple *Object* message by using defaults *FormatterHandler* and *PersistingHandler*, you can use the following method provided by the *Logger*
 ```
 logger.log("my log message", Severity.INFO)
 ```
