@@ -3,7 +3,7 @@ package com.github.ffcfalcos.logger.interceptor;
 import com.github.ffcfalcos.logger.Logger;
 import com.github.ffcfalcos.logger.LoggerInterface;
 import com.github.ffcfalcos.logger.collector.LogType;
-import com.github.ffcfalcos.logger.FilePersistingHandler;
+import com.github.ffcfalcos.logger.handler.persisting.FilePersistingHandler;
 import com.github.ffcfalcos.logger.util.FilePathService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.github.ffcfalcos.logger.rule.storage;
 
-import com.github.ffcfalcos.logger.JsonFormatterHandler;
-import com.github.ffcfalcos.logger.FilePersistingHandler;
+import com.github.ffcfalcos.logger.handler.formatter.JsonFormatterHandler;
+import com.github.ffcfalcos.logger.handler.persisting.FilePersistingHandler;
 import com.github.ffcfalcos.logger.rule.Entry;
 import com.github.ffcfalcos.logger.rule.Rule;
 import com.github.ffcfalcos.logger.util.FilePathService;

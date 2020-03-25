@@ -1,6 +1,5 @@
 package com.github.ffcfalcos.logger.handler.formatter;
 
-import com.github.ffcfalcos.logger.StringFormatterHandler;
 import com.github.ffcfalcos.logger.collector.LogContent;
 import com.github.ffcfalcos.logger.collector.LogType;
 import com.github.ffcfalcos.logger.collector.Severity;

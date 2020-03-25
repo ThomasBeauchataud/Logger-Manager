@@ -1,7 +1,7 @@
 package com.github.ffcfalcos.logger.interceptor;
 
-import com.github.ffcfalcos.logger.JsonFormatterHandler;
-import com.github.ffcfalcos.logger.FilePersistingHandler;
+import com.github.ffcfalcos.logger.handler.formatter.JsonFormatterHandler;
+import com.github.ffcfalcos.logger.handler.persisting.FilePersistingHandler;
 
 @JsonSerializable
 @SuppressWarnings("all")

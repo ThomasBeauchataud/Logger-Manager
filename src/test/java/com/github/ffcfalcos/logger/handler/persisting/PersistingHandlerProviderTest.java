@@ -1,8 +1,5 @@
 package com.github.ffcfalcos.logger.handler.persisting;
 
-import com.github.ffcfalcos.logger.FilePersistingHandler;
-import com.github.ffcfalcos.logger.PersistingHandler;
-import com.github.ffcfalcos.logger.PersistingHandlerProvider;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
