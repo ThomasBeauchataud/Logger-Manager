@@ -1,5 +1,7 @@
 package com.github.ffcfalcos.logger.interceptor;
 
+import com.github.ffcfalcos.logger.JsonSerializable;
+
 @JsonSerializable
 @SuppressWarnings("unused")
 abstract class AbstractUserTest {

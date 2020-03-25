@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.statistic;
+package com.github.ffcfalcos.logger;
 
 import java.io.FileWriter;
 import java.util.Date;

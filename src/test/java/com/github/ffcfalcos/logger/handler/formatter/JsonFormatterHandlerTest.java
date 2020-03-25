@@ -1,9 +1,9 @@
 package com.github.ffcfalcos.logger.handler.formatter;
 
 import com.github.ffcfalcos.logger.JsonFormatterHandler;
-import com.github.ffcfalcos.logger.collector.LogContent;
-import com.github.ffcfalcos.logger.collector.LogType;
-import com.github.ffcfalcos.logger.collector.Severity;
+import com.github.ffcfalcos.logger.LogContent;
+import com.github.ffcfalcos.logger.LogType;
+import com.github.ffcfalcos.logger.Severity;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 

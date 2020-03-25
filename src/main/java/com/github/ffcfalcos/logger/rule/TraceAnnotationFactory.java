@@ -1,9 +1,9 @@
 package com.github.ffcfalcos.logger.rule;
 
-import com.github.ffcfalcos.logger.interceptor.TraceAfter;
-import com.github.ffcfalcos.logger.interceptor.TraceAfterThrowing;
-import com.github.ffcfalcos.logger.interceptor.TraceAround;
-import com.github.ffcfalcos.logger.interceptor.TraceBefore;
+import com.github.ffcfalcos.logger.TraceAfter;
+import com.github.ffcfalcos.logger.TraceAfterThrowing;
+import com.github.ffcfalcos.logger.TraceAround;
+import com.github.ffcfalcos.logger.TraceBefore;
 
 import java.lang.annotation.Annotation;
 

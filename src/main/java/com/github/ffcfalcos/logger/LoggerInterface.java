@@ -1,9 +1,5 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.collector.LogContent;
-import com.github.ffcfalcos.logger.collector.Severity;
-import com.github.ffcfalcos.logger.statistic.LoggerStatisticsManagement;
-
 /**
  * @author Thomas Beauchataud
  * @since 24.02.2020

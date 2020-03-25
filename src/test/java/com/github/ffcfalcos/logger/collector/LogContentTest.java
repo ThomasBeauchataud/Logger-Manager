@@ -1,5 +1,7 @@
 package com.github.ffcfalcos.logger.collector;
 
+import com.github.ffcfalcos.logger.LogContent;
+import com.github.ffcfalcos.logger.LogType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

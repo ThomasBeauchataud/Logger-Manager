@@ -1,5 +1,8 @@
 package com.github.ffcfalcos.logger.interceptor;
 
+import com.github.ffcfalcos.logger.JsonSerializable;
+import com.github.ffcfalcos.logger.LogIgnored;
+
 @JsonSerializable
 @SuppressWarnings("unused")
 class AccountTest {

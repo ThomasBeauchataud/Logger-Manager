@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.collector;
+package com.github.ffcfalcos.logger;
 
 import java.util.Date;
 import java.util.HashMap;

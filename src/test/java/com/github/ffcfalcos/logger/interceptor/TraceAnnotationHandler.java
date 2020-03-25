@@ -1,5 +1,6 @@
 package com.github.ffcfalcos.logger.interceptor;
 
+import com.github.ffcfalcos.logger.*;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;

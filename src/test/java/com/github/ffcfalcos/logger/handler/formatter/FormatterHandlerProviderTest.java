@@ -4,8 +4,8 @@ import com.github.ffcfalcos.logger.FormatterHandler;
 import com.github.ffcfalcos.logger.FormatterHandlerProvider;
 import com.github.ffcfalcos.logger.JsonFormatterHandler;
 import com.github.ffcfalcos.logger.StringFormatterHandler;
-import com.github.ffcfalcos.logger.collector.LogContent;
-import com.github.ffcfalcos.logger.collector.Severity;
+import com.github.ffcfalcos.logger.LogContent;
+import com.github.ffcfalcos.logger.Severity;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

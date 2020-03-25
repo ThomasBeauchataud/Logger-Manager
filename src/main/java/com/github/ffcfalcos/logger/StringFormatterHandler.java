@@ -1,8 +1,5 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.collector.LogContent;
-import com.github.ffcfalcos.logger.collector.Severity;
-
 import java.util.Date;
 import java.util.stream.Collectors;
 

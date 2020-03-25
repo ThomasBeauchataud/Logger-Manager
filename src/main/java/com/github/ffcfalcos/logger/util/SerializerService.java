@@ -1,7 +1,7 @@
 package com.github.ffcfalcos.logger.util;
 
-import com.github.ffcfalcos.logger.interceptor.LogIgnored;
-import com.github.ffcfalcos.logger.interceptor.JsonSerializable;
+import com.github.ffcfalcos.logger.LogIgnored;
+import com.github.ffcfalcos.logger.JsonSerializable;
 
 import java.lang.reflect.Field;
 import java.util.*;
