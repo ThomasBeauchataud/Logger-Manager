@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger;
+package com.github.ffcfalcos.logger.trace;
 
 import java.nio.file.*;
 import java.util.List;

@@ -1,5 +1,7 @@
 package com.github.ffcfalcos.logger;
 
+import com.github.ffcfalcos.logger.util.FilePathService;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

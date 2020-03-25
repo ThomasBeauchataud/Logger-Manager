@@ -1,5 +1,6 @@
 package com.github.ffcfalcos.logger;
 
+import com.github.ffcfalcos.logger.util.FilePathService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 

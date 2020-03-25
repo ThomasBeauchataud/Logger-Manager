@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger;
+package com.github.ffcfalcos.logger.trace;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

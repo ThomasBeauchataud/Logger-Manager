@@ -1,4 +1,7 @@
-package com.github.ffcfalcos.logger;
+package com.github.ffcfalcos.logger.trace;
+
+import com.github.ffcfalcos.logger.trace.AbstractRulesLoader;
+import com.github.ffcfalcos.logger.trace.RulesStorageHandler;
 
 /**
  * @author Thomas Beauchataud

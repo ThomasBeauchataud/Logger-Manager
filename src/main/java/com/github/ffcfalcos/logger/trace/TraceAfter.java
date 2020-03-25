@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger;
+package com.github.ffcfalcos.logger.trace;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,11 +8,11 @@ import java.lang.annotation.Target;
 /**
  * @author Thomas Beauchataud
  * @since 24.02.2020
- * Annotation to place on a method to trace it after returning his result
+ * Annotation to place on a method to trace it after his execution
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface TraceAfterReturning {
+public @interface TraceAfter {
 
     /**
      * The PersistingHandlerClass to use to trace the method execution

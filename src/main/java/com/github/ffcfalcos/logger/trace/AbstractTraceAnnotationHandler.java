@@ -1,5 +1,7 @@
-package com.github.ffcfalcos.logger;
+package com.github.ffcfalcos.logger.trace;
 
+import com.github.ffcfalcos.logger.*;
+import com.github.ffcfalcos.logger.util.SerializerService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 
