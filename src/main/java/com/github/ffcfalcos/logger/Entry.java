@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.rule;
+package com.github.ffcfalcos.logger;
 
 /**
  * @author Thomas Beauchataud

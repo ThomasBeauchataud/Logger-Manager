@@ -1,9 +1,5 @@
-package com.github.ffcfalcos.logger.rule;
+package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.LogContent;
-import com.github.ffcfalcos.logger.LogType;
-import com.github.ffcfalcos.logger.AbstractTraceAnnotationHandler;
-import com.github.ffcfalcos.logger.rule.loader.AbstractRulesLoader;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 import java.util.List;

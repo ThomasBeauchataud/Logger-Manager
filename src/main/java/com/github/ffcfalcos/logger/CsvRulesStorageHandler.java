@@ -1,7 +1,5 @@
-package com.github.ffcfalcos.logger.rule.storage;
+package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.rule.Entry;
-import com.github.ffcfalcos.logger.rule.Rule;
 import com.github.ffcfalcos.logger.util.FilePathService;
 
 import java.io.*;

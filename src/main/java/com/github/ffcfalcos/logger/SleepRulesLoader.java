@@ -1,6 +1,4 @@
-package com.github.ffcfalcos.logger.rule.loader;
-
-import com.github.ffcfalcos.logger.rule.storage.RulesStorageHandler;
+package com.github.ffcfalcos.logger;
 
 /**
  * @author Thomas Beauchataud

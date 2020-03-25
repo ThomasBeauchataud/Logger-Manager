@@ -1,6 +1,4 @@
-package com.github.ffcfalcos.logger.rule.loader;
-
-import com.github.ffcfalcos.logger.rule.storage.FileRulesStorageHandler;
+package com.github.ffcfalcos.logger;
 
 import java.nio.file.*;
 import java.util.List;
