@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.handler.formatter;
+package com.github.ffcfalcos.logger;
 
 import com.github.ffcfalcos.logger.JsonFormatterHandler;
 import com.github.ffcfalcos.logger.LogContent;

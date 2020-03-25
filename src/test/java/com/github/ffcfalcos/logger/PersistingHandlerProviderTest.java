@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.handler.persisting;
+package com.github.ffcfalcos.logger;
 
 import com.github.ffcfalcos.logger.FilePersistingHandler;
 import com.github.ffcfalcos.logger.PersistingHandler;

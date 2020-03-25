@@ -1,7 +1,5 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.util.FilePathService;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

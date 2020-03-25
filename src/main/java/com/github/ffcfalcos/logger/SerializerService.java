@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.util;
+package com.github.ffcfalcos.logger;
 
 import com.github.ffcfalcos.logger.LogIgnored;
 import com.github.ffcfalcos.logger.JsonSerializable;

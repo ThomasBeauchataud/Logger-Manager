@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.interceptor;
+package com.github.ffcfalcos.logger;
 
 import com.github.ffcfalcos.logger.JsonSerializable;
 

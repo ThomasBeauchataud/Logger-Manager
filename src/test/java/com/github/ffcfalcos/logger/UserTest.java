@@ -1,6 +1,4 @@
-package com.github.ffcfalcos.logger.interceptor;
-
-import com.github.ffcfalcos.logger.*;
+package com.github.ffcfalcos.logger;
 
 @JsonSerializable
 @SuppressWarnings("all")

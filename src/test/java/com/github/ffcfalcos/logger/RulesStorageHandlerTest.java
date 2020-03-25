@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.rule.storage;
+package com.github.ffcfalcos.logger;
 
 import com.github.ffcfalcos.logger.CsvRulesStorageHandler;
 import com.github.ffcfalcos.logger.JsonFormatterHandler;
@@ -6,7 +6,7 @@ import com.github.ffcfalcos.logger.FilePersistingHandler;
 import com.github.ffcfalcos.logger.RulesStorageHandler;
 import com.github.ffcfalcos.logger.Entry;
 import com.github.ffcfalcos.logger.Rule;
-import com.github.ffcfalcos.logger.util.FilePathService;
+import com.github.ffcfalcos.logger.FilePathService;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

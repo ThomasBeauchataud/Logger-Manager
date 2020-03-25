@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.util;
+package com.github.ffcfalcos.logger;
 
 import java.io.File;
 import java.util.Stack;

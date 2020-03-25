@@ -1,4 +1,4 @@
-package com.github.ffcfalcos.logger.collector;
+package com.github.ffcfalcos.logger;
 
 import com.github.ffcfalcos.logger.LogContent;
 import com.github.ffcfalcos.logger.LogType;

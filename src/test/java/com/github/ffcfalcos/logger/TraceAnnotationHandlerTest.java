@@ -1,10 +1,5 @@
-package com.github.ffcfalcos.logger.interceptor;
+package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.Logger;
-import com.github.ffcfalcos.logger.LoggerInterface;
-import com.github.ffcfalcos.logger.LogType;
-import com.github.ffcfalcos.logger.FilePersistingHandler;
-import com.github.ffcfalcos.logger.util.FilePathService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
