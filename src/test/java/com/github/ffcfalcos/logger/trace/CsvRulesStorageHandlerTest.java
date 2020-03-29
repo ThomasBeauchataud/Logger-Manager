@@ -20,6 +20,7 @@ class CsvRulesStorageHandlerTest {
     @Test
     void getRules() {
         try {
+            cleanUp();
             CsvRulesStorageHandler csvRulesStorageHandler = new CsvRulesStorageHandler();
             final String filePath = System.getProperty("user.dir") + "/src/test/resources/rules.csv";
             csvRulesStorageHandler.setFilePath(filePath, false);
@@ -32,13 +33,15 @@ class CsvRulesStorageHandlerTest {
             assertEquals(csvRulesStorageHandler.getRules().size(), 1);
             assertTrue(csvRulesStorageHandler.getRules().get(0).equalsTo(rule));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
     @Test
     void removeRules() {
         try {
+            cleanUp();
             CsvRulesStorageHandler csvRulesStorageHandler = new CsvRulesStorageHandler();
             final String filePath = System.getProperty("user.dir") + "/src/test/resources/rules.csv";
             csvRulesStorageHandler.setFilePath(filePath, false);
@@ -55,13 +58,15 @@ class CsvRulesStorageHandlerTest {
             assertDoesNotThrow(() -> csvRulesStorageHandler.removeRules(Collections.singletonList(rule)));
             assertDoesNotThrow(() -> csvRulesStorageHandler.removeRules(Collections.singletonList(null)));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
     @Test
     void addRules() {
         try {
+            cleanUp();
             CsvRulesStorageHandler csvRulesStorageHandler = new CsvRulesStorageHandler();
             final String filePath = System.getProperty("user.dir") + "/src/test/resources/rules.csv";
             csvRulesStorageHandler.setFilePath(filePath, false);
@@ -81,13 +86,15 @@ class CsvRulesStorageHandlerTest {
             }
             assertEquals(count, 6);
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
     @Test
     void setFilePath() {
         try {
+            cleanUp();
             CsvRulesStorageHandler csvRulesStorageHandler = new CsvRulesStorageHandler();
             String filePath = System.getProperty("user.dir") + "/src/test/resources/rules.csv";
             csvRulesStorageHandler.setFilePath(filePath, false);
@@ -98,7 +105,8 @@ class CsvRulesStorageHandlerTest {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
             assertTrue(bufferedReader.readLine().contains("method1"));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 

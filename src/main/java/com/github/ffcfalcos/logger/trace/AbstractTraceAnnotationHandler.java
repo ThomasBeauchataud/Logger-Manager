@@ -57,7 +57,11 @@ public abstract class AbstractTraceAnnotationHandler {
         }
         try {
             Object result = proceedingJoinPoint.proceed();
-            logContent.put("response", result.toString());
+            if(result == null) {
+                logContent.put("response", null);
+            } else {
+                logContent.put("response", result.toString());
+            }
             logger.log(logContent.close(Severity.DEBUG), traceAround.persistingHandlerClass(), traceAround.formatterHandlerClass());
             return result;
         } catch (Exception e) {

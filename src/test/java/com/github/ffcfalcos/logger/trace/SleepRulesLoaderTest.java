@@ -30,7 +30,8 @@ class SleepRulesLoaderTest {
             assertTrue(sleepRulesLoader.getRulesStorageHandler().getRules().get(0).equalsTo(rule));
             thread.interrupt();
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 

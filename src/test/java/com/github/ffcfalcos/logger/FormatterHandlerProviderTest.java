@@ -14,7 +14,8 @@ class FormatterHandlerProviderTest {
             assertEquals(formatterHandler.getClass(), JsonFormatterHandler.class);
             assertDoesNotThrow(() -> formatterHandlerProvider.get(null));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -27,7 +28,8 @@ class FormatterHandlerProviderTest {
             assertDoesNotThrow(() -> formatterHandlerProvider.setDefault(null));
             assertEquals(formatterHandlerProvider.get(void.class).getClass(), StringFormatterHandler.class);
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -50,7 +52,8 @@ class FormatterHandlerProviderTest {
             assertEquals(formatterHandlerProvider.get(TestFormatterHandler.class).getClass(), TestFormatterHandler.class);
             assertDoesNotThrow(() -> formatterHandlerProvider.add(null));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 }

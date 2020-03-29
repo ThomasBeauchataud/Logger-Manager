@@ -14,7 +14,8 @@ class StringFormatterHandlerTest {
             assertTrue(formattedMessage.contains("We are doing a test"));
             assertTrue(formattedMessage.contains(Severity.DEBUG.name()));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -27,7 +28,8 @@ class StringFormatterHandlerTest {
             String formattedMessage = stringFormatterHandler.format(logContent);
             assertTrue(formattedMessage.contains("We are doing a test"));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 }

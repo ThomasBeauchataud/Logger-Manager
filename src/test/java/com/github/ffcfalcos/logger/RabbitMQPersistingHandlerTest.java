@@ -17,7 +17,8 @@ class RabbitMQPersistingHandlerTest {
             rabbitMQPersistingHandler.setRabbitMQRoutingKey("*");
             rabbitMQPersistingHandler.persist("Here is a test message");
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 }

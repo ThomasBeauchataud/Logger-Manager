@@ -12,7 +12,8 @@ class SystemOutPersistingHandlerTest {
             SystemOutPersistingHandler systemOutPersistingHandler = new SystemOutPersistingHandler();
             systemOutPersistingHandler.persist("Here is a test message");
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 }

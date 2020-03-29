@@ -35,7 +35,8 @@ class LoggerStatisticsManagementTest {
             assertTrue(line.contains(StringFormatterHandler.class.getName()));
             assertTrue(line.contains(RabbitMQPersistingHandler.class.getName()));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 

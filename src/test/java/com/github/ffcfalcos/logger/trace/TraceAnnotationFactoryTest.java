@@ -17,7 +17,8 @@ class TraceAnnotationFactoryTest {
             assertEquals(traceBefore.persistingHandlerClass(), rule.getPersistingHandlerClass());
             assertEquals(traceBefore.formatterHandlerClass(), rule.getFormatterHandlerClass());
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -30,7 +31,8 @@ class TraceAnnotationFactoryTest {
             assertEquals(traceAfter.persistingHandlerClass(), rule.getPersistingHandlerClass());
             assertEquals(traceAfter.formatterHandlerClass(), rule.getFormatterHandlerClass());
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -43,7 +45,8 @@ class TraceAnnotationFactoryTest {
             assertEquals(traceAround.persistingHandlerClass(), rule.getPersistingHandlerClass());
             assertEquals(traceAround.formatterHandlerClass(), rule.getFormatterHandlerClass());
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -56,7 +59,8 @@ class TraceAnnotationFactoryTest {
             assertEquals(traceAfterThrowing.persistingHandlerClass(), rule.getPersistingHandlerClass());
             assertEquals(traceAfterThrowing.formatterHandlerClass(), rule.getFormatterHandlerClass());
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 }

@@ -17,7 +17,8 @@ public class LogContentTest {
             assertNull(logContent.get("message"));
             assertEquals(logContent.get("error"), true);
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -29,7 +30,8 @@ public class LogContentTest {
             assertNotNull(logContent.close(Severity.DEBUG).get("end"));
             assertNotNull(logContent.close(Severity.DEBUG).get("time"));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 }

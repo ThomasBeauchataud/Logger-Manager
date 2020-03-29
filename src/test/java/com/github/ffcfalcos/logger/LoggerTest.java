@@ -18,7 +18,8 @@ class LoggerTest {
             Logger logger = new Logger();
             assertEquals(logger.getFormatterHandlerProvider().getClass(), FormatterHandlerProvider.class);
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -28,7 +29,8 @@ class LoggerTest {
             Logger logger = new Logger();
             assertEquals(logger.getPersistingHandlerProvider().getClass(), PersistingHandlerProvider.class);
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -38,7 +40,8 @@ class LoggerTest {
             Logger logger = new Logger();
             assertEquals(logger.getLoggerStatisticsManagement().getClass(), LoggerStatisticsManagement.class);
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -55,7 +58,8 @@ class LoggerTest {
             assertTrue(line.contains("Here is my log message"));
             assertTrue(line.contains(Severity.DEBUG.name()));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -73,7 +77,8 @@ class LoggerTest {
             assertTrue(line.contains("Here is my log message"));
             assertTrue(line.contains(Severity.DEBUG.name()));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -92,7 +97,8 @@ class LoggerTest {
             assertTrue(line.contains("Here is my log message"));
             assertTrue(line.contains(Severity.DEBUG.name()));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -112,7 +118,8 @@ class LoggerTest {
             assertTrue(line.contains("Here is my log message"));
             assertTrue(line.contains(Severity.DEBUG.name()));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 

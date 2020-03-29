@@ -16,7 +16,8 @@ class JsonFormatterHandlerTest {
             assertEquals(jsonObject.get("severity"), Severity.DEBUG.name());
             assertEquals(jsonObject.get("content"), "We are doing a test");
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -30,7 +31,8 @@ class JsonFormatterHandlerTest {
             assertEquals(jsonObject.get("error"), false);
             assertEquals(jsonObject.get("type"), LogType.TRACE.name());
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 }

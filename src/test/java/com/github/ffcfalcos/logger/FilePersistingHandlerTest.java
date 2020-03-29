@@ -22,7 +22,8 @@ class FilePersistingHandlerTest {
             String line = bufferedReader.readLine();
             assertEquals(line, "Here is a test message");
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 

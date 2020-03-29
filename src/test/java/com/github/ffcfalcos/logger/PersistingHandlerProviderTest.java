@@ -14,7 +14,8 @@ class PersistingHandlerProviderTest {
             assertEquals(persistingHandler.getClass(), FilePersistingHandler.class);
             assertDoesNotThrow(() -> persistingHandlerProvider.get(null));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -27,7 +28,8 @@ class PersistingHandlerProviderTest {
             assertDoesNotThrow(() -> persistingHandlerProvider.setDefault(null));
             assertEquals(persistingHandlerProvider.get(void.class).getClass(), FilePersistingHandler.class);
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -44,7 +46,8 @@ class PersistingHandlerProviderTest {
             assertEquals(persistingHandlerProvider.get(TestPersistingHandler.class).getClass(), TestPersistingHandler.class);
             assertDoesNotThrow(() -> persistingHandlerProvider.add(null));
         } catch (Exception e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            fail();
         }
     }
 }
