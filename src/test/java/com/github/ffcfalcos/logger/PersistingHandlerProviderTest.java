@@ -1,8 +1,5 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.FilePersistingHandler;
-import com.github.ffcfalcos.logger.PersistingHandler;
-import com.github.ffcfalcos.logger.PersistingHandlerProvider;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,7 +36,8 @@ class PersistingHandlerProviderTest {
         try {
             class TestPersistingHandler implements PersistingHandler {
                 @Override
-                public void persist(String content) { }
+                public void persist(String content) {
+                }
             }
             PersistingHandlerProvider persistingHandlerProvider = new PersistingHandlerProvider();
             persistingHandlerProvider.add(new TestPersistingHandler());

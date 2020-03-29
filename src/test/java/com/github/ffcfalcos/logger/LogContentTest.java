@@ -1,7 +1,5 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.LogContent;
-import com.github.ffcfalcos.logger.LogType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,8 +11,8 @@ public class LogContentTest {
         try {
             LogContent logContent = new LogContent(LogType.TRACE);
             logContent.addException(new Exception("Exception test"));
-            assertEquals(logContent.close().get("message"), "Exception test");
-            assertEquals(logContent.close().get("error"), true);
+            assertEquals(logContent.close(Severity.DEBUG).get("message"), "Exception test");
+            assertEquals(logContent.close(Severity.DEBUG).get("error"), true);
             logContent.addException(null);
             assertNull(logContent.get("message"));
             assertEquals(logContent.get("error"), true);
@@ -27,9 +25,9 @@ public class LogContentTest {
     void close() {
         try {
             LogContent logContent = new LogContent(LogType.TRACE);
-            logContent.close();
-            assertNotNull(logContent.close().get("end"));
-            assertNotNull(logContent.close().get("time"));
+            logContent.close(Severity.DEBUG);
+            assertNotNull(logContent.close(Severity.DEBUG).get("end"));
+            assertNotNull(logContent.close(Severity.DEBUG).get("time"));
         } catch (Exception e) {
             fail(e.getMessage());
         }

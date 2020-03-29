@@ -1,9 +1,5 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.JsonFormatterHandler;
-import com.github.ffcfalcos.logger.LogContent;
-import com.github.ffcfalcos.logger.LogType;
-import com.github.ffcfalcos.logger.Severity;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class JsonFormatterHandlerTest {
 
     @Test
-    void testFormat1() {
+    void format1() {
         try {
             JsonFormatterHandler jsonFormatterHandler = new JsonFormatterHandler();
             String formattedMessage = jsonFormatterHandler.format("We are doing a test", Severity.DEBUG);
@@ -25,10 +21,10 @@ class JsonFormatterHandlerTest {
     }
 
     @Test
-    void testFormat2() {
+    void format2() {
         try {
             JsonFormatterHandler jsonFormatterHandler = new JsonFormatterHandler();
-            LogContent logContent = new LogContent(LogType.TRACE).close();
+            LogContent logContent = new LogContent(LogType.TRACE).close(Severity.DEBUG);
             String formattedMessage = jsonFormatterHandler.format(logContent);
             JSONObject jsonObject = new JSONObject(formattedMessage);
             assertEquals(jsonObject.get("error"), false);

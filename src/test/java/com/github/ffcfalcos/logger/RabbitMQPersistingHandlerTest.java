@@ -8,45 +8,16 @@ class RabbitMQPersistingHandlerTest {
 
     @Test
     void persist() {
-    }
-
-    @Test
-    void getRabbitMQHost() {
-    }
-
-    @Test
-    void setRabbitMQHost() {
-    }
-
-    @Test
-    void getRabbitMQUser() {
-    }
-
-    @Test
-    void setRabbitMQUser() {
-    }
-
-    @Test
-    void getRabbitMQPassword() {
-    }
-
-    @Test
-    void setRabbitMQPassword() {
-    }
-
-    @Test
-    void getRabbitMQExchange() {
-    }
-
-    @Test
-    void setRabbitMQExchange() {
-    }
-
-    @Test
-    void getRabbitMQRoutingKey() {
-    }
-
-    @Test
-    void setRabbitMQRoutingKey() {
+        try {
+            RabbitMQPersistingHandler rabbitMQPersistingHandler = new RabbitMQPersistingHandler();
+            rabbitMQPersistingHandler.setRabbitMQHost("localhost");
+            rabbitMQPersistingHandler.setRabbitMQPassword("guest");
+            rabbitMQPersistingHandler.setRabbitMQUser("guest");
+            rabbitMQPersistingHandler.setRabbitMQExchange("test");
+            rabbitMQPersistingHandler.setRabbitMQRoutingKey("*");
+            rabbitMQPersistingHandler.persist("Here is a test message");
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
     }
 }

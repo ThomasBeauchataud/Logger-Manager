@@ -1,11 +1,5 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.FormatterHandler;
-import com.github.ffcfalcos.logger.FormatterHandlerProvider;
-import com.github.ffcfalcos.logger.JsonFormatterHandler;
-import com.github.ffcfalcos.logger.StringFormatterHandler;
-import com.github.ffcfalcos.logger.LogContent;
-import com.github.ffcfalcos.logger.Severity;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,9 +36,14 @@ class FormatterHandlerProviderTest {
         try {
             class TestFormatterHandler implements FormatterHandler {
                 @Override
-                public String format(LogContent logContent) { return null; }
+                public String format(LogContent logContent) {
+                    return null;
+                }
+
                 @Override
-                public String format(Object logContent, Severity severity) { return null; }
+                public String format(Object logContent, Severity severity) {
+                    return null;
+                }
             }
             FormatterHandlerProvider formatterHandlerProvider = new FormatterHandlerProvider();
             formatterHandlerProvider.add(new TestFormatterHandler());

@@ -8,5 +8,11 @@ class SystemOutPersistingHandlerTest {
 
     @Test
     void persist() {
+        try {
+            SystemOutPersistingHandler systemOutPersistingHandler = new SystemOutPersistingHandler();
+            systemOutPersistingHandler.persist("Here is a test message");
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
     }
 }
