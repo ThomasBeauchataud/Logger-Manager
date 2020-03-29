@@ -26,14 +26,13 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
     }
 
     /**
-     * Return all stored rules
-     * @return Rule[]
+     * {@inheritDoc}
      */
     @Override
     public List<Rule> getRules() {
         List<Rule> rules = new ArrayList<>();
         try {
-            if(filePath != null) {
+            if (filePath != null) {
                 FilePathService.checkFilePath(filePath);
                 BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
                 String row;
@@ -50,12 +49,11 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
     }
 
     /**
-     * Remove multiple rules
-     * @param rules Rule[]
+     * {@inheritDoc}
      */
     @Override
     public void removeRules(List<Rule> rules) {
-        if(rules != null) {
+        if (rules != null) {
             List<Rule> actualRules = getRules();
             List<Rule> finalRules = new ArrayList<>();
             for (Rule rule : actualRules) {
@@ -66,7 +64,7 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
                         break;
                     }
                 }
-                if(isToSave) {
+                if (isToSave) {
                     finalRules.add(rule);
                 }
             }
@@ -75,12 +73,11 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
     }
 
     /**
-     * Add new rules
-     * @param rules Rule[]
+     * {@inheritDoc}
      */
     @Override
     public void addRules(List<Rule> rules) {
-        if(rules != null) {
+        if (rules != null) {
             List<Rule> actualRules = getRules();
             actualRules.addAll(rules);
             writeRules(actualRules);
@@ -88,28 +85,21 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
     }
 
     /**
-     * Modify the actual file path and migrate all rule from the previous file in the new file
-     * @param filePath String
+     * {@inheritDoc}
      */
-    public void modifyFilePathAndMigrateRules(String filePath) {
-        List<Rule> rules = this.getRules();
-        this.filePath = filePath;
-        this.writeRules(rules);
+    @Override
+    public void setFilePath(String filePath, boolean migration) {
+        if (migration) {
+            List<Rule> rules = this.getRules();
+            this.filePath = filePath;
+            this.writeRules(rules);
+        } else {
+            this.filePath = filePath;
+        }
     }
 
     /**
-     * Modify the actual file path
-     * Be advised that previous rules stored in the previous csv file will be ignored
-     * To migrate previous rules in the new file, use modifyFilePath method
-     * @param filePath String
-     */
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    /**
-     * Return the actual file path
-     * @return String
+     * {@inheritDoc}
      */
     @Override
     public String getFilePath() {
@@ -118,6 +108,7 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
 
     /**
      * Write rules in a csv file
+     *
      * @param rules Rule[]
      */
     private void writeRules(List<Rule> rules) {
@@ -137,6 +128,7 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
 
     /**
      * Create a Rule entity from a string array get by the csv file
+     *
      * @param data String[]
      * @return Rule
      */
@@ -153,7 +145,7 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
         } catch (Exception e) {
             formatterHandlerClass = null;
         }
-        return new Rule(data[0], data[1], Entry.valueOf(data[2]), persistingHandlerClass, formatterHandlerClass);
+        return new Rule(data[0], data[1], Entry.valueOf(data[2]), persistingHandlerClass, formatterHandlerClass, Boolean.parseBoolean(data[5]));
     }
 
 }

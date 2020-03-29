@@ -16,12 +16,14 @@ public @interface TraceBefore {
 
     /**
      * The PersistingHandlerClass to use to trace the method execution
+     *
      * @return Class
      */
     Class<?> persistingHandlerClass() default void.class;
 
     /**
      * The FormatterHandlerClass to use to trace the method execution
+     *
      * @return Class
      */
     Class<?> formatterHandlerClass() default void.class;
@@ -29,6 +31,7 @@ public @interface TraceBefore {
     /**
      * Define if the context of the invoked method has to be logged or not
      * Make sur that your class has the JsonSerializable annotation if you set it to true
+     *
      * @return boolean
      */
     boolean context() default false;

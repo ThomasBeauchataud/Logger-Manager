@@ -9,6 +9,7 @@ public interface FormatterHandler {
 
     /**
      * Format a LogContent message
+     *
      * @param logContent LogContent
      * @return String
      */
@@ -16,8 +17,9 @@ public interface FormatterHandler {
 
     /**
      * Format an object with his severity
+     *
      * @param logContent Object
-     * @param severity Severity
+     * @param severity   Severity
      * @return String
      */
     String format(Object logContent, Severity severity);

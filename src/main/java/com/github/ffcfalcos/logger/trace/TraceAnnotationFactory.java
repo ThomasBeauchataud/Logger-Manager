@@ -11,14 +11,17 @@ class TraceAnnotationFactory {
             public Class<? extends Annotation> annotationType() {
                 return TraceBefore.class;
             }
+
             @Override
             public Class<?> persistingHandlerClass() {
                 return rule.getPersistingHandlerClass();
             }
+
             @Override
             public Class<?> formatterHandlerClass() {
                 return rule.getFormatterHandlerClass();
             }
+
             @Override
             public boolean context() {
                 return rule.getContext();
@@ -32,14 +35,17 @@ class TraceAnnotationFactory {
             public Class<? extends Annotation> annotationType() {
                 return TraceBefore.class;
             }
+
             @Override
             public Class<?> persistingHandlerClass() {
                 return rule.getPersistingHandlerClass();
             }
+
             @Override
             public Class<?> formatterHandlerClass() {
                 return rule.getFormatterHandlerClass();
             }
+
             @Override
             public boolean context() {
                 return rule.getContext();
@@ -53,14 +59,17 @@ class TraceAnnotationFactory {
             public Class<? extends Annotation> annotationType() {
                 return TraceBefore.class;
             }
+
             @Override
             public Class<?> persistingHandlerClass() {
                 return rule.getPersistingHandlerClass();
             }
+
             @Override
             public Class<?> formatterHandlerClass() {
                 return rule.getFormatterHandlerClass();
             }
+
             @Override
             public boolean context() {
                 return rule.getContext();
@@ -74,14 +83,17 @@ class TraceAnnotationFactory {
             public Class<? extends Annotation> annotationType() {
                 return TraceBefore.class;
             }
+
             @Override
             public Class<?> persistingHandlerClass() {
                 return rule.getPersistingHandlerClass();
             }
+
             @Override
             public Class<?> formatterHandlerClass() {
                 return rule.getFormatterHandlerClass();
             }
+
             @Override
             public boolean context() {
                 return rule.getContext();

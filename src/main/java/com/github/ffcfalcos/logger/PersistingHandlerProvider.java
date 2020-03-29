@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * @author Thomas Beauchataud
  * @since 24.02.2020
- * Provide Persisting Handlers
+ * Provides Persisting Handlers
  */
 @SuppressWarnings("unused")
-public class PersistingHandlerProvider {
+public class PersistingHandlerProvider implements HandlerProvider<PersistingHandler> {
 
     private PersistingHandler defaultPersistingHandler;
     private List<PersistingHandler> persistingHandlers;
@@ -26,15 +26,14 @@ public class PersistingHandlerProvider {
     }
 
     /**
-     * Return a PersistingHandler associated to the class in parameter
-     * Return the default PersistingHandler if the one in parameter doesn't exists
-     * @param persistingHandlerClass Class | null to get the default PersistingHandler
-     * @return PersistingHandler
+     * {@inheritDoc}
      */
     public PersistingHandler get(Class<?> persistingHandlerClass) {
-        if(persistingHandlerClass == null) { return defaultPersistingHandler; }
-        for(PersistingHandler persistingHandler : this.persistingHandlers) {
-            if(persistingHandler.getClass().equals(persistingHandlerClass)) {
+        if (persistingHandlerClass == null) {
+            return defaultPersistingHandler;
+        }
+        for (PersistingHandler persistingHandler : this.persistingHandlers) {
+            if (persistingHandler.getClass().equals(persistingHandlerClass)) {
                 return persistingHandler;
             }
         }
@@ -42,13 +41,12 @@ public class PersistingHandlerProvider {
     }
 
     /**
-     * Change the default PersistingHandler
-     * @param persistingHandlerClass Class
+     * {@inheritDoc}
      */
     public void setDefault(Class<?> persistingHandlerClass) {
-        if(persistingHandlerClass != null) {
-            for(PersistingHandler persistingHandler : this.persistingHandlers) {
-                if(persistingHandler.getClass().equals(persistingHandlerClass)) {
+        if (persistingHandlerClass != null) {
+            for (PersistingHandler persistingHandler : this.persistingHandlers) {
+                if (persistingHandler.getClass().equals(persistingHandlerClass)) {
                     defaultPersistingHandler = persistingHandler;
                 }
             }
@@ -56,11 +54,10 @@ public class PersistingHandlerProvider {
     }
 
     /**
-     * Add a new PersistingHandler to the provider
-     * @param persistingHandler PersistingHandler
+     * {@inheritDoc}
      */
     public void add(PersistingHandler persistingHandler) {
-        if(persistingHandler != null) {
+        if (persistingHandler != null) {
             this.persistingHandlers.add(persistingHandler);
         }
     }

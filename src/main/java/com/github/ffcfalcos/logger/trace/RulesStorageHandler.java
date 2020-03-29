@@ -13,18 +13,21 @@ public interface RulesStorageHandler {
 
     /**
      * Return all stored rules
+     *
      * @return Rule[]
      */
     List<Rule> getRules();
 
     /**
      * Remove multiple rules
+     *
      * @param rules Rule[]
      */
     void removeRules(List<Rule> rules);
 
     /**
      * Add new rules
+     *
      * @param rules Rule[]
      */
     void addRules(List<Rule> rules);

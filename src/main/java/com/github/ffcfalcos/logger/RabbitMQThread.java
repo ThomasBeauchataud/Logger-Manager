@@ -21,12 +21,13 @@ class RabbitMQThread implements Runnable {
 
     /**
      * RabbitMQThread Constructor
-     * @param host String
-     * @param user String
-     * @param password String
-     * @param exchange String
+     *
+     * @param host       String
+     * @param user       String
+     * @param password   String
+     * @param exchange   String
      * @param routingKey String
-     * @param content String assuming it is a valid Json format
+     * @param content    String assuming it is a valid Json format
      */
     RabbitMQThread(String host, String user, String password, String exchange, String routingKey, String content) {
         this.host = host;

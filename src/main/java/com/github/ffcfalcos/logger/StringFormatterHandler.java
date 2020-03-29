@@ -11,13 +11,11 @@ import java.util.stream.Collectors;
 public class StringFormatterHandler implements FormatterHandler {
 
     /**
-     * Format a map message
-     * @param logContent LogContent
-     * @return String
+     * {@inheritDoc}
      */
     @Override
     public String format(LogContent logContent) {
-        if(logContent == null) {
+        if (logContent == null) {
             return null;
         }
         return getFormatDate() + logContent.keySet().stream().map(key -> key + "=" +
@@ -25,24 +23,26 @@ public class StringFormatterHandler implements FormatterHandler {
     }
 
     /**
-     * Format an object with his severity
-     * @param logContent Object
-     * @param severity Severity
-     * @return String
+     * {@inheritDoc}
      */
     @Override
     public String format(Object logContent, Severity severity) {
-        if(logContent == null) {
+        if (logContent == null) {
             return null;
         }
-        String content =  getFormatDate() + " - ";
-        if(severity != null) {
+        String content = getFormatDate() + " - ";
+        if (severity != null) {
             content += severity.name() + " - ";
         }
         content += logContent.toString();
         return content;
     }
 
+    /**
+     * Format a date to string
+     *
+     * @return String
+     */
     private String getFormatDate() {
         return "[" + new Date().toString() + "] ";
     }

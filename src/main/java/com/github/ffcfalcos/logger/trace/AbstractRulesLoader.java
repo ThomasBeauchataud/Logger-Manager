@@ -1,12 +1,13 @@
 package com.github.ffcfalcos.logger.trace;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Thomas Beauchataud
  * @since 24.02.2020
  * Thread that load rules from the RuleStorageHandler and inject them in the
- *      AbstractTraceableAnnotationHandler rules list
+ * AbstractTraceableAnnotationHandler rules list
  */
 public abstract class AbstractRulesLoader implements Runnable {
 
@@ -15,14 +16,17 @@ public abstract class AbstractRulesLoader implements Runnable {
 
     /**
      * AbstractRulesLoader Constructor
+     *
      * @param rulesStorageHandler RulesStorageHandler
      */
     public AbstractRulesLoader(RulesStorageHandler rulesStorageHandler) {
         this.rulesStorageHandler = rulesStorageHandler;
+        this.rules = new ArrayList<>();
     }
 
     /**
      * Set the Rule list
+     *
      * @param rules Rule[]
      */
     public void setRules(List<Rule> rules) {
@@ -31,6 +35,7 @@ public abstract class AbstractRulesLoader implements Runnable {
 
     /**
      * Return the RulesStorageHandler
+     *
      * @return RulesStorageHandler
      */
     public RulesStorageHandler getRulesStorageHandler() {

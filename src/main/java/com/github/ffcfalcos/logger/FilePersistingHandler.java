@@ -26,17 +26,16 @@ public class FilePersistingHandler implements PersistingHandler {
     }
 
     /**
-     * Persist a string message
-     * @param content String
+     * {@inheritDoc}
      */
     @Override
     public void persist(String content) {
         try {
-            if(filePath != null) {
+            if (filePath != null) {
                 FilePathService.checkFilePath(filePath);
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filePath, true));
-                bufferedWriter.append("\n");
                 bufferedWriter.append(content);
+                bufferedWriter.append("\n");
                 bufferedWriter.close();
             }
         } catch (IOException e) {
@@ -46,6 +45,7 @@ public class FilePersistingHandler implements PersistingHandler {
 
     /**
      * Modify the log file path to persist in
+     *
      * @param filePath String
      */
     public void setFilePath(String filePath) {
@@ -54,6 +54,7 @@ public class FilePersistingHandler implements PersistingHandler {
 
     /**
      * Return the actual file path
+     *
      * @return String
      */
     public String getFilePath() {

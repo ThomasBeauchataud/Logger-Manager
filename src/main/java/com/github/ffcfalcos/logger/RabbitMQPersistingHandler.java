@@ -29,16 +29,12 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
     }
 
     /**
-     * Persist a string message formatted in Json
-     * If the message is not a valid Json, it will not be thrown
-     * Make sur you have previously set RabbitMQ parameters
-     * Each message are sent threw different threads
-     * @param content String formatted in Json
+     * {@inheritDoc}
      */
     @Override
     public void persist(String content) {
         try {
-            if(content != null && isJSONValid(content)) {
+            if (content != null && isJSONValid(content)) {
                 new Thread(new RabbitMQThread(rabbitMQHost, rabbitMQUser, rabbitMQPassword, rabbitMQExchange, rabbitMQRoutingKey, content)).start();
             }
         } catch (Exception e) {
@@ -48,6 +44,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Return the actual RabbitMQ host parameter
+     *
      * @return String
      */
     public String getRabbitMQHost() {
@@ -56,6 +53,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Set the new RabbitMQ host parameter
+     *
      * @param rabbitMQHost String
      */
     public void setRabbitMQHost(String rabbitMQHost) {
@@ -64,6 +62,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Return the actual RabbitMQ user parameter
+     *
      * @return String
      */
     public String getRabbitMQUser() {
@@ -72,6 +71,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Set the new RabbitMQ user parameter
+     *
      * @param rabbitMQUser String
      */
     public void setRabbitMQUser(String rabbitMQUser) {
@@ -80,6 +80,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Return the actual RabbitMQ password parameter
+     *
      * @return String
      */
     public String getRabbitMQPassword() {
@@ -88,6 +89,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Set the new RabbitMQ password parameter
+     *
      * @param rabbitMQPassword String
      */
     public void setRabbitMQPassword(String rabbitMQPassword) {
@@ -96,6 +98,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Return the actual RabbitMQ exchange parameter
+     *
      * @return String
      */
     public String getRabbitMQExchange() {
@@ -104,6 +107,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Set the new RabbitMQ exchange parameter
+     *
      * @param rabbitMQExchange String
      */
     public void setRabbitMQExchange(String rabbitMQExchange) {
@@ -112,6 +116,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Return the actual RabbitMQ routing-key parameter
+     *
      * @return String
      */
     public String getRabbitMQRoutingKey() {
@@ -120,6 +125,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Set the new RabbitMQ routing-key parameter
+     *
      * @param rabbitMQRoutingKey String
      */
     public void setRabbitMQRoutingKey(String rabbitMQRoutingKey) {
@@ -128,6 +134,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
 
     /**
      * Validate a Json string
+     *
      * @param test String
      * @return boolean
      */

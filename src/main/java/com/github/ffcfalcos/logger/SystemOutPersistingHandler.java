@@ -8,8 +8,7 @@ package com.github.ffcfalcos.logger;
 public class SystemOutPersistingHandler implements PersistingHandler {
 
     /**
-     * Persist a string message
-     * @param content String
+     * {@inheritDoc}
      */
     @Override
     public void persist(String content) {

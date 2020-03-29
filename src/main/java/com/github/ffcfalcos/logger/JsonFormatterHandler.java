@@ -10,9 +10,7 @@ import org.json.JSONObject;
 public class JsonFormatterHandler implements FormatterHandler {
 
     /**
-     * Format a LogContent message
-     * @param logContent LogContent
-     * @return String
+     * {@inheritDoc}
      */
     @Override
     public String format(LogContent logContent) {
@@ -23,10 +21,7 @@ public class JsonFormatterHandler implements FormatterHandler {
     }
 
     /**
-     * Format an object with his severity
-     * @param logContent Object
-     * @param severity Severity
-     * @return String
+     * {@inheritDoc}
      */
     @Override
     public String format(Object logContent, Severity severity) {

@@ -16,8 +16,8 @@ public class Logger implements LoggerInterface {
 
     private static LoggerInterface instance;
 
-    private FormatterHandlerProvider formatterHandlerProvider;
-    private PersistingHandlerProvider persistingHandlerProvider;
+    private HandlerProvider<FormatterHandler> formatterHandlerProvider;
+    private HandlerProvider<PersistingHandler> persistingHandlerProvider;
     private LoggerStatisticsManagement loggerStatisticsManagement;
 
     /**
@@ -38,26 +38,23 @@ public class Logger implements LoggerInterface {
     }
 
     /**
-     * Return the PersistingHandlerProvider to manage PersistingHandlers
-     * @return PersistingHandlerProvider
+     * {@inheritDoc}
      */
     @Override
-    public FormatterHandlerProvider getFormatterHandlerProvider() {
+    public HandlerProvider<FormatterHandler> getFormatterHandlerProvider() {
         return formatterHandlerProvider;
     }
 
     /**
-     * Return the FormatterHandlerProvider to manage FormatterHandlers
-     * @return FormatterHandlerProvider
+     * {@inheritDoc}
      */
     @Override
-    public PersistingHandlerProvider getPersistingHandlerProvider() {
+    public HandlerProvider<PersistingHandler> getPersistingHandlerProvider() {
         return persistingHandlerProvider;
     }
 
     /**
-     * Return the LoggerStatisticsManagement to manage it
-     * @return LoggerStatisticsManagement
+     * {@inheritDoc}
      */
     @Override
     public LoggerStatisticsManagement getLoggerStatisticsManagement() {
@@ -65,8 +62,7 @@ public class Logger implements LoggerInterface {
     }
 
     /**
-     * Log a LogContent object with the defaults FormatterHandler and PersistingHandler
-     * @param content LogContent
+     * {@inheritDoc}
      */
     @Override
     public void log(LogContent content) {
@@ -74,9 +70,7 @@ public class Logger implements LoggerInterface {
     }
 
     /**
-     * Log a string object with the default FormatterHandler and the default PersistingHandler
-     * @param content Object
-     * @param severity Severity
+     * {@inheritDoc}
      */
     @Override
     public void log(Object content, Severity severity) {
@@ -84,10 +78,7 @@ public class Logger implements LoggerInterface {
     }
 
     /**
-     * Log a LogContent object with specifics FormatterHandler and PersistingHandler
-     * @param persistingHandlerClass Class | null to use the default PersistingHandler
-     * @param formatterHandlerClass Class | null to use the default FormatterHandler
-     * @param content LogContent
+     * {@inheritDoc}
      */
     @Override
     public void log(LogContent content, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass) {
@@ -98,11 +89,7 @@ public class Logger implements LoggerInterface {
     }
 
     /**
-     * Log a string object with specifics FormatterHandler and PersistingHandler
-     * @param persistingHandlerClass Class | null to use the default PersistingHandler
-     * @param formatterHandlerClass Class | null to use the default FormatterHandler
-     * @param content Object
-     * @param severity Severity
+     * {@inheritDoc}
      */
     @Override
     public void log(Object content, Severity severity, Class<?> persistingHandlerClass, Class<?> formatterHandlerClass) {
@@ -114,13 +101,13 @@ public class Logger implements LoggerInterface {
 
     /**
      * Return the singleton instance
+     *
      * @return LoggerInterface
      */
     public static LoggerInterface getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new Logger();
         }
         return instance;
     }
-
 }

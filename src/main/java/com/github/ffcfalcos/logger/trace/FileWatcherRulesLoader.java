@@ -7,10 +7,10 @@ import java.util.List;
  * @author Thomas Beauchataud
  * @since 24.02.2020
  * Thread that load rules from the RuleStorageHandler and inject them in the
- *      AbstractTraceableAnnotationHandler rules list
+ * AbstractTraceableAnnotationHandler rules list
  * This thread is working with an infinite loop triggering with a file watcher
  */
-@SuppressWarnings({"unused","InfiniteLoopStatement"})
+@SuppressWarnings({"unused", "InfiniteLoopStatement"})
 public class FileWatcherRulesLoader extends AbstractRulesLoader {
 
     private WatchService watcher;
@@ -18,6 +18,7 @@ public class FileWatcherRulesLoader extends AbstractRulesLoader {
 
     /**
      * AbstractRulesLoader Constructor
+     *
      * @param fileRulesStorageHandler FileRulesStorageHandler
      */
     public FileWatcherRulesLoader(FileRulesStorageHandler fileRulesStorageHandler) {

@@ -10,6 +10,7 @@ public interface PersistingHandler {
 
     /**
      * Persist a string message
+     *
      * @param content String
      */
     void persist(String content);

@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * @author Thomas Beauchataud
  * @since 24.02.2020
- * Provide Formatter Handlers
+ * Provides Formatter Handlers
  */
 @SuppressWarnings("unused")
-public class FormatterHandlerProvider {
+public class FormatterHandlerProvider implements HandlerProvider<FormatterHandler> {
 
     private FormatterHandler defaultFormatterHandler;
     private List<FormatterHandler> formatterHandlers;
@@ -25,11 +25,7 @@ public class FormatterHandlerProvider {
     }
 
     /**
-     * Return a FormatterHandler associated to the class in parameter
-     * Return the default FormatterHandler if the one in parameter doesn't exists
-     *
-     * @param formatterHandlerClass Class | null to get the default FormatterHandler
-     * @return FormatterHandler
+     * {@inheritDoc}
      */
     public FormatterHandler get(Class<?> formatterHandlerClass) {
         if (formatterHandlerClass == null) {
@@ -44,9 +40,7 @@ public class FormatterHandlerProvider {
     }
 
     /**
-     * Change the default FormatterHandler
-     *
-     * @param formatterHandlerClass Class
+     * {@inheritDoc}
      */
     public void setDefault(Class<?> formatterHandlerClass) {
         if (formatterHandlerClass != null) {
@@ -59,9 +53,7 @@ public class FormatterHandlerProvider {
     }
 
     /**
-     * Add a new FormatterHandler to the provider
-     *
-     * @param formatterHandler FormatterHandler
+     * {@inheritDoc}
      */
     public void add(FormatterHandler formatterHandler) {
         if (formatterHandler != null) {

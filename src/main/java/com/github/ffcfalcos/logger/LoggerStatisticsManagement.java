@@ -1,5 +1,9 @@
 package com.github.ffcfalcos.logger;
 
+import com.github.ffcfalcos.logger.util.FilePathService;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Date;
 
@@ -24,6 +28,7 @@ public class LoggerStatisticsManagement {
 
     /**
      * Set if the statistics component is active or not
+     *
      * @param active boolean
      */
     public void setActive(boolean active) {
@@ -32,18 +37,19 @@ public class LoggerStatisticsManagement {
 
     /**
      * Update the historic of handlers utilisation
+     *
      * @param persistingHandlerClass Class
-     * @param formatterHandlerClass Class
+     * @param formatterHandlerClass  Class
      */
     public void update(Class<?> persistingHandlerClass, Class<?> formatterHandlerClass) {
-        if(active) {
+        if (active) {
             try {
-                FileWriter csvWriter = new FileWriter(filePath);
-                csvWriter.append(Float.toString(new Date().getTime()));
+                FileWriter csvWriter = new FileWriter(filePath, true);
+                csvWriter.append(Long.toString(new Date().getTime()));
                 csvWriter.append(",");
-                csvWriter.append(persistingHandlerClass.getSimpleName());
+                csvWriter.append(persistingHandlerClass.getName());
                 csvWriter.append(",");
-                csvWriter.append(formatterHandlerClass.getSimpleName());
+                csvWriter.append(formatterHandlerClass.getName());
                 csvWriter.append("\n");
                 csvWriter.flush();
                 csvWriter.close();
@@ -53,4 +59,31 @@ public class LoggerStatisticsManagement {
         }
     }
 
+    /**
+     * Set the new file path for the file storing statistics
+     * Set migration to true if you want to migrate statistics of the actual file into the new one
+     *
+     * @param filePath  String
+     * @param migration boolean
+     */
+    public void setFilePath(String filePath, boolean migration) {
+        FilePathService.checkFilePath(filePath);
+        if (migration) {
+            try {
+                FileWriter csvWriter = new FileWriter(filePath);
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(this.filePath));
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    csvWriter.append(line);
+                    csvWriter.append("\n");
+                }
+                bufferedReader.close();
+                csvWriter.flush();
+                csvWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        this.filePath = filePath;
+    }
 }

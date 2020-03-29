@@ -20,6 +20,7 @@ public abstract class AbstractTraceableAnnotationHandler extends AbstractTraceAn
 
     /**
      * AbstractTraceableAnnotationHandler Constructor
+     *
      * @param rulesLoader AbstractRulesLoader
      */
     protected AbstractTraceableAnnotationHandler(AbstractRulesLoader rulesLoader) {
@@ -30,26 +31,27 @@ public abstract class AbstractTraceableAnnotationHandler extends AbstractTraceAn
 
     /**
      * Handle the invocation of the ProceedingJoinPoint of log with the associated Rule if it exists
+     *
      * @param proceedingJoinPoint ProceedingJoinPoint
      * @return Object
      * @throws Throwable if there is an exception during the method invocation
      */
     protected Object handle(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Rule rule = getRule(proceedingJoinPoint);
-        if(rule != null) {
-            if(rule.getEntry().equals(Entry.BEFORE)) {
+        if (rule != null) {
+            if (rule.getEntry().equals(Entry.BEFORE)) {
                 super.handleTraceBefore(proceedingJoinPoint, TraceAnnotationFactory.createTraceBefore(rule));
                 return proceedingJoinPoint.proceed();
             }
-            if(rule.getEntry().equals(Entry.AFTER)) {
+            if (rule.getEntry().equals(Entry.AFTER)) {
                 Object response = proceedingJoinPoint.proceed();
                 super.handleTraceAfter(proceedingJoinPoint, TraceAnnotationFactory.createTraceAfter(rule));
                 return response;
             }
-            if(rule.getEntry().equals(Entry.AROUND)) {
+            if (rule.getEntry().equals(Entry.AROUND)) {
                 return super.handleTraceAround(proceedingJoinPoint, TraceAnnotationFactory.createTraceAround(rule));
             }
-            if(rule.getEntry().equals(Entry.AFTER_THROWING)) {
+            if (rule.getEntry().equals(Entry.AFTER_THROWING)) {
                 LogContent logContent = new LogContent(LogType.TRACE_AFTER_THROWING);
                 try {
                     return proceedingJoinPoint.proceed();
@@ -64,12 +66,13 @@ public abstract class AbstractTraceableAnnotationHandler extends AbstractTraceAn
 
     /**
      * Return a the rule associated to the JointPoint or null if there is no rule corresponding
+     *
      * @param proceedingJoinPoint ProceedingJoinPoint
      * @return Rule
      */
     private Rule getRule(ProceedingJoinPoint proceedingJoinPoint) {
-        for(Rule rule : rules) {
-            if(rule.validRule(proceedingJoinPoint)) {
+        for (Rule rule : rules) {
+            if (rule.validRule(proceedingJoinPoint)) {
                 return rule;
             }
         }

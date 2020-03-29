@@ -12,6 +12,7 @@ public class FilePathService {
 
     /**
      * Try to delete a file
+     *
      * @param filePath String file path
      */
     public static void deleteFile(String filePath) {
@@ -20,6 +21,7 @@ public class FilePathService {
 
     /**
      * Create folders for the file path if necessary
+     *
      * @param filePath String
      */
     public static void checkFilePath(String filePath) {
@@ -34,11 +36,12 @@ public class FilePathService {
 
     /**
      * Create folders recursively
+     *
      * @param stack Stack
      */
     private static void createFolderPath(Stack<String> stack) {
-        while(!stack.empty()) {
-            if(new File(stack.peek()).mkdir()) {
+        while (!stack.empty()) {
+            if (new File(stack.peek()).mkdir()) {
                 stack.pop();
             } else {
                 stack.push(stack.peek().substring(0, stack.peek().lastIndexOf('/')));
