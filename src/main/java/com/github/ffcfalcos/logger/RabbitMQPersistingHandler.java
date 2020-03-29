@@ -1,5 +1,8 @@
 package com.github.ffcfalcos.logger;
 
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 import org.json.JSONObject;
 
 /**
@@ -35,7 +38,7 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
     public void persist(String content) {
         try {
             if (content != null && isJSONValid(content)) {
-                new Thread(new RabbitMQThread(rabbitMQHost, rabbitMQUser, rabbitMQPassword, rabbitMQExchange, rabbitMQRoutingKey, content)).start();
+                new Thread(() -> send(content)).start();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,6 +148,25 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Send the log message to the RabbitMQ on a new thread
+     *
+     * @param content String
+     */
+    private void send(String content) {
+        try {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.setHost(rabbitMQHost);
+            factory.setUsername(rabbitMQUser);
+            factory.setPassword(rabbitMQPassword);
+            Connection connection = factory.newConnection();
+            Channel channel = connection.createChannel();
+            channel.basicPublish(rabbitMQExchange, rabbitMQRoutingKey, null, content.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
