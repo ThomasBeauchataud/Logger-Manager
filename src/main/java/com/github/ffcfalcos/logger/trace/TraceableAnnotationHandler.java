@@ -1,4 +1,5 @@
-import com.github.ffcfalcos.logger.trace.*;
+package com.github.ffcfalcos.logger.trace;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 
@@ -16,5 +17,4 @@ public class TraceableAnnotationHandler extends AbstractTraceableAnnotationHandl
     public Object traceable(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         return super.handle(proceedingJoinPoint);
     }
-
 }
