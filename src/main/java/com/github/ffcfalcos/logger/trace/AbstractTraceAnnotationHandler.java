@@ -10,7 +10,6 @@ import java.util.Arrays;
 /**
  * @author Thomas Beauchataud
  * @since 24.02.2020
- * Handle Trace Annotation
  * This abstract class is use to be an aspect class, any class extending it must be an aspect class having pointcut
  * executing methods above
  */
