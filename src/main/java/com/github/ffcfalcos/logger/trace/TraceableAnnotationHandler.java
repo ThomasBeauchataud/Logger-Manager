@@ -20,8 +20,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class TraceableAnnotationHandler extends AbstractTraceAnnotationHandler {
 
-    private static List<Rule> rules;
-    private static AbstractRulesLoader rulesLoader;
+    private List<Rule> rules;
+    private AbstractRulesLoader rulesLoader;
 
     /**
      * TraceableAnnotationHandler Constructor
@@ -86,26 +86,4 @@ public class TraceableAnnotationHandler extends AbstractTraceAnnotationHandler {
         }
         return null;
     }
-
-    /**
-     * Return the RulesLoader
-     *
-     * @return AbstractRulesLoader
-     */
-    public static AbstractRulesLoader getRulesLoader() {
-        return rulesLoader;
-    }
-
-    /**
-     * Set and initialize a new AbstractRulesLoader
-     *
-     * @param newRulesLoader AbstractRulesLoader
-     */
-    public static void setRulesLoader(AbstractRulesLoader newRulesLoader) {
-        rulesLoader = newRulesLoader;
-        rules = rulesLoader.getRulesStorageHandler().getRules();
-        rulesLoader.setRules(rules);
-        new Thread(rulesLoader).start();
-    }
-
 }
