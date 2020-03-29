@@ -1,5 +1,6 @@
 # Logger-Manager
 Maven repository to easily generate logs message
+# THIS README IS NOT UP TO DATE ! PLEASE WAIT FOR CORRECTIONS
 ## 1. Get the Logger service
 - By using a static method to get the singleton
 ```
