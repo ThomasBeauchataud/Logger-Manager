@@ -1,9 +1,13 @@
 package com.github.ffcfalcos.logger;
 
+import com.github.ffcfalcos.logger.util.FileService;
+import com.github.ffcfalcos.logger.util.XmlReader;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import org.json.JSONObject;
+
+import java.io.File;
 
 /**
  * @author Thomas Beauchataud
@@ -29,6 +33,18 @@ public class RabbitMQPersistingHandler implements PersistingHandler {
         rabbitMQPassword = "guest";
         rabbitMQExchange = "COMMON";
         rabbitMQRoutingKey = "*";
+        File file = FileService.getConfigFile();
+        if(file != null) {
+            try {
+                rabbitMQHost = XmlReader.getElement(file, "rabbitMQ-host");
+                rabbitMQUser = XmlReader.getElement(file, "rabbitMQ-user");
+                rabbitMQPassword = XmlReader.getElement(file, "rabbitMQ-password");
+                rabbitMQExchange = XmlReader.getElement(file, "rabbitMQ-exchange");
+                rabbitMQRoutingKey = XmlReader.getElement(file, "rabbitMQ-routingKey");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

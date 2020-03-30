@@ -7,10 +7,17 @@
         <storage-handler-class>com.github.ffcfalcos.logger.trace.CsvRulesStorageHandler</storage-handler-class>
     </traceable>
 
-    <file-paths>
+    <parameters>
         <file-persisting-handler-path>/default-log.log</file-persisting-handler-path>
-        <csv-storage-handler-path>/rules.csv</csv-storage-handler-path>
-    </file-paths>
+        <csv-rules-storage-handler-path>/rules.csv</csv-rules-storage-handler-path>
+        <rabbitMQ-persisting-handler>
+            <rabbitMQ-host>localhost</rabbitMQ-host>
+            <rabbitMQ-user>guest</rabbitMQ-user>
+            <rabbitMQ-password>guest</rabbitMQ-password>
+            <rabbitMQ-exchange>COMMON</rabbitMQ-exchange>
+            <rabbitMQ-routingKey>*</rabbitMQ-routingKey>
+        </rabbitMQ-persisting-handler>
+    </parameters>
 
     <persisting-handlers>
         <persisting-handler>com.github.ffcfalcos.logger.PersistingHandlerTest</persisting-handler>
