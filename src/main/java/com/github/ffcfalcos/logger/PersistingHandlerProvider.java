@@ -1,5 +1,9 @@
 package com.github.ffcfalcos.logger;
 
+import com.github.ffcfalcos.logger.util.FileService;
+import com.github.ffcfalcos.logger.util.XmlReader;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,17 @@ public class PersistingHandlerProvider implements HandlerProvider<PersistingHand
         persistingHandlers.add(defaultPersistingHandler);
         persistingHandlers.add(new RabbitMQPersistingHandler());
         persistingHandlers.add(new SystemOutPersistingHandler());
+        File file = FileService.getConfigFile();
+        if(file != null) {
+            try {
+                for(String persistingHandlerClassName : XmlReader.getElements(file, "persisting-handler")) {
+                    Class<?> persistingHandlerClass = Class.forName(persistingHandlerClassName);
+                    add((PersistingHandler) persistingHandlerClass.getConstructor().newInstance());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

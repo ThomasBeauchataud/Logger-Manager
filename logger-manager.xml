@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<logger>
+
+    <traceable>
+        <loader-class>com.github.ffcfalcos.logger.trace.FileWatcherRulesLoader</loader-class>
+        <storage-handler-class>com.github.ffcfalcos.logger.trace.CsvRulesStorageHandler</storage-handler-class>
+    </traceable>
+
+    <file-paths>
+        <file-persisting-handler-path>/default-log.log</file-persisting-handler-path>
+        <csv-storage-handler-path>/rules.csv</csv-storage-handler-path>
+    </file-paths>
+
+    <persisting-handlers>
+        <persisting-handler>com.github.ffcfalcos.logger.PersistingHandlerTest</persisting-handler>
+    </persisting-handlers>
+
+    <formatter-handlers>
+        <formatter-handler>com.github.ffcfalcos.logger.FormatterHandlerTest</formatter-handler>
+    </formatter-handlers>
+
+</logger>

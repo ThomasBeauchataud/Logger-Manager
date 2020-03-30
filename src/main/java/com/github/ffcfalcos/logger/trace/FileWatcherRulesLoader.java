@@ -19,10 +19,11 @@ public class FileWatcherRulesLoader extends AbstractRulesLoader {
     /**
      * AbstractRulesLoader Constructor
      *
-     * @param fileRulesStorageHandler FileRulesStorageHandler
+     * @param rulesStorageHandler RulesStorageHandler
      */
-    public FileWatcherRulesLoader(FileRulesStorageHandler fileRulesStorageHandler) {
-        super(fileRulesStorageHandler);
+    public FileWatcherRulesLoader(RulesStorageHandler rulesStorageHandler) {
+        super(rulesStorageHandler);
+        FileRulesStorageHandler fileRulesStorageHandler = (FileRulesStorageHandler) rulesStorageHandler;
         filePath = fileRulesStorageHandler.getFilePath();
         try {
             Path path = Paths.get(filePath.substring(0, filePath.lastIndexOf('/')));

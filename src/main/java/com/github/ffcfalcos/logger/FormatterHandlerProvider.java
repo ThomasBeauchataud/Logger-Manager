@@ -1,5 +1,9 @@
 package com.github.ffcfalcos.logger;
 
+import com.github.ffcfalcos.logger.util.FileService;
+import com.github.ffcfalcos.logger.util.XmlReader;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +26,17 @@ public class FormatterHandlerProvider implements HandlerProvider<FormatterHandle
         formatterHandlers = new ArrayList<>();
         formatterHandlers.add(defaultFormatterHandler);
         formatterHandlers.add(new StringFormatterHandler());
+        File file = FileService.getConfigFile();
+        if(file != null) {
+            try {
+                for(String formatterHandlerClassName : XmlReader.getElements(file, "formatter-handler")) {
+                    Class<?> formatterHandlerClass = Class.forName(formatterHandlerClassName);
+                    add((FormatterHandler) formatterHandlerClass.getConstructor().newInstance());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.github.ffcfalcos.logger.trace;
 
-import com.github.ffcfalcos.logger.util.FilePathService;
+import com.github.ffcfalcos.logger.util.FileService;
+import com.github.ffcfalcos.logger.util.XmlReader;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,7 +23,15 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
      * Initialize the default file path
      */
     public CsvRulesStorageHandler() {
-        this.filePath = System.getProperty("user.dir") + "/csv-rules.csv";
+        this.filePath = System.getProperty("user.dir") + "/rules.csv";
+        File file = FileService.getConfigFile();
+        if(file != null) {
+            try {
+                this.filePath = System.getProperty("user.dir") + XmlReader.getElement(file, "csv-storage-handler-path");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -33,7 +42,7 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
         List<Rule> rules = new ArrayList<>();
         try {
             if (filePath != null) {
-                FilePathService.checkFilePath(filePath);
+                FileService.createFilePath(filePath);
                 BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
                 String row;
                 while ((row = csvReader.readLine()) != null) {
@@ -113,7 +122,7 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
      */
     private void writeRules(List<Rule> rules) {
         try {
-            FilePathService.checkFilePath(filePath);
+            FileService.createFilePath(filePath);
             FileWriter csvWriter = new FileWriter(filePath);
             for (Rule rule : rules) {
                 csvWriter.append(String.join(",", rule.toStringList()));

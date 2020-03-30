@@ -2,12 +2,14 @@ package com.github.ffcfalcos.logger.trace;
 
 import com.github.ffcfalcos.logger.LogContent;
 import com.github.ffcfalcos.logger.LogType;
+import com.github.ffcfalcos.logger.util.FileService;
+import com.github.ffcfalcos.logger.util.XmlReader;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-import java.util.List;
+import java.io.File;
 
 /**
  * @author Thomas Beauchataud
@@ -20,17 +22,25 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class TraceableAnnotationHandler extends AbstractTraceAnnotationHandler {
 
-    private List<Rule> rules;
     private AbstractRulesLoader rulesLoader;
 
     /**
      * TraceableAnnotationHandler Constructor
      */
     public TraceableAnnotationHandler() {
-        AbstractRulesLoader rulesLoader = new FileWatcherRulesLoader(new CsvRulesStorageHandler());
-        rules = rulesLoader.getRulesStorageHandler().getRules();
-        rulesLoader.setRules(rules);
-        new Thread(rulesLoader).start();
+        this.rulesLoader = new FileWatcherRulesLoader(new CsvRulesStorageHandler());
+        File file = FileService.getConfigFile();
+        if(file != null) {
+            try {
+                Class<?> rulesLoaderClass = Class.forName(XmlReader.getElement(file, "loader-class"));
+                Class<?> rulesStorageHandlerClass = Class.forName(XmlReader.getElement(file, "storage-handler-class"));
+                RulesStorageHandler rulesStorageHandler = (RulesStorageHandler) rulesStorageHandlerClass.getConstructor().newInstance();
+                this.rulesLoader = (AbstractRulesLoader) rulesLoaderClass.getConstructor(RulesStorageHandler.class).newInstance(rulesStorageHandler);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        new Thread(this.rulesLoader).start();
     }
 
     @Pointcut("@annotation(com.github.ffcfalcos.logger.trace.Traceable) && execution(* *(..))")
@@ -79,7 +89,7 @@ public class TraceableAnnotationHandler extends AbstractTraceAnnotationHandler {
      * @return Rule
      */
     private Rule getRule(ProceedingJoinPoint proceedingJoinPoint) {
-        for (Rule rule : rules) {
+        for (Rule rule : rulesLoader.getRules()) {
             if (rule.validRule(proceedingJoinPoint)) {
                 return rule;
             }

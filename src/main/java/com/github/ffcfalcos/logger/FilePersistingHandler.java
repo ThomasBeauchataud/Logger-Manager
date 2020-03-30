@@ -1,8 +1,10 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.util.FilePathService;
+import com.github.ffcfalcos.logger.util.FileService;
+import com.github.ffcfalcos.logger.util.XmlReader;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -23,6 +25,14 @@ public class FilePersistingHandler implements PersistingHandler {
      */
     public FilePersistingHandler() {
         filePath = System.getProperty("user.dir") + "/default-log.log";
+        File file = FileService.getConfigFile();
+        if(file != null) {
+            try {
+                this.filePath = System.getProperty("user.dir") + XmlReader.getElement(file, "file-persisting-handler-path");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -32,7 +42,7 @@ public class FilePersistingHandler implements PersistingHandler {
     public void persist(String content) {
         try {
             if (filePath != null) {
-                FilePathService.checkFilePath(filePath);
+                FileService.createFilePath(filePath);
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filePath, true));
                 bufferedWriter.append(content);
                 bufferedWriter.append("\n");

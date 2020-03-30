@@ -1,6 +1,6 @@
 package com.github.ffcfalcos.logger;
 
-import com.github.ffcfalcos.logger.util.FilePathService;
+import com.github.ffcfalcos.logger.util.FileService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -67,7 +67,7 @@ public class LoggerStatisticsManagement {
      * @param migration boolean
      */
     public void setFilePath(String filePath, boolean migration) {
-        FilePathService.checkFilePath(filePath);
+        FileService.createFilePath(filePath);
         if (migration) {
             try {
                 FileWriter csvWriter = new FileWriter(filePath);

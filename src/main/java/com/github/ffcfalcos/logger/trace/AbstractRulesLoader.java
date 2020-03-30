@@ -25,12 +25,12 @@ public abstract class AbstractRulesLoader implements Runnable {
     }
 
     /**
-     * Set the Rule list
+     * Return the rule list
      *
-     * @param rules Rule[]
+     * @return Rule[]
      */
-    public void setRules(List<Rule> rules) {
-        this.rules = rules;
+    public List<Rule> getRules() {
+        return this.rules;
     }
 
     /**
