@@ -18,7 +18,6 @@ class TraceableAnnotationHandlerTest {
 
     @Test
     void traceablePointcut() {
-        traceable();
         try {
             traceable();
             BufferedReader bufferedReader = new BufferedReader(new FileReader(((FilePersistingHandler) Logger.getInstance()
@@ -50,8 +49,7 @@ class TraceableAnnotationHandlerTest {
 
     @BeforeAll
     static void cleanUp() throws IOException {
-        new FileWriter(((FilePersistingHandler) Logger.getInstance()
-                .getPersistingHandlerProvider().get(FilePersistingHandler.class)).getFilePath()).write("");
         new FileWriter(new CsvRulesStorageHandler().getFilePath()).write("");
+        new FileWriter(new FilePersistingHandler().getFilePath()).write("");
     }
 }

@@ -100,7 +100,7 @@ class CsvRulesStorageHandlerTest {
             csvRulesStorageHandler.setFilePath(filePath, false);
             Rule rule = new Rule("class1", "method1", Entry.AFTER, null, null, false);
             assertDoesNotThrow(() -> csvRulesStorageHandler.addRules(Collections.singletonList(rule)));
-            filePath = System.getProperty("user.dir") + "/src/test/resources/rules.csv-switch";
+            filePath = System.getProperty("user.dir") + "/src/test/resources/rules-switch.csv";
             csvRulesStorageHandler.setFilePath(filePath, true);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
             assertTrue(bufferedReader.readLine().contains("method1"));
@@ -113,6 +113,6 @@ class CsvRulesStorageHandlerTest {
     @BeforeAll
     static void cleanUp() throws IOException {
         new FileWriter(System.getProperty("user.dir") + "/src/test/resources/rules.csv").write("");
-        new FileWriter(System.getProperty("user.dir") + "/src/test/resources/rules.csv-switch").write("");
+        new FileWriter(System.getProperty("user.dir") + "/src/test/resources/rules-switch.csv").write("");
     }
 }
