@@ -1,6 +1,5 @@
 package com.github.ffcfalcos.logger.trace;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +20,7 @@ public abstract class AbstractRulesLoader implements Runnable {
      */
     public AbstractRulesLoader(RulesStorageHandler rulesStorageHandler) {
         this.rulesStorageHandler = rulesStorageHandler;
-        this.rules = new ArrayList<>();
+        this.rules = this.rulesStorageHandler.getRules();
     }
 
     /**

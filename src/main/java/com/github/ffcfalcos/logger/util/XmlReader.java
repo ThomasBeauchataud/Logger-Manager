@@ -33,7 +33,6 @@ public class XmlReader {
             Node node = doc.getElementsByTagName(element).item(0);
             return node.getFirstChild().getNodeValue();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -46,8 +45,8 @@ public class XmlReader {
      * @return String[]
      */
     public static List<String> getElements(File file, String element) {
-        List<String> elements = new ArrayList<>();
         try {
+            List<String> elements = new ArrayList<>();
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(file);
@@ -56,10 +55,10 @@ public class XmlReader {
             for(int i = 0 ; i < nodeList.getLength() ; ++i) {
                 elements.add(nodeList.item(i).getFirstChild().getNodeValue());
             }
+            return elements;
         } catch (Exception e) {
-            e.printStackTrace();
+            return new ArrayList<>();
         }
-        return elements;
     }
 
 }

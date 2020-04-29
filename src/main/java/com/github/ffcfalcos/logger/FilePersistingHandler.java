@@ -24,7 +24,7 @@ public class FilePersistingHandler implements PersistingHandler {
      * Initialize the file path with a default path
      */
     public FilePersistingHandler() {
-        filePath = System.getProperty("user.dir") + "/default-log.log";
+        filePath = System.getProperty("user.dir") + "/logs/default-log.log";
         File file = FileService.getConfigFile();
         if(file != null) {
             try {

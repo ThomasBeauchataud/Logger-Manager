@@ -3,6 +3,7 @@ package com.github.ffcfalcos.logger.trace;
 import com.github.ffcfalcos.logger.FilePersistingHandler;
 import com.github.ffcfalcos.logger.Logger;
 import com.github.ffcfalcos.logger.StringFormatterHandler;
+import com.github.ffcfalcos.logger.util.FileService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -119,6 +120,8 @@ class TraceAnnotationHandlerTest {
 
     @BeforeAll
     static void cleanUp() throws IOException {
+        FileService.createFilePath(((FilePersistingHandler) Logger.getInstance()
+                .getPersistingHandlerProvider().get(FilePersistingHandler.class)).getFilePath());
         new FileWriter(((FilePersistingHandler) Logger.getInstance()
                 .getPersistingHandlerProvider().get(FilePersistingHandler.class)).getFilePath()).write("");
     }

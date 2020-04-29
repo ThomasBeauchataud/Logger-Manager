@@ -23,6 +23,9 @@ public class FileService {
             Stack<String> stack = new Stack<>();
             stack.push(filePath.substring(0, filePath.lastIndexOf('/')));
             createFolderPath(stack);
+            try {
+                new File(filePath).createNewFile();
+            } catch (Exception ignored) { }
         }
     }
 

@@ -1,61 +1,107 @@
 # Logger-Manager
 Maven repository to easily generate logs message
-# THIS README IS NOT UP TO DATE ! PLEASE WAIT FOR CORRECTIONS
-## 1. Get the Logger service
-- By using a static method to get the singleton
+## 1. Install the Logger component
+Add the dependency in your pom.xml file
+```
+<dependency>
+    <groupId>com.github.ffcfalcos</groupId>
+    <artifactId>logger-manager</artifactId>
+    <version>4.0.6-RELEASE</version>
+</dependency>
+```
+If you want to full components options, add the maven plugin below in your pom.xml to install aspect class
+```
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>aspectj-maven-plugin</artifactId>
+    <version>1.4</version>
+    <configuration>
+        <source>1.8</source>
+        <aspectLibraries>
+            <aspectLibrary>
+                <groupId>com.github.ffcfalcos</groupId>
+                <artifactId>logger-manager</artifactId>
+            </aspectLibrary>
+        </aspectLibraries>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>compile</goal>
+                <goal>test-compile</goal>
+            </goals>
+        </execution>
+    </executions>
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.9.5</version>
+        </dependency>
+    </dependencies>
+</plugin>
+```
+## 2. Log with the Logger component
+Get the service with singleton option or by dependency injection and log a message
 ```
 LoggerInterface logger = Logger.getInstance();
+
+logger.log("Here is my first message");
 ```
-- By using dependency injection
 ```
 @Inject
 LoggerInterface logger;
-```
-> If you use dependency injection, the static method of the singleton will return the same instance
-## 2. Log with the Logger service
-### 2.1. Persist a log message
-*PersistingHandlers* are persisting systems which persist a message.
-They implements the *PersistingHandler* interface
 
-You can get any *PersistingHandler* by getting the *PersistingHandlerProvider* from the *Logger* to execute his methods
+logger.log("Here is my first message", Severity.INFO);
 ```
-PersistingHandler filePersistingHandler = logger.getPersistingHandlerProvider().get(FilePersistingHandler.class);
+You can specify which *FormatterHandler* and/or *PersistingHandler* you want to use 
 ```
-Here are the default *PersistingHandlers* provided with this library :
-- *SystemOutPersistingHandler* which persist a message on the system console
-- *FilePersistingHandler* which persist a message on a file
-- *RabbitMQPersistingHandler* which persist a message on a RabbitMQ server
-### 2.2. Format a log message
-*FormatterHandlers* are persisting systems which format a message.
-They implements the *FormatterHandler* interface
+logger.log("Here is my first message", Severity.INFO, FilePersistingHandler.class, JsonFormatterHandler.class);
+```
+> Set the *FormatterHandler* or *PersistingHandler* to null to use default
 
-You can get any *FormatterHandler* by getting the *FormatterHandlerProvider* from the *Logger* to execute his methods
+You can use to *LogContent* object to log consistent log message
 ```
-FormatterHandler jsonFormatterHandler = logger.getFormatterHandlerProvider().get(JsonFormatterHandler.class);
+try {
+    //do your stuff
+    throw new Exception("Exception message");
+} catch (Exception e) {
+    LogContent logContent = new LogContent(LogType.TRACE_AFTER_THROWING);
+    logContent.put("content", "put a custom message here");
+    logContent.addException(e);
+    Logger.getInstance().log(logContent.close(Severity.CRITICAL), SystemOutPersistingHandler.class, StringFormatterHandler.class);
+}
 ```
-Here are the default *FormatterHandlers* provided with this library :
-- *JsonFormatterHandler* which format any object into a json string
-- *StringPersistingHandler* which format any object into a string by using *toString()* method of the object
-### 2.3. Log a message using *FormatterHandlers* and *PersistingHandlers*
-To log a simple *Object* message by using defaults *FormatterHandler* and *PersistingHandler*, you can use the following method provided by the *Logger*
 ```
-logger.log("my log message", Severity.INFO)
+[Wed Apr 08 14:31:33 EDT 2020] {severity=CRITICAL, start=1586370693362, cause=null, end=1586370693362, time=0, type=TRACE_AFTER_THROWING, error=true, message=Exception message, content=put a custom message here}
 ```
-If you want to specify which *FormatterHandler* and/or *PersistingHandler* you want to use, you can use the following method
+### 3. Customize your Logger component
+You can manage existing *FormatterHandler* & *PersistingHandler* and/or create your own by getting the associated provider
 ```
-logger.log("my log message", Severity.INFO, FilePersistingHandler.class, JsonFormatterHandler.class)
-```
-> Let a *Handler* to *null* to get the default *Handler* of the *Logger*
-## 3. The LogContent object
+Provider<PersistingHandler> persistingHandlerProvider = logger.getPersistingHandlerProvider();
 
-## 4. How to trace a method invocation
-### Methods trace annotations
+((FilePersistingHandler)persistingHandlerProvider.get(FilePersistingHandler.class)).setFilePath("new-path.loh");
+
+persistingHandlerProvider.add(new MyNewPersistingHandler());
+persistingHandlerProvider.setDefault(MyNewPersistingHandler.class)
+```
+```
+Provider<FormatterHandler> formatterHandlerProvider = logger.getFormatterHandlerProvider();
+
+formatterHandlerProvider.add(new MyNewFormatterHandler());
+formatterHandlerProvider.setDefault(MyNewFormatterHandler.class)
+```
+
+## 4. Trace method invocation with annotations
 Trace annotations are annotation to trace before, after or around method invocation.
-You can specify for each method which *FormatterHandler* and/or *PersistingHandler* you want to use or use the default
-> The *TraceAnnotationHandler* (see [Plug the aspect class](#plug-the-aspect-class)) use the *LogDataCollector* service (see [How to create a Map log message with the LogDataCollector](#how-to-create-a-map-log-message-with-the-logdatacollector))
+You can specify for each method which *FormatterHandler* and/or *PersistingHandler* you want to use
 
 Here are the available annotation :
 - TraceBefore, this annotation trace a method before his invocation with his parameters
+- TraceAround, this annotation trace a method around his invocation with his parameters and his result
+- TraceAfter, this annotation trace a method before his invocation with his parameters
+- TraceAfterReturning, this annotation trace a method after returning the response with his parameters and his result
+- TraceAfterThrowing, this annotation trace a method after throwing an exception with his parameters and the exception
 ```
 # MyService.java
 
@@ -64,101 +110,6 @@ public Object myMethodToTrace(Object param1, String param2, int param2) {
     ...
 }
 ```
-- TraceAround, this annotation trace a method around his invocation with his parameters and his result
+## 5. Change a trace method invocation during application runtime with annotations
 ```
-# MyService.java
-
-@TraceAround(formatterHandlerClass = JsonFormatterHandler.class)
-public Object myMethodToTrace(Object param1, String param2, int param2) {
-    ...
-}
 ```
-- TraceAfter, this annotation trace a method before his invocation with his parameters
-```
-# MyService.java
-
-@TraceAfter()
-public Object myMethodToTrace(Object param1, String param2, int param2) {
-    ...
-}
-```
-### Plug the aspect class
-To intercept annotated methods invocations, you have to create the aspect class. 
-Methods to handle the trace of methods are already implemented in the *TraceAnnotationHandler* class.
-
-This is what should looks like your aspect class to intercept annotated methods invocations
-```
-@Aspect
-public class MyTraceAspectClass extends TraceAnnotationsHandler {
-
-    @Pointcut("@annotation(traceBefore) && execution(* *(..)")
-    public void traceBeforePointcut(TraceBefore traceBefore) { }
-
-    @Pointcut("@annotation(traceAround) && execution(* *(..))")
-    public void traceAroundPointcut(TraceAround traceAround) { }
-
-    @Pointcut("@annotation(traceAfter) && execution(* *(..)")
-    public void traceAfterPointcut(TraceAfter traceAfter) { }
-
-    @Before(value = "traceBeforePointcut(traceBefore)", argNames = "joinPoint, traceBefore")
-    public void traceBefore(JoinPoint joinPoint, TraceBefore traceBefore) {
-        super.handleTraceBefore(joinPoint, traceBefore);
-    }
-
-    @Around(value = "traceAroundPointcut(traceAround)", argNames = "proceedingJoinPoint, traceAround")
-    public Object traceAround(ProceedingJoinPoint proceedingJoinPoint, TraceAround traceAround) throws Throwable {
-        return super.handleTraceAround(proceedingJoinPoint, traceAround);
-    }
-
-    @After(value = "traceAfterPointcut(traceAfter)", argNames = "joinPoint, traceAfter")
-    public void traceAfter(JoinPoint joinPoint, TraceAfter traceAfter) {
-        super.handleTraceAfter(joinPoint, traceAfter);
-    }
-
-}
-```
-### How to create a Map log message with the LogDataCollector
-## Custom your Logger service
-You can customise your *Logger* by creating your own *PersistingHandler* and *FormatterHandler*
-### Add a new PersistingHandler
-To create a new *PersistingHandler*, you just have to create a class implementing the interface *PersistingHandler*
-> You can test your *PersistingHandler* by running the test *PersistingHandlerTest.run(PersistingHandler)* on your new *PersistingHandler*
-
-Then to add your new *PersistingHandler* in the *Logger*, you can use the following method
-````
-# LoggerInterface.java
-
-void addPersistingHandler(PersistingHandler persistingHandler);
-````
-> Example
-````
-# MyService.java
-
-logger.addPersistingHandler(new MyPersistingHandler());
-````
-### Add a new FormatterHandler
-To create a new *FormatterHandler*, you just have to create a class implementing the interface *FormatterHandler*
-> You can test your *FormatterHandler* by running the test *FormatterHandlerTest.run(FormatterHandler)* on your new *FormatterHandler*
-
-Then to add your new *FormatterHandler* in the *Logger*, you can use the following method
-````
-# LoggerInterface.java
-
-void addFormatterHandler(FormatterHandler persistingHandler);
-````
-> Example
-````
-# MyService.java
-
-logger.addFormatterHandler(new MyFormatterHandler());
-````
-## Logger statistics
-## Versions historic and projects
-- 5.0 (Project) Adding a graphic interface to manage the *Logger* service
-- 4.0 (Project) The possibility to create, remove and modify logging rules during the runtime
-- 3.1 Adding the *LoggerStatisticsManagement* to follow the utilisation of the *Logger* service
-- 3.0 Adding traces annotations and the *TraceAnnotationsHandler*
-- 2.0 Adding the *LogDataCollector* service and the possibility to log *Map* object
-- 1.2 Adding tests to check if the created *PersistingHandler* & *FormatterHandler* are conformed
-- 1.1 Adding the possibility to create and add *PersistingHandler* & *FormatterHandler*
-- 1.0 Creation of the library

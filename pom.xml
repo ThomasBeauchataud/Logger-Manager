@@ -6,7 +6,7 @@
 
     <groupId>com.github.ffcfalcos</groupId>
     <artifactId>logger-manager</artifactId>
-    <version>4.0.0-RELEASE</version>
+    <version>4.0.6-RELEASE</version>
     <packaging>jar</packaging>
     <name>Logger Manager</name>
     <description>Logger Manager is a small component to easily log messages on rabbitMQ, console and files</description>
@@ -29,34 +29,20 @@
         </developer>
     </developers>
 
-    <profiles>
-        <profile>
-            <id>github</id>
-            <repositories>
-                <repository>
-                    <id>central</id>
-                    <url>https://repo1.maven.org/maven2</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-                <repository>
-                    <id>github</id>
-                    <name>GitHub ffcfalcos Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/ffcfalcos</url>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
+    <scm>
+        <connection>scm:git:git://github.com/ffcfalcos/Logger-Manager.git</connection>
+        <developerConnection>scm:git:ssh://github.com:ffcfalcos/Logger-Manager.git</developerConnection>
+        <url>https://github.com/ffcfalcos/Logger-Manager</url>
+    </scm>
 
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>github</id>
-            <name>GitHub ffcfalcos Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/ffcfalcos/Logger-Manager</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -71,6 +57,31 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -146,6 +157,10 @@
             </plugin>
         </plugins>
     </build>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
