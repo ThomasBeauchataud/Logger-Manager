@@ -26,10 +26,8 @@ public class CsvRulesStorageHandler implements FileRulesStorageHandler {
         this.filePath = System.getProperty("user.dir") + "/rules.csv";
         File file = FileService.getConfigFile();
         if(file != null) {
-            try {
+            if(XmlReader.getElement(file, "csv-rules-storage-handler-path") != null) {
                 this.filePath = System.getProperty("user.dir") + XmlReader.getElement(file, "csv-rules-storage-handler-path");
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
